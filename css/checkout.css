@@ -311,16 +311,19 @@
 }
 
 .payment-logo {
-    height: 64px;
+    height: 32px;
     width: auto;
+    max-height: 32px;
 }
 
 .payment-logo.paypal-logo {
-    height: 72px;
+    height: 28px;
+    max-height: 28px;
 }
 
 .payment-logo.stripe-logo {
-    height: 64px;
+    height: 28px;
+    max-height: 28px;
 }
 
 /* Card Fields */

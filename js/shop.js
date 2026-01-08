@@ -433,11 +433,21 @@ function filterAndRenderProducts() {
     // Filter by categories (multi-select)
     if (selectedCategories.length > 0) {
         filteredProducts = filteredProducts.filter(p => {
-            return selectedCategories.some(cat => 
-                p.category === cat || 
-                p.subcategory === cat ||
-                (p.category || '').toLowerCase().includes(cat.toLowerCase())
-            );
+            const productCategory = (p.category || '').toLowerCase();
+            const productSubcategory = (p.subcategory || '').toLowerCase();
+            
+            return selectedCategories.some(cat => {
+                const catLower = cat.toLowerCase();
+                // Exact match for category
+                if (productCategory === catLower) return true;
+                // Exact match for subcategory
+                if (productSubcategory === catLower) return true;
+                // Partial match for category (e.g., "home-decor" matches "Home Decor & Accessories")
+                if (productCategory.includes(catLower) || catLower.includes(productCategory)) return true;
+                // Special handling for sale
+                if (catLower === 'sale' && productCategory === 'sale') return true;
+                return false;
+            });
         });
     }
     

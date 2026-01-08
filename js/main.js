@@ -36,7 +36,7 @@ const brandLogos = [
 let cart = [];
 
 // Build version check (must match cart.js)
-const MAIN_BUILD_VERSION = '3.2.0';
+const MAIN_BUILD_VERSION = '3.4.0';
 
 // Initialize cart from localStorage
 function initCartFromStorage() {

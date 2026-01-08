@@ -110,30 +110,35 @@
     font-weight: 600;
     font-size: 16px;
     line-height: 26px;
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     text-decoration: none;
     border-radius: 8px;
     transition: all 0.3s ease;
     width: 100%;
-    background: none;
+    background: transparent;
     border: none;
     text-align: left;
     cursor: pointer;
 }
 
+.account-nav-item:link,
+.account-nav-item:visited {
+    color: #FFFFFF !important;
+}
+
 .account-nav-item:hover {
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     background: rgba(255, 255, 255, 0.15);
 }
 
 .account-nav-item.active {
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     background: rgba(255, 255, 255, 0.2);
     font-weight: 600;
 }
 
 .account-nav-item.logout {
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     cursor: pointer;
     margin-top: 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
@@ -142,7 +147,7 @@
 }
 
 .account-nav-item.logout:hover {
-    color: #FFFFFF;
+    color: #FFFFFF !important;
     background: transparent;
 }
 

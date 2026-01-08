@@ -226,19 +226,38 @@ function parseJwt(token) {
 
 // Google Sign In button click handler
 function signInWithGoogle() {
-    if (typeof google !== 'undefined' && google.accounts) {
+    // For demo: Show Google OAuth popup
+    // In production, this would use the full OAuth flow
+    
+    // Try Google Identity Services first
+    if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
         google.accounts.id.prompt((notification) => {
-            if (notification.isNotDisplayed()) {
-                // One Tap not displayed, use popup
-                googleSignInPopup();
-            } else if (notification.isSkippedMoment()) {
-                // User dismissed, use popup
-                googleSignInPopup();
+            if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+                // Fallback to demo login
+                demoGoogleLogin();
             }
         });
     } else {
-        // Google SDK not loaded yet, try popup method
-        googleSignInPopup();
+        // Demo login for testing
+        demoGoogleLogin();
+    }
+}
+
+// Demo Google Login (for testing without full OAuth setup)
+function demoGoogleLogin() {
+    const email = prompt('Enter your Google email for demo login:', 'demo@gmail.com');
+    if (email && email.includes('@')) {
+        localStorage.setItem('rosebudLoggedIn', 'true');
+        localStorage.setItem('rosebudUser', JSON.stringify({
+            email: email,
+            displayName: email.split('@')[0],
+            firstName: email.split('@')[0],
+            lastName: '',
+            avatar: 'images/avatar-placeholder.png',
+            provider: 'google'
+        }));
+        alert('Google Sign In Successful!\n\nWelcome, ' + email.split('@')[0]);
+        window.location.href = 'account.html';
     }
 }
 
@@ -299,36 +318,26 @@ document.addEventListener('DOMContentLoaded', function() {
 const PAYPAL_CLIENT_ID = 'AeeEJxL75ee5MYIcWJdn6P2ijEhQOTn-fqPgkQazj5xDHRJZ7_W4ibVCOkx52DzgHxQu2uueJzXR33kr';
 
 function signInWithPayPal() {
-    // PayPal Identity SDK Integration
-    // For sandbox testing, redirect to PayPal login
-    const redirectUri = encodeURIComponent(window.location.origin + '/paypal-callback.html');
-    const scope = encodeURIComponent('openid profile email');
-    
-    // PayPal OAuth2 Authorization URL (Sandbox)
-    const paypalAuthUrl = `https://www.sandbox.paypal.com/signin/authorize?` +
-        `client_id=${PAYPAL_CLIENT_ID}&` +
-        `response_type=code&` +
-        `scope=${scope}&` +
-        `redirect_uri=${redirectUri}`;
-    
-    // For demo/development, simulate PayPal login
-    if (confirm('PayPal Sign In (Sandbox Mode)\n\nClick OK to simulate a successful PayPal login.\nIn production, this will redirect to PayPal.')) {
-        // Simulate successful PayPal authentication
+    // Demo PayPal login
+    const email = prompt('Enter your PayPal email for demo login:', 'paypal@example.com');
+    if (email && email.includes('@')) {
         localStorage.setItem('rosebudLoggedIn', 'true');
         localStorage.setItem('rosebudUser', JSON.stringify({
-            email: 'paypal-sandbox@business.example.com',
-            displayName: 'PayPal User',
-            firstName: 'PayPal',
-            lastName: 'Customer',
+            email: email,
+            displayName: email.split('@')[0],
+            firstName: email.split('@')[0],
+            lastName: '',
             avatar: 'images/avatar-placeholder.png',
-            authProvider: 'paypal'
+            provider: 'paypal'
         }));
+        alert('PayPal Sign In Successful!\n\nWelcome, ' + email.split('@')[0]);
         
         // Check if there's a redirect URL (e.g., from checkout)
         const redirectUrl = sessionStorage.getItem('authRedirect') || 'account.html';
         sessionStorage.removeItem('authRedirect');
         window.location.href = redirectUrl;
     }
+}
 }
 
 // PayPal callback handler (would be on paypal-callback.html)

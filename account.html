@@ -14,7 +14,8 @@
         (function() {
             const isLoggedIn = localStorage.getItem('rosebudLoggedIn') === 'true';
             if (!isLoggedIn) {
-                window.location.href = 'signin.html';
+                window.location.replace('signin.html');
+                document.documentElement.style.display = 'none';
             }
         })();
     </script>

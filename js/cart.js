@@ -4,7 +4,7 @@
    ======================================== */
 
 // Build version - increment this to force cart reset on new deployments
-const CART_BUILD_VERSION = '3.2.0';
+const CART_BUILD_VERSION = '3.4.0';
 
 // Cart expiry duration (7 days in milliseconds)
 const CART_EXPIRY_DAYS = 7;
