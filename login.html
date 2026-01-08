@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - RoseBud Global</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .login-container {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Left Side - Image (52% width based on Figma 764/1460) */
+        .login-image {
+            flex: 0 0 52.33%;
+            background: url('images/LoginImage.png') center center;
+            background-size: cover;
+            height: 100vh;
+        }
+
+        /* Right Side - Form */
+        .login-form-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 29px 0 0 0;
+            background: white;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .form-content {
+            width: 422px;
+            margin-left: calc(50% - 211px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .login-logo {
+            width: 116px;
+            height: 39px;
+            object-fit: contain;
+            margin-bottom: 30px;
+        }
+
+        .login-title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 28px;
+            line-height: 34px;
+            letter-spacing: -0.6px;
+            color: #000;
+            margin-bottom: 10px;
+        }
+
+        .login-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            color: #818181;
+            margin-bottom: 22px;
+        }
+
+        .login-form {
+            width: 100%;
+        }
+
+        .form-input {
+            width: 100%;
+            height: 60px;
+            border: 1px solid #D1D1D1;
+            border-radius: 10px;
+            padding: 0 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 13px;
+            background: white;
+        }
+
+        .form-input::placeholder {
+            color: #818181;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #D63585;
+        }
+
+        .form-options {
+            display: flex;
+            align-items: center;
+            margin-bottom: 22px;
+            margin-top: 5px;
+        }
+
+        .keep-logged-in {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .keep-logged-in input[type="checkbox"] {
+            display: none;
+        }
+
+        .checkbox-custom {
+            width: 30px;
+            height: 30px;
+            background: #D63585;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .checkbox-custom svg {
+            width: 18px;
+            height: 14px;
+            fill: none;
+            stroke: white;
+            stroke-width: 2.5;
+        }
+
+        .keep-logged-in input[type="checkbox"]:not(:checked) + .checkbox-custom {
+            background: white;
+            border: 1px solid #D1D1D1;
+        }
+
+        .keep-logged-in input[type="checkbox"]:not(:checked) + .checkbox-custom svg {
+            display: none;
+        }
+
+        .keep-logged-in span:last-child {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: #818181;
+        }
+
+        /* Login Button - Pink with shadow */
+        .login-btn {
+            width: 100%;
+            height: 60px;
+            background: #D63585;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-bottom: 24px;
+            box-shadow: 0px 15px 30px -10px rgba(119, 84, 246, 0.27);
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            color: white;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 18px 35px -10px rgba(119, 84, 246, 0.35);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .forgot-password {
+            display: block;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: #D63585;
+            text-decoration: none;
+            margin-bottom: 12px;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .signup-link {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: #818181;
+            text-align: center;
+            margin-bottom: 18px;
+        }
+
+        .signup-link a {
+            color: #D63585;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 18px;
+            position: relative;
+        }
+
+        .divider-line {
+            flex: 1;
+            height: 1px;
+            background: #818181;
+            opacity: 0.5;
+        }
+
+        .divider-text {
+            padding: 0 15px;
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: #818181;
+            opacity: 0.5;
+            white-space: nowrap;
+        }
+
+        /* Facebook Button */
+        .facebook-btn {
+            width: 100%;
+            height: 60px;
+            background: #1877F2;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-bottom: 14px;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .facebook-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .facebook-btn svg {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .facebook-btn span {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-weight: 700;
+            font-size: 20px;
+            color: white;
+        }
+
+        /* Google Button */
+        .google-btn {
+            width: 100%;
+            height: 60px;
+            background: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-bottom: 18px;
+            box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.08), 0px 2px 3px rgba(0, 0, 0, 0.17);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .google-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15), 0px 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .google-btn svg {
+            width: 24px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .google-btn span {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            font-size: 20px;
+            color: rgba(0, 0, 0, 0.54);
+        }
+
+        /* Social Icons at Bottom */
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            width: 100%;
+            margin-top: auto;
+            padding-bottom: 20px;
+        }
+
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #D63585;
+        }
+
+        .social-icon svg {
+            width: 36px;
+            height: 36px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .login-image {
+                flex: 0 0 45%;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .login-image {
+                display: none;
+            }
+            
+            .login-form-container {
+                align-items: center;
+            }
+
+            .form-content {
+                margin-left: 0;
+                padding: 0 20px;
+                max-width: 422px;
+                width: 100%;
+            }
+        }
+
+        @media (max-height: 900px) {
+            .form-content {
+                transform: scale(0.9);
+                transform-origin: top center;
+            }
+        }
+
+        @media (max-height: 750px) {
+            .form-content {
+                transform: scale(0.8);
+                transform-origin: top center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <!-- Left Side Image -->
+        <div class="login-image"></div>
+
+        <!-- Right Side Form -->
+        <div class="login-form-container">
+            <div class="form-content">
+                <img src="images/Rosebud_Global_Logo.png" alt="RoseBud Global" class="login-logo">
+                
+                <h1 class="login-title">Login</h1>
+                <p class="login-subtitle">Login your account in a seconds</p>
+
+                <form class="login-form" onsubmit="handleLogin(event)">
+                    <input type="email" class="form-input" placeholder="Email Address" id="email" required>
+                    <input type="password" class="form-input" placeholder="Password" id="password" required>
+
+                    <div class="form-options">
+                        <label class="keep-logged-in">
+                            <input type="checkbox" id="keepLoggedIn" checked>
+                            <span class="checkbox-custom">
+                                <svg viewBox="0 0 18 14">
+                                    <path d="M1 7L6.5 12.5L17 1" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span>Keep me logged in</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="login-btn">Log in</button>
+                </form>
+
+                <a href="forgot-password.html" class="forgot-password">Forgot password?</a>
+
+                <p class="signup-link">Don't have an account? <a href="signup.html">Sign up</a></p>
+
+                <div class="divider">
+                    <span class="divider-line"></span>
+                    <span class="divider-text">Or continue with</span>
+                    <span class="divider-line"></span>
+                </div>
+
+                <button type="button" class="facebook-btn" onclick="signInWithFacebook()">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="12" fill="white"/>
+                        <path d="M16.5 12.5H14V20H11V12.5H9V10H11V8C11 6.07 12.57 4.5 14.5 4.5H17V7H15C14.45 7 14 7.45 14 8V10H17L16.5 12.5Z" fill="#1877F2"/>
+                    </svg>
+                    <span>Sign In with Facebook</span>
+                </button>
+
+                <button type="button" class="google-btn" onclick="signInWithGoogle()">
+                    <svg viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    <span>Sign In with Google</span>
+                </button>
+
+                <div class="social-icons">
+                    <a href="https://instagram.com/rosebudglobal" class="social-icon" aria-label="Instagram" target="_blank">
+                        <svg viewBox="0 0 36 36" fill="none">
+                            <rect x="3" y="3" width="30" height="30" rx="4" stroke="#D63585" stroke-width="1.5"/>
+                            <circle cx="18" cy="18" r="7.5" stroke="#D63585" stroke-width="1.5"/>
+                            <circle cx="27" cy="9" r="1.5" fill="#D63585"/>
+                        </svg>
+                    </a>
+                    <a href="https://facebook.com/rosebudglobal" class="social-icon" aria-label="Facebook" target="_blank">
+                        <svg viewBox="0 0 36 36" fill="none">
+                            <path d="M27 4.5H22.5C20.51 4.5 18.6 5.29 17.2 6.7C15.79 8.1 15 10.01 15 12V16.5H10.5V22.5H15V34.5H21V22.5H25.5L27 16.5H21V12C21 11.6 21.16 11.22 21.44 10.94C21.72 10.66 22.1 10.5 22.5 10.5H27V4.5Z" stroke="#D63585" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <a href="https://youtube.com/rosebudglobal" class="social-icon" aria-label="YouTube" target="_blank">
+                        <svg viewBox="0 0 36 36" fill="none">
+                            <rect x="3" y="4.5" width="30" height="27" rx="4" stroke="#D63585" stroke-width="1.5"/>
+                            <path d="M13.5 12L22.5 18L13.5 24V12Z" stroke="#D63585" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const keepLoggedIn = document.getElementById('keepLoggedIn').checked;
+
+            if (email && password) {
+                // Store login state
+                localStorage.setItem('rosebudLoggedIn', 'true');
+                
+                // Store user data
+                const userData = {
+                    email: email,
+                    displayName: email.split('@')[0],
+                    firstName: '',
+                    lastName: '',
+                    avatar: 'images/avatar-placeholder.png'
+                };
+                localStorage.setItem('rosebudUser', JSON.stringify(userData));
+
+                if (keepLoggedIn) {
+                    localStorage.setItem('rosebudRememberEmail', email);
+                }
+
+                // Check if there's a redirect URL (from cart)
+                const urlParams = new URLSearchParams(window.location.search);
+                const redirect = urlParams.get('redirect');
+
+                if (redirect === 'checkout') {
+                    window.location.href = 'checkout.html';
+                } else {
+                    window.location.href = 'account.html';
+                }
+            }
+        }
+
+        function signInWithFacebook() {
+            // Simulate Facebook login
+            localStorage.setItem('rosebudLoggedIn', 'true');
+            localStorage.setItem('rosebudUser', JSON.stringify({
+                email: 'user@facebook.com',
+                displayName: 'Facebook User',
+                avatar: 'images/avatar-placeholder.png'
+            }));
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const redirect = urlParams.get('redirect');
+            window.location.href = redirect === 'checkout' ? 'checkout.html' : 'account.html';
+        }
+
+        function signInWithGoogle() {
+            // Simulate Google login
+            localStorage.setItem('rosebudLoggedIn', 'true');
+            localStorage.setItem('rosebudUser', JSON.stringify({
+                email: 'user@gmail.com',
+                displayName: 'Google User',
+                avatar: 'images/avatar-placeholder.png'
+            }));
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const redirect = urlParams.get('redirect');
+            window.location.href = redirect === 'checkout' ? 'checkout.html' : 'account.html';
+        }
+
+        // Pre-fill email if remembered
+        document.addEventListener('DOMContentLoaded', function() {
+            const rememberedEmail = localStorage.getItem('rosebudRememberEmail');
+            if (rememberedEmail) {
+                document.getElementById('email').value = rememberedEmail;
+            }
+        });
+    </script>
+</body>
+</html>

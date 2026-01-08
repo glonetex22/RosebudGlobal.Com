@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS Admin - RoseBud Global</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <img src="../images/Rosebud_Global_Logo_White.png" alt="RoseBud Global" class="admin-logo">
+                <h2>CMS Admin</h2>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active" onclick="showSection('dashboard')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2"/></svg>
+                    Dashboard
+                </a>
+                <a href="#products" class="nav-item" onclick="showSection('products')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 7L12 3L4 7M20 7L12 11M20 7V17L12 21M12 11L4 7M12 11V21M4 7V17L12 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Products
+                </a>
+                <a href="#images" class="nav-item" onclick="showSection('images')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/><path d="M21 15L16 10L5 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Images
+                </a>
+                <a href="#orders" class="nav-item" onclick="showSection('orders')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15" stroke="currentColor" stroke-width="2"/><rect x="9" y="3" width="6" height="4" rx="1" stroke="currentColor" stroke-width="2"/></svg>
+                    Orders
+                </a>
+                <a href="#content" class="nav-item" onclick="showSection('content')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Content
+                </a>
+                <a href="#settings" class="nav-item" onclick="showSection('settings')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" stroke="currentColor" stroke-width="2"/></svg>
+                    Settings
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="../index.html" class="back-to-site">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Back to Website
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <h1 id="pageTitle">Dashboard</h1>
+                <div class="header-actions">
+                    <span class="admin-user">Admin</span>
+                    <button class="logout-btn" onclick="adminLogout()">Logout</button>
+                </div>
+            </header>
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon products"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M20 7L12 3L4 7M20 7L12 11M20 7V17L12 21M12 11L4 7M12 11V21M4 7V17L12 21" stroke="currentColor" stroke-width="2"/></svg></div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalProducts">0</span>
+                            <span class="stat-label">Total Products</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon orders"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15" stroke="currentColor" stroke-width="2"/><rect x="9" y="3" width="6" height="4" rx="1" stroke="currentColor" stroke-width="2"/></svg></div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalOrders">0</span>
+                            <span class="stat-label">Total Orders</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon images"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/><path d="M21 15L16 10L5 21" stroke="currentColor" stroke-width="2"/></svg></div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalImages">0</span>
+                            <span class="stat-label">Total Images</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon categories"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2"/></svg></div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="totalCategories">12</span>
+                            <span class="stat-label">Categories</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="recent-activity">
+                    <h3>Recent Activity</h3>
+                    <div class="activity-list" id="activityList">
+                        <div class="activity-item">
+                            <span class="activity-icon">📦</span>
+                            <span class="activity-text">New order #RBG-2026-001 received</span>
+                            <span class="activity-time">2 minutes ago</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">🖼️</span>
+                            <span class="activity-text">5 new images uploaded to Handbags</span>
+                            <span class="activity-time">1 hour ago</span>
+                        </div>
+                        <div class="activity-item">
+                            <span class="activity-icon">✏️</span>
+                            <span class="activity-text">Product "Tozai Golden Vase" updated</span>
+                            <span class="activity-time">3 hours ago</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Products Section -->
+            <section id="products" class="content-section">
+                <div class="section-header">
+                    <h2>Product Management</h2>
+                    <button class="primary-btn" onclick="showAddProductModal()">+ Add Product</button>
+                </div>
+                
+                <div class="filter-bar">
+                    <input type="text" id="productSearch" placeholder="Search products..." class="search-input">
+                    <select id="categoryFilter" class="filter-select">
+                        <option value="">All Categories</option>
+                        <option value="fine-china">Fine China & Crystal</option>
+                        <option value="handbags">Handbags & Accessories</option>
+                        <option value="home-decor">Home Decor & Accessories</option>
+                        <option value="custom-gifts">Custom Gift Items</option>
+                        <option value="specialty">Specialty Items</option>
+                    </select>
+                </div>
+
+                <div class="products-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>SKU</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTableBody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Images Section -->
+            <section id="images" class="content-section">
+                <div class="section-header">
+                    <h2>Image Management</h2>
+                    <div class="header-buttons">
+                        <button class="secondary-btn" onclick="showBulkUploadModal()">Bulk Upload</button>
+                        <button class="primary-btn" onclick="showUploadModal()">+ Upload Image</button>
+                    </div>
+                </div>
+
+                <div class="upload-zone" id="dropZone" ondrop="handleDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)">
+                    <div class="upload-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none"><path d="M21 15V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M17 8L12 3L7 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                    <p>Drag & drop images here or <label for="fileInput" class="upload-link">browse</label></p>
+                    <input type="file" id="fileInput" multiple accept="image/*" onchange="handleFileSelect(event)" style="display: none;">
+                    <span class="upload-hint">Supports: JPG, PNG, WebP, AVIF (Max 10MB each)</span>
+                </div>
+
+                <div class="image-association">
+                    <h3>Associate Images with Products</h3>
+                    <div class="association-controls">
+                        <select id="productForImage" class="filter-select">
+                            <option value="">Select Product</option>
+                        </select>
+                        <select id="imageType" class="filter-select">
+                            <option value="main">Main Image</option>
+                            <option value="gallery">Gallery Image</option>
+                            <option value="thumbnail">Thumbnail</option>
+                        </select>
+                        <button class="primary-btn" onclick="associateSelectedImages()">Associate</button>
+                    </div>
+                </div>
+
+                <div class="images-grid" id="imagesGrid">
+                    <!-- Populated dynamically -->
+                </div>
+            </section>
+
+            <!-- Orders Section -->
+            <section id="orders" class="content-section">
+                <div class="section-header">
+                    <h2>Order Fulfillment</h2>
+                    <div class="order-stats">
+                        <span class="order-stat pending">Pending: <strong id="pendingOrders">0</strong></span>
+                        <span class="order-stat processing">Processing: <strong id="processingOrders">0</strong></span>
+                        <span class="order-stat shipped">Shipped: <strong id="shippedOrders">0</strong></span>
+                    </div>
+                </div>
+
+                <div class="orders-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ordersTableBody">
+                            <tr>
+                                <td>#RBG-2026-001</td>
+                                <td>John Doe</td>
+                                <td>3 items</td>
+                                <td>$450.00</td>
+                                <td>Jan 7, 2026</td>
+                                <td><span class="status-badge pending">Pending</span></td>
+                                <td>
+                                    <button class="action-btn" onclick="viewOrder('RBG-2026-001')">View</button>
+                                    <button class="action-btn primary" onclick="updateOrderStatus('RBG-2026-001', 'processing')">Process</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Content Section -->
+            <section id="content" class="content-section">
+                <div class="section-header">
+                    <h2>Website Content</h2>
+                </div>
+
+                <div class="content-tabs">
+                    <button class="content-tab active" onclick="showContentTab('homepage')">Homepage</button>
+                    <button class="content-tab" onclick="showContentTab('social')">Social Media</button>
+                    <button class="content-tab" onclick="showContentTab('banners')">Banners</button>
+                </div>
+
+                <div class="content-editor" id="homepageContent">
+                    <div class="editor-group">
+                        <label>Hero Headline</label>
+                        <input type="text" id="heroHeadline" value="We believe in sustainable decor.">
+                    </div>
+                    <div class="editor-group">
+                        <label>Hero Subheadline</label>
+                        <textarea id="heroSubheadline" rows="3">Our features timeless furniture, with natural fabrics, curved lines, plenty of mirrors and classic design.</textarea>
+                    </div>
+                    <button class="primary-btn" onclick="saveHomepageContent()">Save Changes</button>
+                </div>
+
+                <div class="content-editor" id="socialContent" style="display: none;">
+                    <h3>Social Media Links</h3>
+                    <div class="editor-group">
+                        <label>Instagram URL</label>
+                        <input type="url" id="instagramUrl" placeholder="https://instagram.com/rosebudglobal">
+                    </div>
+                    <div class="editor-group">
+                        <label>Facebook URL</label>
+                        <input type="url" id="facebookUrl" placeholder="https://facebook.com/rosebudglobal">
+                    </div>
+                    <div class="editor-group">
+                        <label>YouTube URL</label>
+                        <input type="url" id="youtubeUrl" placeholder="https://youtube.com/rosebudglobal">
+                    </div>
+                    <button class="primary-btn" onclick="saveSocialLinks()">Save Links</button>
+                </div>
+
+                <div class="content-editor" id="bannersContent" style="display: none;">
+                    <h3>Promotional Banners</h3>
+                    <div class="banner-list">
+                        <div class="banner-item">
+                            <span>Notification Bar</span>
+                            <input type="text" id="notificationText" value="30% off on selected items">
+                            <button class="action-btn" onclick="updateBanner('notification')">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="content-section">
+                <div class="section-header">
+                    <h2>Settings</h2>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3>Store Information</h3>
+                        <div class="editor-group">
+                            <label>Store Name</label>
+                            <input type="text" value="RoseBud Global">
+                        </div>
+                        <div class="editor-group">
+                            <label>Contact Email</label>
+                            <input type="email" value="contact@rosebudglobal.com">
+                        </div>
+                        <div class="editor-group">
+                            <label>Phone Number</label>
+                            <input type="tel" value="+1 (888) 555-0123">
+                        </div>
+                        <button class="primary-btn">Save Store Info</button>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3>Payment Settings</h3>
+                        <div class="toggle-group">
+                            <label>PayPal</label>
+                            <input type="checkbox" checked>
+                        </div>
+                        <div class="toggle-group">
+                            <label>Stripe</label>
+                            <input type="checkbox" checked>
+                        </div>
+                        <div class="toggle-group">
+                            <label>Credit/Debit Cards</label>
+                            <input type="checkbox" checked>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
+    
+    <!-- Upload Modal -->
+    <div class="modal" id="uploadModal">
+        <div class="modal-header">
+            <h3>Upload Images</h3>
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Category</label>
+                <select id="uploadCategory">
+                    <option value="fine-china">Fine China & Crystal</option>
+                    <option value="handbags">Handbags & Accessories</option>
+                    <option value="home-decor">Home Decor & Accessories</option>
+                    <option value="custom-gifts">Custom Gift Items</option>
+                    <option value="specialty">Specialty Items</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Select Images</label>
+                <input type="file" id="modalFileInput" multiple accept="image/*">
+            </div>
+            <div class="upload-preview" id="uploadPreview"></div>
+        </div>
+        <div class="modal-footer">
+            <button class="secondary-btn" onclick="closeModal()">Cancel</button>
+            <button class="primary-btn" onclick="uploadImages()">Upload</button>
+        </div>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div class="modal" id="addProductModal">
+        <div class="modal-header">
+            <h3>Add New Product</h3>
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Product Name *</label>
+                    <input type="text" id="productName" required>
+                </div>
+                <div class="form-group">
+                    <label>SKU *</label>
+                    <input type="text" id="productSku" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="productCategory">
+                        <option value="Fine China & Crystal">Fine China & Crystal</option>
+                        <option value="Handbags & Accessories">Handbags & Accessories</option>
+                        <option value="Home Decor & Accessories">Home Decor & Accessories</option>
+                        <option value="Custom Gift Items">Custom Gift Items</option>
+                        <option value="Specialty Items">Specialty Items</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="number" id="productPrice" step="0.01" placeholder="0.00">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea id="productDescription" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Main Image</label>
+                <input type="file" id="productImage" accept="image/*">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="secondary-btn" onclick="closeModal()">Cancel</button>
+            <button class="primary-btn" onclick="saveProduct()">Save Product</button>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

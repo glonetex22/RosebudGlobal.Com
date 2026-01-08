@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoseBud Global - Premium Gifts &amp; Home Essentials</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Notification Bar -->
+    <div class="notification-bar">
+        <div class="notification-content">
+            <svg class="notification-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="#343839" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="notification-text">30% off storewide — Limited time!</span>
+            <a href="#shop" class="notification-link">
+                Shop Now
+                <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                    <path d="M4.16667 10H15.8333" stroke="#377DFF" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M10.8333 5L15.8333 10L10.8333 15" stroke="#377DFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+        </div>
+        <button class="notification-close" aria-label="Close notification">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M15 5L5 15M5 5L15 15" stroke="#343839" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="logo">
+                <img src="images/Rosebud_Global_Logo.png" alt="RoseBud Global" class="logo-img logo-default">
+                <img src="images/Rosebud_Global_Logo_White.png" alt="RoseBud Global" class="logo-img logo-scrolled">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="shop.html" class="nav-link">Shop</a></li>
+                <li><a href="supply-services.html" class="nav-link">Supply Services</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <div class="search-container">
+                    <button class="icon-btn search-btn" aria-label="Search" onclick="toggleSearch()">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M20 20L16 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <div class="search-dropdown" id="searchDropdown">
+                        <input type="text" class="search-input" id="searchInput" placeholder="Search by name, model, or manufacturer..." autocomplete="off">
+                        <div class="search-results" id="searchResults"></div>
+                    </div>
+                </div>
+                <a href="javascript:void(0)" class="icon-btn" aria-label="Account" onclick="goToAccount()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M5 20C5 16.6863 7.68629 14 11 14H13C16.3137 14 19 16.6863 19 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </a>
+                <button class="icon-btn cart-btn" aria-label="Cart" onclick="toggleCart()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M6 6H21L19 16H8L6 6Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                        <path d="M6 6L5 3H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="10" cy="20" r="1" fill="currentColor"/>
+                        <circle cx="17" cy="20" r="1" fill="currentColor"/>
+                    </svg>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Menu" onclick="toggleMobileMenu()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M3 6H21M3 12H21M3 18H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div class="login-modal" id="loginModal">
+        <div class="login-container">
+            <button class="close-modal" onclick="closeLogin()">&times;</button>
+            <h2>Welcome Back</h2>
+            <p class="login-subtitle">Sign in to your account</p>
+            <form class="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox"> Remember me
+                    </label>
+                    <a href="#" class="forgot-link">Forgot password?</a>
+                </div>
+                <button type="submit" class="login-btn">Sign In</button>
+            </form>
+            <p class="signup-text">Don't have an account? <a href="#" onclick="showSignup()">Create one</a></p>
+        </div>
+    </div>
+    <div class="modal-overlay" id="loginOverlay" onclick="closeLogin()"></div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p class="empty-cart">Your cart is empty</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <button class="checkout-btn" onclick="handleCheckout()">Checkout</button>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+    <!-- Hero Slider Section -->
+    <section class="hero-section">
+        <div class="hero-slider">
+            <div class="hero-slide active" data-slide="0">
+                <div class="hero-slide-bg hero-slide-bg-1"></div>
+                <div class="hero-slide-content">
+                    <div class="hero-image-wrapper">
+                        <img src="images/hero/Noritake.webp" alt="Noritake Fine China" class="hero-product-image">
+                    </div>
+                    <div class="hero-text-content">
+                        <span class="hero-label">Premium Collection</span>
+                        <h1 class="hero-title">Exquisite Fine China</h1>
+                        <p class="hero-subtitle">Elevate every dining experience with our curated collection of elegant dinnerware from world-renowned brands</p>
+                        <a href="shop.html?category=household" class="hero-cta">Explore Collection
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4.16667 10H15.8333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M10.8333 5L15.8333 10L10.8333 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-slide" data-slide="1">
+                <div class="hero-slide-bg hero-slide-bg-2"></div>
+                <div class="hero-slide-content">
+                    <div class="hero-image-wrapper">
+                        <img src="images/hero/Tozai_Home.png" alt="Tozai Home Décor" class="hero-product-image">
+                    </div>
+                    <div class="hero-text-content">
+                        <span class="hero-label">Artisan Crafted</span>
+                        <h1 class="hero-title">Stunning Home Décor</h1>
+                        <p class="hero-subtitle">Transform your living spaces with unique decorative pieces that blend artistry with functionality</p>
+                        <a href="shop.html?category=home-decor" class="hero-cta">Shop Home Décor
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4.16667 10H15.8333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M10.8333 5L15.8333 10L10.8333 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-slide" data-slide="2">
+                <div class="hero-slide-bg hero-slide-bg-3"></div>
+                <div class="hero-slide-content">
+                    <div class="hero-image-wrapper">
+                        <img src="images/hero/Mont_Blanc.png" alt="Luxury Gift Items" class="hero-product-image">
+                    </div>
+                    <div class="hero-text-content">
+                        <span class="hero-label">Luxury Gifts</span>
+                        <h1 class="hero-title">Distinctive Gift Items</h1>
+                        <p class="hero-subtitle">Discover exceptional gifts for every occasion — from timeless classics to modern treasures</p>
+                        <a href="shop.html?category=specialty" class="hero-cta">Find Perfect Gifts
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4.16667 10H15.8333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M10.8333 5L15.8333 10L10.8333 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-navigation">
+            <button class="slider-btn prev" aria-label="Previous slide">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="slider-btn next" aria-label="Next slide">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+        </div>
+        <div class="slider-dots">
+            <span class="dot active" data-slide="0"></span>
+            <span class="dot" data-slide="1"></span>
+            <span class="dot" data-slide="2"></span>
+        </div>
+    </section>
+
+    <!-- Hero Content Section -->
+    <section class="hero-content-section">
+        <div class="container">
+            <div class="hero-content-grid">
+                <div class="hero-headline">
+                    <h1>Simply Unique<span class="text-dark">/</span><br><span class="text-primary">Simply Better</span><span class="text-dark">.</span></h1>
+                </div>
+                <div class="hero-description">
+                    <p><span class="text-highlight">RoseBud Global</span> is a New Jersey based company with operations in the USA and West Africa. <span>- Established in 2010</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Carousel - Clean with only logo images, 40px spacing -->
+    <section class="brand-carousel-section">
+        <div class="brand-carousel-track" id="brandCarousel">
+            <!-- Logos loaded dynamically via JS -->
+        </div>
+    </section>
+
+    <!-- Banner Grid -->
+    <section class="banner-grid-section" id="shop">
+        <div class="container">
+            <div class="shop-header">
+                <h1 class="shop-title">Shop Our Collections</h1>
+                <p class="shop-subtitle">Discover premium fine china, crystal, home décor, and unique gift items from world-renowned brands</p>
+            </div>
+            <div class="banner-grid">
+                <div class="banner-card banner-large">
+                    <div class="banner-content-top">
+                        <h3 class="banner-title">Fine China &amp; Crystal</h3>
+                        <a href="shop.html?category=fine-china" class="btn-link">Shop Now <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4.16667 10H15.8333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M10.8333 5L15.8333 10L10.8333 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    </div>
+                    <div class="banner-image-wrapper">
+                        <img src="images/categories/Fine_China___Crystal.webp" alt="Fine China & Crystal" class="banner-img">
+                    </div>
+                </div>
+                <div class="banner-small-wrapper">
+                    <div class="banner-card banner-small">
+                        <div class="banner-content-top">
+                            <h3 class="banner-title">Custom Gift Items</h3>
+                            <a href="shop.html?category=corporate-gifts" class="btn-link">Shop Now <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4.16667 10H15.8333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M10.8333 5L15.8333 10L10.8333 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                        </div>
+                        <div class="banner-image-wrapper banner-collage">
+                            <div class="collage-grid collage-two">
+                                <img src="images/custom-gifts/Custom Charge bank.png" alt="Custom Charge Bank" class="collage-img">
+                                <img src="images/custom-gifts/Custom Wireless Earplugs.png" alt="Custom Wireless Earplugs" class="collage-img">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="banner-card banner-small">
+                        <div class="banner-content-top">
+                            <h3 class="banner-title">Specialty Items</h3>
+                            <a href="shop.html?category=specialty" class="btn-link">Shop Now <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4.16667 10H15.8333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M10.8333 5L15.8333 10L10.8333 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                        </div>
+                        <div class="banner-image-wrapper">
+                            <img src="images/categories/Specialty_Items.png" alt="Specialty Items" class="banner-img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Items Section -->
+    <section class="products-section" id="products">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-title"><h2>New<br>Items</h2></div>
+                <a href="#" class="btn-link">More Products <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4.16667 10H15.8333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M10.8333 5L15.8333 10L10.8333 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+            <div class="products-carousel" id="productsCarousel">
+                <div class="product-card" data-price="0" data-name="Custom 100% Cotton Dyed Terry Hand Towels" data-sku="RBG-C2600" data-manufacturer="RoseBud Global">
+                    <div class="product-image-wrapper">
+                        <img src="images/new-items/New Items - Custom Towels.png" alt="Custom Towels" class="product-img">
+                        <div class="product-badges"><span class="badge badge-new-green">NEW</span></div>
+                        <button class="wishlist-btn" aria-label="Add to wishlist"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 17.5L9.08333 16.6667C4.58333 12.5833 1.66667 9.95833 1.66667 6.79167C1.66667 4.16667 3.75 2.08333 6.375 2.08333C7.86667 2.08333 9.3 2.79167 10 3.89167C10.7 2.79167 12.1333 2.08333 13.625 2.08333C16.25 2.08333 18.3333 4.16667 18.3333 6.79167C18.3333 9.95833 15.4167 12.5833 10.9167 16.6667L10 17.5Z" stroke="currentColor" stroke-width="1.5"/></svg></button>
+                        <button class="add-to-cart-btn" onclick="addToCart('Custom 100% Cotton Dyed Terry Hand Towels', 0, 'RBG-C2600')">Contact For Pricing</button>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-rating"><span class="stars">★★★★★</span></div>
+                        <h3 class="product-name">Custom 100% Cotton Dyed Terry Hand Towels</h3>
+                        <div class="product-price"><span class="current-price product-sku">RBG-C2600</span><span class="contact-price">Wholesale</span></div>
+                    </div>
+                </div>
+                <div class="product-card" data-price="0" data-name="Special Shaped Plate Series Ceramic Plate" data-sku="RBG-P31005" data-manufacturer="OH OHERE">
+                    <div class="product-image-wrapper product-img-white-bg">
+                        <img src="images/new-items/plate-cleaned.png" alt="Ceramic Plate" class="product-img">
+                        <div class="product-badges"><span class="badge badge-new-green">NEW</span></div>
+                        <button class="wishlist-btn" aria-label="Add to wishlist"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 17.5L9.08333 16.6667C4.58333 12.5833 1.66667 9.95833 1.66667 6.79167C1.66667 4.16667 3.75 2.08333 6.375 2.08333C7.86667 2.08333 9.3 2.79167 10 3.89167C10.7 2.79167 12.1333 2.08333 13.625 2.08333C16.25 2.08333 18.3333 4.16667 18.3333 6.79167C18.3333 9.95833 15.4167 12.5833 10.9167 16.6667L10 17.5Z" stroke="currentColor" stroke-width="1.5"/></svg></button>
+                        <button class="add-to-cart-btn" onclick="addToCart('Special Shaped Plate Series Ceramic Plate', 0, 'RBG-P31005')">Contact For Pricing</button>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-rating"><span class="stars">★★★★★</span></div>
+                        <h3 class="product-name">Special Shaped Plate Series Latest Design Ceramic Plate</h3>
+                        <div class="product-price"><span class="current-price product-sku">RBG-P31005</span><span class="contact-price">Wholesale</span></div>
+                    </div>
+                </div>
+                <div class="product-card" data-price="0" data-name="Custom Exotic Material Loveseat" data-sku="RBG-F29055" data-manufacturer="RoseBud Global">
+                    <div class="product-image-wrapper">
+                        <img src="images/new-items/New Item - Exotic Loveseat.png" alt="Exotic Loveseat" class="product-img">
+                        <div class="product-badges"><span class="badge badge-new-green">NEW</span></div>
+                        <button class="wishlist-btn" aria-label="Add to wishlist"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 17.5L9.08333 16.6667C4.58333 12.5833 1.66667 9.95833 1.66667 6.79167C1.66667 4.16667 3.75 2.08333 6.375 2.08333C7.86667 2.08333 9.3 2.79167 10 3.89167C10.7 2.79167 12.1333 2.08333 13.625 2.08333C16.25 2.08333 18.3333 4.16667 18.3333 6.79167C18.3333 9.95833 15.4167 12.5833 10.9167 16.6667L10 17.5Z" stroke="currentColor" stroke-width="1.5"/></svg></button>
+                        <button class="add-to-cart-btn" onclick="addToCart('Custom Exotic Material Loveseat', 0, 'RBG-F29055')">Contact For Pricing</button>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-rating"><span class="stars">★★★★★</span></div>
+                        <h3 class="product-name">Custom Exotic Material Loveseat</h3>
+                        <div class="product-price"><span class="current-price product-sku">RBG-F29055</span><span class="contact-price">Wholesale</span></div>
+                    </div>
+                </div>
+                <div class="product-card" data-price="300" data-name="Olivia Riegel Priscilla Picture Frame" data-sku="RT1189" data-manufacturer="Olivia Riegel">
+                    <div class="product-image-wrapper">
+                        <img src="images/new-items/New Item - Frame.webp" alt="Picture Frame" class="product-img">
+                        <div class="product-badges"><span class="badge badge-new-green">NEW</span></div>
+                        <button class="wishlist-btn" aria-label="Add to wishlist"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 17.5L9.08333 16.6667C4.58333 12.5833 1.66667 9.95833 1.66667 6.79167C1.66667 4.16667 3.75 2.08333 6.375 2.08333C7.86667 2.08333 9.3 2.79167 10 3.89167C10.7 2.79167 12.1333 2.08333 13.625 2.08333C16.25 2.08333 18.3333 4.16667 18.3333 6.79167C18.3333 9.95833 15.4167 12.5833 10.9167 16.6667L10 17.5Z" stroke="currentColor" stroke-width="1.5"/></svg></button>
+                        <button class="add-to-cart-btn" onclick="addToCart('Olivia Riegel Priscilla Picture Frame', 300, 'RT1189')">Add to cart</button>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-rating"><span class="stars">★★★★★</span></div>
+                        <h3 class="product-name">Olivia Riegel Priscilla Picture Frame</h3>
+                        <div class="product-price"><span class="current-price product-sku">RT1189</span><span class="current-price">$300.00</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-progress">
+                <div class="progress-bar" id="progressBar" style="width: 25%;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values-section">
+        <div class="container">
+            <div class="values-grid">
+                <div class="value-card">
+                    <svg class="value-icon" viewBox="0 0 48 48" fill="none">
+                        <path d="M24 44C35.046 44 44 35.046 44 24C44 12.954 35.046 4 24 4C12.954 4 4 12.954 4 24C4 35.046 12.954 44 24 44Z" stroke="#D63585" stroke-width="2.5"/>
+                        <path d="M4 24H44" stroke="#D63585" stroke-width="2.5"/>
+                        <path d="M24 4C28.4183 8.41828 31 15.9127 31 24C31 32.0873 28.4183 39.5817 24 44C19.5817 39.5817 17 32.0873 17 24C17 15.9127 19.5817 8.41828 24 4Z" stroke="#D63585" stroke-width="2.5"/>
+                    </svg>
+                    <h3 class="value-title">Free Shipping</h3>
+                    <p class="value-description">Order above $200</p>
+                </div>
+                <div class="value-card">
+                    <svg class="value-icon" viewBox="0 0 48 48" fill="none">
+                        <circle cx="24" cy="24" r="20" stroke="#D63585" stroke-width="2.5"/>
+                        <path d="M24 14V24L30 30" stroke="#D63585" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                    <h3 class="value-title">Money-back</h3>
+                    <p class="value-description">30 days guarantee</p>
+                </div>
+                <div class="value-card">
+                    <svg class="value-icon" viewBox="0 0 48 48" fill="none">
+                        <rect x="4" y="12" width="40" height="28" rx="4" stroke="#D63585" stroke-width="2.5"/>
+                        <path d="M4 20H44" stroke="#D63585" stroke-width="2.5"/>
+                        <circle cx="14" cy="30" r="3" stroke="#D63585" stroke-width="2.5"/>
+                    </svg>
+                    <h3 class="value-title">Secure Payments</h3>
+                    <p class="value-description">Secured by Stripe</p>
+                </div>
+                <div class="value-card">
+                    <svg class="value-icon" viewBox="0 0 48 48" fill="none">
+                        <path d="M44 34V14C44 11.7909 42.2091 10 40 10H8C5.79086 10 4 11.7909 4 14V34C4 36.2091 5.79086 38 8 38H40C42.2091 38 44 36.2091 44 34Z" stroke="#D63585" stroke-width="2.5"/>
+                        <path d="M24 28C27.3137 28 30 25.3137 30 22C30 18.6863 27.3137 16 24 16C20.6863 16 18 18.6863 18 22C18 25.3137 20.6863 28 24 28Z" stroke="#D63585" stroke-width="2.5"/>
+                    </svg>
+                    <h3 class="value-title">24/7 Support</h3>
+                    <p class="value-description">Phone and Email support</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sale Banner -->
+    <section class="sale-banner-section">
+        <div class="sale-banner">
+            <div class="sale-banner-image">
+                <img src="images/Twos_Company.png" alt="Two's Company" class="sale-img">
+            </div>
+            <div class="sale-banner-content">
+                <span class="sale-label">SALE UP TO 35% OFF</span>
+                <h2 class="sale-title">HUNDREDS of<br>New lower prices!</h2>
+                <p class="sale-description">It's more affordable than ever to give every room in your home a stylish makeover</p>
+                <a href="#shop" class="btn-link">Shop Now <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4.16667 10H15.8333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M10.8333 5L15.8333 10L10.8333 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title-text">Articles</h2>
+                <a href="#" class="btn-link">More Articles <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4.16667 10H15.8333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M10.8333 5L15.8333 10L10.8333 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <div class="blog-image-wrapper"><img src="images/blog/How_to_Care_for_Fine_Bone_China.png" alt="How to Care for Fine Bone China" class="blog-img"></div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">How to Care for Fine Bone China</h3>
+                        <a href="#" class="btn-link">Read More <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4.16667 10H15.8333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M10.8333 5L15.8333 10L10.8333 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    </div>
+                </article>
+                <article class="blog-card">
+                    <div class="blog-image-wrapper"><img src="images/blog/Corporate_Gift_Suggestions_for_all_Seasons.png" alt="Corporate Gift Suggestions" class="blog-img"></div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">Corporate Gift Suggestions for all Seasons</h3>
+                        <a href="#" class="btn-link">Read More <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4.16667 10H15.8333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M10.8333 5L15.8333 10L10.8333 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    </div>
+                </article>
+                <article class="blog-card">
+                    <div class="blog-image-wrapper"><img src="images/blog/Coordinating_Tableware_with_Different_Patterns.png" alt="Coordinating Tableware" class="blog-img"></div>
+                    <div class="blog-content">
+                        <h3 class="blog-title">Coordinating Tableware with Different Patterns</h3>
+                        <a href="#" class="btn-link">Read More <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4.16667 10H15.8333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M10.8333 5L15.8333 10L10.8333 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section" id="newsletterSection">
+        <div class="newsletter-bg">
+            <img src="images/Newsletter_Card.png" alt="" class="newsletter-bg-image" id="newsletterBgImage">
+        </div>
+        <div class="newsletter-card-container">
+            <div class="newsletter-card" id="newsletterCard">
+                <div class="newsletter-header">
+                    <h2 class="newsletter-title" id="newsletterTitle">Join Our Newsletter</h2>
+                    <p class="newsletter-description" id="newsletterDescription">Sign up for deals, new products and promotions</p>
+                </div>
+                <div class="newsletter-form-wrapper">
+                    <form class="newsletter-form" id="newsletterForm" onsubmit="handleNewsletter(event)">
+                        <div class="newsletter-input-row">
+                            <div class="newsletter-icon-input">
+                                <svg class="newsletter-email-icon" id="newsletterEmailIcon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M2.88 5.88L12 12L21.12 5.88C20.74 4.8 19.71 4 18.5 4H5.5C4.29 4 3.26 4.8 2.88 5.88Z" fill="#D63585"/>
+                                    <path d="M21.33 7.69L12 14L2.67 7.69C2.56 8.1 2.5 8.54 2.5 9V17C2.5 18.66 3.84 20 5.5 20H18.5C20.16 20 21.5 18.66 21.5 17V9C21.5 8.54 21.44 8.1 21.33 7.69Z" fill="#D63585"/>
+                                </svg>
+                                <input type="email" class="newsletter-input" id="newsletterEmail" placeholder="Email address" required>
+                            </div>
+                            <button type="submit" class="newsletter-submit-btn" id="newsletterSubmitBtn">Signup</button>
+                        </div>
+                        <div class="newsletter-underline"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer - Restored Original State -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <img src="images/Rosebud_Global_Logo_White.png" alt="RoseBud Global" class="footer-logo">
+                    <span class="footer-divider"></span>
+                    <p class="footer-tagline">Premium Gifts &amp; Home Essentials</p>
+                </div>
+                <nav class="footer-nav">
+                    <a href="index.html" class="footer-link">Home</a>
+                    <a href="shop.html" class="footer-link">Shop</a>
+                    <a href="supply-services.html" class="footer-link">Supply Services</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-legal">
+                    <p class="copyright">Copyright © 2026 Rosebud Global LLC. All rights reserved</p>
+                    <a href="privacy.html" class="legal-link">Privacy Policy</a>
+                    <a href="termsofservice.html" class="legal-link">Terms of Use</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#" class="social-link" aria-label="Instagram"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/><circle cx="18" cy="6" r="1.5" fill="currentColor"/></svg></a>
+                    <a href="#" class="social-link" aria-label="Facebook"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M18 2H15C13.6739 2 12.4021 2.52678 11.4645 3.46447C10.5268 4.40215 10 5.67392 10 7V10H7V14H10V22H14V14H17L18 10H14V7C14 6.73478 14.1054 6.48043 14.2929 6.29289C14.4804 6.10536 14.7348 6 15 6H18V2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                    <a href="#" class="social-link" aria-label="YouTube"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="4" stroke="currentColor" stroke-width="1.5"/><path d="M10 9L15 12L10 15V9Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Live Chat Widget -->
+    <div class="chat-widget" id="chatWidget">
+        <button class="chat-toggle" onclick="toggleChat()">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+                <path d="M21 11.5C21.0034 12.8199 20.6951 14.1219 20.1 15.3C19.3944 16.7118 18.3098 17.8992 16.9674 18.7293C15.6251 19.5594 14.0782 19.9994 12.5 20C11.1801 20.0035 9.87812 19.6951 8.7 19.1L3 21L4.9 15.3C4.30493 14.1219 3.99656 12.8199 4 11.5C4.00061 9.92179 4.44061 8.37488 5.27072 7.03258C6.10083 5.69028 7.28825 4.6056 8.7 3.90003C9.87812 3.30496 11.1801 2.99659 12.5 3.00003H13C15.0843 3.11502 17.053 3.99479 18.5291 5.47089C20.0052 6.94699 20.885 8.91568 21 11V11.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="chat-status" id="chatStatus"></span>
+        </button>
+        <div class="chat-box" id="chatBox">
+            <div class="chat-header">
+                <div class="chat-header-info">
+                    <span class="chat-title">Live Support</span>
+                    <span class="chat-availability" id="chatAvailability"></span>
+                </div>
+                <button class="chat-close" onclick="toggleChat()">&times;</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-message bot">
+                    <p>Welcome to RoseBud Global! How can we help you today?</p>
+                </div>
+            </div>
+            <form class="chat-input-form" onsubmit="sendChatMessage(event)">
+                <input type="text" id="chatInput" placeholder="Type your message..." autocomplete="off">
+                <button type="submit">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+</body>
+</html>

@@ -1,0 +1,515 @@
+/* ========================================
+   AUTHENTICATION PAGES - CSS
+   ======================================== */
+
+/* Auth Page Layout */
+.auth-page {
+    min-height: 100vh;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 456px;
+    background: white;
+    padding: 40px;
+}
+
+.auth-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 44px;
+    letter-spacing: -1px;
+    color: #141718;
+    margin: 0 0 8px;
+}
+
+.auth-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    line-height: 26px;
+    color: #6C7275;
+    margin: 0 0 32px;
+}
+
+.auth-subtitle a {
+    color: #38CB89;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-subtitle a:hover {
+    text-decoration: underline;
+}
+
+/* Auth Form */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.auth-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.auth-form label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 12px;
+    color: #6C7275;
+    text-transform: uppercase;
+}
+
+.auth-form input {
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+    border: none;
+    border-bottom: 1px solid #E8ECEF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    line-height: 26px;
+    color: #141718;
+    background: transparent;
+}
+
+.auth-form input::placeholder {
+    color: #6C7275;
+}
+
+.auth-form input:focus {
+    outline: none;
+    border-bottom-color: #141718;
+}
+
+.password-input-wrapper {
+    position: relative;
+}
+
+.password-input-wrapper input {
+    padding-right: 48px;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6C7275;
+    padding: 8px;
+}
+
+.password-toggle:hover {
+    color: #141718;
+}
+
+/* Remember Me & Forgot Password */
+.auth-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.remember-me input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #141718;
+}
+
+.remember-me label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    line-height: 22px;
+    color: #141718;
+    text-transform: none;
+    font-weight: 400;
+}
+
+.forgot-password {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 22px;
+    color: #141718;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+/* Auth Buttons */
+.auth-btn {
+    width: 100%;
+    height: 52px;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 28px;
+    letter-spacing: -0.4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.auth-btn.primary {
+    background: #141718;
+    color: white;
+}
+
+.auth-btn.primary:hover {
+    background: #2a2d2e;
+}
+
+.auth-btn.secondary {
+    background: white;
+    border: 1px solid #141718;
+    color: #141718;
+}
+
+.auth-btn.secondary:hover {
+    background: #F3F5F7;
+}
+
+/* Social Auth */
+.social-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 32px 0;
+}
+
+.social-divider span {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    line-height: 22px;
+    color: #6C7275;
+    white-space: nowrap;
+}
+
+.social-divider::before,
+.social-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #E8ECEF;
+}
+
+.social-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    height: 52px;
+    border: 1px solid #141718;
+    border-radius: 8px;
+    background: white;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 28px;
+    color: #141718;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+    background: #F3F5F7;
+}
+
+.social-btn img,
+.social-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Password Reset Flow */
+.reset-method-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 32px;
+    border-bottom: 1px solid #E8ECEF;
+}
+
+.reset-tab {
+    flex: 1;
+    padding: 16px;
+    background: none;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 22px;
+    color: #6C7275;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.3s ease;
+}
+
+.reset-tab:hover {
+    color: #141718;
+}
+
+.reset-tab.active {
+    color: #141718;
+    border-bottom-color: #141718;
+}
+
+.reset-method-content {
+    display: none;
+}
+
+.reset-method-content.active {
+    display: block;
+}
+
+/* OTP Input */
+.otp-section {
+    margin-top: 24px;
+}
+
+.otp-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    line-height: 22px;
+    color: #6C7275;
+    margin-bottom: 16px;
+}
+
+.otp-inputs {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.otp-input {
+    width: 56px;
+    height: 56px;
+    border: 1px solid #E8ECEF;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    color: #141718;
+}
+
+.otp-input:focus {
+    outline: none;
+    border-color: #141718;
+}
+
+.otp-input.filled {
+    border-color: #38CB89;
+    background: #F0FDF4;
+}
+
+.resend-otp {
+    text-align: center;
+}
+
+.resend-otp span {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    line-height: 22px;
+    color: #6C7275;
+}
+
+.resend-btn {
+    background: none;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 22px;
+    color: #141718;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.resend-btn:disabled {
+    color: #6C7275;
+    cursor: not-allowed;
+    text-decoration: none;
+}
+
+/* Password Requirements */
+.password-requirements {
+    margin-top: 16px;
+}
+
+.password-requirements h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 20px;
+    color: #141718;
+    margin: 0 0 12px;
+    text-transform: uppercase;
+}
+
+.requirement {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+}
+
+.requirement-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #E8ECEF;
+    color: #6C7275;
+    font-size: 12px;
+}
+
+.requirement.met .requirement-icon {
+    background: #38CB89;
+    color: white;
+}
+
+.requirement-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    line-height: 22px;
+    color: #6C7275;
+}
+
+.requirement.met .requirement-text {
+    color: #141718;
+}
+
+/* Success Message */
+.auth-success {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.auth-success-icon {
+    width: 80px;
+    height: 80px;
+    background: #38CB89;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+}
+
+.auth-success-icon svg {
+    width: 40px;
+    height: 40px;
+    color: white;
+}
+
+.auth-success h2 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 34px;
+    color: #141718;
+    margin: 0 0 8px;
+}
+
+.auth-success p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    line-height: 26px;
+    color: #6C7275;
+    margin: 0 0 32px;
+}
+
+/* Back Link */
+.back-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    line-height: 22px;
+    color: #141718;
+    text-decoration: none;
+    margin-bottom: 32px;
+}
+
+.back-link:hover {
+    color: #6C7275;
+}
+
+.back-link svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Error States */
+.form-error {
+    color: #D63585;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    line-height: 20px;
+    margin-top: 4px;
+}
+
+.auth-form input.error {
+    border-bottom-color: #D63585;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+    .auth-card {
+        padding: 24px;
+    }
+    
+    .auth-title {
+        font-size: 32px;
+        line-height: 38px;
+    }
+    
+    .otp-inputs {
+        gap: 8px;
+    }
+    
+    .otp-input {
+        width: 48px;
+        height: 48px;
+        font-size: 20px;
+    }
+}

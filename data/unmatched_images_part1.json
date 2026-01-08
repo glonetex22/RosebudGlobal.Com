@@ -1,0 +1,244 @@
+{
+  "unmatched_image_skus": [
+    "RBG-CD037-25C_MULTI",
+    "RBG-CD022-25-BRN",
+    "RBG-CDL028-25-ORG",
+    "RBG-CDL036-22S-BLKGRN",
+    "RBG-6290-RSERED",
+    "RBG-AL6039",
+    "RBG-7376",
+    "RBG-2881",
+    "RBG-CD022-25-BLU",
+    "RBG-CD008-26S-RED",
+    "RBG-CD008-26S-PUR",
+    "RBG-CDL036-22S-MIX",
+    "RBG-CD008-26S-BLK",
+    "RBG-CD022-25-PNK",
+    "RBG-6290-BGE",
+    "RBG-CD135-6010-BLKWT",
+    "RBG-CD257-160-BLU",
+    "RBG-CD024-25-APR",
+    "RBG-EP0001-2-BGE",
+    "RBG-CD017-25-SBLU",
+    "MULTI-COLOR COS_RBG",
+    "RBG-CD026-26-BLK",
+    "RBG-CD017-25-APRVIN_MIX",
+    "RBG-CD017-25-GGRNN",
+    "RBG-CDL028-25-BLU",
+    "RBG-CD017-25-BLK",
+    "RBG-CD031-25S-APR",
+    "RBG-CD008-26S-MIX",
+    "RBG-CDL028-25-BLK",
+    "RBG-CD031-25S-BLU",
+    "RBG-CD017-25-YEL",
+    "RBG-CD024-25-BRN",
+    "RBG-CD017-25-APR",
+    "RBG-CDL028-25-VIN",
+    "RBG-CDL028-25-PINK",
+    "RBG-CD026-26-DBLU",
+    "RBG-CD031-25S-AQUA",
+    "RBG-CD017-25-VIN"
+  ],
+  "products_needing_images": [
+    {
+      "sku": "RBG-W024-25-APR",
+      "name": "Apricot Embossed Genuine Leather Handbag"
+    },
+    {
+      "sku": "RBG-W024-25-BLK",
+      "name": "Black Embossed Genuine Leather Handbag"
+    },
+    {
+      "sku": "RBG-W024-25-BRN",
+      "name": "Brown Embossed Genuine Leather Handbag"
+    },
+    {
+      "sku": "RBG2675-BLU",
+      "name": "Blue Embossed Crocodile Cow Leather Bag"
+    },
+    {
+      "sku": "RBG-UB001-BGE",
+      "name": "Beige Original Ostrich Leather Handbag"
+    },
+    {
+      "sku": "RBG-W026-BLU",
+      "name": "Blue Genuine Leather Hobo Bag"
+    },
+    {
+      "sku": "RBG1175-GAZ",
+      "name": "Gazelle Fur Design Handbag with Leather Accents"
+    },
+    {
+      "sku": "RBG-W033-BLK",
+      "name": "Black Genuine Leather Hobo Bag"
+    },
+    {
+      "sku": "RBG2869-BRN",
+      "name": "Brown Genuine Grain Cow Leather Bag"
+    },
+    {
+      "sku": "RBG-W003-CML",
+      "name": "Camel Sheepskin Leather Draw String Bag"
+    },
+    {
+      "sku": "RBG-W035-BLK",
+      "name": "Black Genuine Leather Handbag"
+    },
+    {
+      "sku": "RBG-W038-BGE",
+      "name": "Beige Genuine Leather Hobo"
+    },
+    {
+      "sku": "RBG2874-ORG",
+      "name": "Orange Genuine Embossed Crocodile Cow Leather Bag"
+    },
+    {
+      "sku": "RBG2064-BLU",
+      "name": "Blue Quilted Leather Bag"
+    },
+    {
+      "sku": "RBG2373-BLU",
+      "name": "Blue Genuine Wash Cow Leather Bag"
+    },
+    {
+      "sku": "RBG-W003-BRN",
+      "name": "Brown Sheepskin Leather Draw String Bag"
+    },
+    {
+      "sku": "RBG-W024-25-BLU",
+      "name": "Blue Embossed Genuine Leather Handbag"
+    },
+    {
+      "sku": "RBG-W003-GRN",
+      "name": "Green Sheepskin Leather Draw String Bag"
+    },
+    {
+      "sku": "RBG2044-BRN",
+      "name": "Rosebud Coffee Oil-tanned Leather Bag"
+    },
+    {
+      "sku": "RBG-W033-BLU",
+      "name": "Blue Genuine Leather Hobo Bag"
+    },
+    {
+      "sku": "RBG1175-GAZL",
+      "name": "Gazelle and Leather Designer Hand Bag"
+    },
+    {
+      "sku": "RBG-W035-BRN",
+      "name": "Brown Genuine Leather Handbag"
+    },
+    {
+      "sku": "RBG-W002-ARMYGRN",
+      "name": "Army Green Tote Bag with Leather Trim"
+    },
+    {
+      "sku": "DEER001_BLU",
+      "name": "Rosebud Blue Deer Genuine Italian Leather Shoulder Bag"
+    },
+    {
+      "sku": "RBG-W002-BLK",
+      "name": "Black Tote Bag with Leather Trim"
+    },
+    {
+      "sku": "RBG-W003-BLK",
+      "name": "Black Sheepskin Leather Draw String Bag"
+    },
+    {
+      "sku": "RBG-W031-25S-APR",
+      "name": "Apricot Genuine Leather Handbag"
+    },
+    {
+      "sku": "RBG-W028-25-PINK",
+      "name": "Pink Genuine Patent Leather Handbag"
+    },
+    {
+      "sku": "7741_YEL",
+      "name": "Yellow Genuine Leather Fashion Handbag"
+    },
+    {
+      "sku": "RBG-W034-20S-BLK",
+      "name": "Black Genuine Grain Cow Leather Bag"
+    },
+    {
+      "sku": "MT163_BLK",
+      "name": "Black Genuine Grain Cow Leather Bag"
+    },
+    {
+      "sku": "RBG7675_BLU",
+      "name": "Blue Genuine Leather Handbag"
+    },
+    {
+      "sku": "RBG7376-BLK",
+      "name": "Black Genuine Grain Cow Leather Bag"
+    },
+    {
+      "sku": "CD14006_BLU",
+      "name": "Blue Genuine Leather Handbag"
+    },
+    {
+      "sku": "SD14032_SIL",
+      "name": "Silver Croco-Print Handbag"
+    },
+    {
+      "sku": "SD14032_GLD",
+      "name": "Gold Croco-Print Handbag"
+    },
+    {
+      "sku": "SHQ7529_SAPBLU",
+      "name": "Genuine Patent Leather Hobo Bag"
+    },
+    {
+      "sku": "SHQ7485_BLK",
+      "name": "Genuine Croco Print Clutch Bag"
+    },
+    {
+      "sku": "HQJUN7376_RED",
+      "name": "Red Genuine Grain Cow Leather Bag"
+    },
+    {
+      "sku": "SHQ7529_BLK",
+      "name": "Black Genuine Patent Leather Hobo Bag"
+    },
+    {
+      "sku": "WL1290_PUR",
+      "name": "Purple Women's Fashion Shoulder Bag"
+    },
+    {
+      "sku": "WL1290_BRN",
+      "name": "Brown Women's Fashion Shoulder Bag"
+    },
+    {
+      "sku": "HQJUL7541_BLK",
+      "name": "Black Women's Fashion Shoulder Bag"
+    },
+    {
+      "sku": "HQJUL7541_GRY",
+      "name": "Grey Women's Fashion Shoulder Bag"
+    },
+    {
+      "sku": "CDL14012-BLU",
+      "name": "Blue Genuine Grain Cow Leather Bag"
+    },
+    {
+      "sku": "RBG-W026-BLK",
+      "name": "Black Genuine Leather Hobo Bag"
+    },
+    {
+      "sku": "RBG-2044-BRN",
+      "name": "Women's Genuine Sheepskin Handbag Brown"
+    },
+    {
+      "sku": "IT614",
+      "name": "Ivanka Trump Women's Handbag Beige"
+    },
+    {
+      "sku": "RBG2874-BLU",
+      "name": "Blue Genuine Embossed Crocodile Cow Leather Bag"
+    },
+    {
+      "sku": "RBG2319_ORG",
+      "name": "Orange Women's Fashion Clutch Bag"
+    }
+  ]
+}

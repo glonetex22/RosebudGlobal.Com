@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Rosebud Global</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="images/logo.svg" alt="Rosebud Global" class="logo-img">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#categories">Collections</a></li>
+                <li><a href="products.html?category=handbags" class="active">Handbags</a></li>
+                <li><a href="products.html?category=china">Fine China</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="admin/cms.html" class="admin-link">CMS</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="featured-products" style="padding-top: 120px;">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Our Collection</span>
+                <h2 class="section-title" id="pageTitle">All Products</h2>
+                <p class="section-desc" id="pageDesc">Browse our complete inventory</p>
+            </div>
+            <div class="product-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="tote">Totes</button>
+                <button class="filter-btn" data-filter="satchel">Satchels</button>
+                <button class="filter-btn" data-filter="backpack">Backpacks</button>
+                <button class="filter-btn" data-filter="hobo">Hobo Bags</button>
+            </div>
+            <div class="products-grid" id="allProductsGrid"></div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 Rosebud Global. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const grid = document.getElementById('allProductsGrid');
+            const params = new URLSearchParams(window.location.search);
+            const category = params.get('category');
+            
+            let products = HANDBAGS;
+            
+            if (category === 'handbags') {
+                document.getElementById('pageTitle').textContent = "Women's Handbags";
+                document.getElementById('pageDesc').textContent = "100% Genuine Italian Leather Collection";
+            }
+            
+            renderAllProducts(products);
+            initProductFilters();
+        });
+        
+        function renderAllProducts(products) {
+            const grid = document.getElementById('allProductsGrid');
+            grid.innerHTML = products.map(product => `
+                <div class="product-card" data-type="${product.type}">
+                    <div class="product-image">
+                        <img src="${product.image}" 
+                             alt="${product.shortName}"
+                             onerror="this.parentElement.innerHTML='<div class=\\'no-image\\'>Image Coming Soon<br>${product.model}</div>'">
+                        <span class="product-badge">Italian Leather</span>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-brand">${product.brand}</span>
+                        <h3 class="product-name">${product.shortName}</h3>
+                        <div class="product-meta">
+                            <span class="product-price">${product.price ? '$' + product.price.toFixed(2) : 'Contact for Price'}</span>
+                            <span class="product-sku">${product.model}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function initProductFilters() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const filter = btn.dataset.filter;
+                    const filtered = filter === 'all' ? HANDBAGS : HANDBAGS.filter(p => p.type === filter);
+                    renderAllProducts(filtered);
+                });
+            });
+        }
+    </script>
+</body>
+</html>

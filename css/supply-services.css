@@ -1,0 +1,460 @@
+/* ========================================
+   SUPPLY SERVICES PAGE STYLES
+   ======================================== */
+
+/* Navbar White Variant */
+.navbar-white {
+    background: #FFFFFF;
+    border-bottom: 1px solid #F3F5F7;
+}
+
+.navbar-white .nav-link {
+    color: #6C7275;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.navbar-white .nav-link:hover,
+.navbar-white .nav-link.active {
+    color: #141718;
+}
+
+.navbar-white .icon-btn {
+    color: #141718;
+}
+
+.navbar-white .cart-count {
+    background: #D63585;
+    color: #FFFFFF;
+}
+
+/* ========================================
+   HERO SECTION
+   ======================================== */
+.supply-hero {
+    background-image: url('../images/Supply_Items_Header.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 120px 160px;
+    text-align: center;
+    position: relative;
+}
+
+.supply-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(214, 53, 133, 0.7) 0%, rgba(156, 39, 96, 0.7) 100%);
+}
+
+.supply-hero .hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 54px;
+    line-height: 58px;
+    letter-spacing: -1px;
+    color: #FFFFFF;
+    margin: 0 0 16px;
+}
+
+.hero-subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 32px;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0;
+}
+
+/* ========================================
+   MAIN CONTENT
+   ======================================== */
+.supply-page {
+    padding: 16px 160px 80px;
+    background: #FFFFFF;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 40px;
+}
+
+.breadcrumb-link {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    color: #605F5F;
+    text-decoration: none;
+}
+
+.breadcrumb-link:hover {
+    color: #D63585;
+}
+
+.breadcrumb-separator {
+    color: #605F5F;
+    font-size: 14px;
+}
+
+.breadcrumb-current {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    color: #121212;
+}
+
+/* ========================================
+   INTRO SECTION
+   ======================================== */
+.intro-section {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 60px;
+}
+
+.section-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 44px;
+    letter-spacing: -0.4px;
+    color: #141718;
+    margin: 0 0 24px;
+}
+
+.section-description {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 26px;
+    color: #6C7275;
+    margin: 0;
+}
+
+/* ========================================
+   SERVICES GRID
+   ======================================== */
+.services-section {
+    margin-bottom: 80px;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+}
+
+.service-card {
+    background: #F3F5F7;
+    border-radius: 16px;
+    padding: 40px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+.service-icon {
+    margin-bottom: 24px;
+}
+
+.service-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 32px;
+    color: #141718;
+    margin: 0 0 16px;
+}
+
+.service-description {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 26px;
+    color: #6C7275;
+    margin: 0 0 24px;
+}
+
+.service-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.service-features li {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 22px;
+    color: #141718;
+    padding-left: 24px;
+    position: relative;
+}
+
+.service-features li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    background: #D63585;
+    border-radius: 50%;
+}
+
+/* ========================================
+   PROCESS SECTION
+   ======================================== */
+.process-section {
+    margin-bottom: 80px;
+    text-align: center;
+}
+
+.process-steps {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 48px;
+}
+
+.process-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 200px;
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    background: #D63585;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    color: #FFFFFF;
+    margin-bottom: 16px;
+}
+
+.step-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 26px;
+    color: #141718;
+    margin: 0 0 8px;
+}
+
+.step-description {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    color: #6C7275;
+    margin: 0;
+}
+
+.process-arrow {
+    display: flex;
+    align-items: center;
+    padding-top: 20px;
+}
+
+/* ========================================
+   BRANDS SECTION
+   ======================================== */
+.brands-section {
+    margin-bottom: 80px;
+    text-align: center;
+}
+
+.brand-logos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 48px;
+    margin-top: 48px;
+}
+
+.brand-logo {
+    width: 150px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: grayscale(100%);
+    opacity: 0.6;
+    transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+.brand-logo:hover {
+    filter: grayscale(0%);
+    opacity: 1;
+}
+
+.brand-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* ========================================
+   CTA SECTION
+   ======================================== */
+.cta-section {
+    background: linear-gradient(135deg, #141718 0%, #343839 100%);
+    border-radius: 16px;
+    padding: 60px;
+    text-align: center;
+}
+
+.cta-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 44px;
+    letter-spacing: -0.4px;
+    color: #FFFFFF;
+    margin: 0 0 16px;
+}
+
+.cta-description {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0 0 32px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.cta-btn {
+    padding: 12px 40px;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 28px;
+    letter-spacing: -0.4px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.cta-btn.primary {
+    background: #D63585;
+    color: #FFFFFF;
+}
+
+.cta-btn.primary:hover {
+    background: #C12D75;
+}
+
+.cta-btn.secondary {
+    background: transparent;
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+}
+
+.cta-btn.secondary:hover {
+    background: #FFFFFF;
+    color: #141718;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 1200px) {
+    .supply-hero,
+    .supply-page {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+}
+
+@media (max-width: 992px) {
+    .hero-title {
+        font-size: 40px;
+        line-height: 46px;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .process-steps {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .process-arrow {
+        transform: rotate(90deg);
+        padding: 16px 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .supply-hero,
+    .supply-page {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    
+    .hero-title {
+        font-size: 32px;
+        line-height: 38px;
+    }
+    
+    .section-title {
+        font-size: 28px;
+        line-height: 34px;
+    }
+    
+    .cta-section {
+        padding: 40px 20px;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+    }
+    
+    .brand-logos {
+        gap: 24px;
+    }
+    
+    .brand-logo {
+        width: 100px;
+        height: 60px;
+    }
+}

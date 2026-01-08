@@ -1,0 +1,342 @@
+[
+  {
+    "id": 1,
+    "name": "Mikasa Elite Metropole 16pc Set",
+    "model": "CX023/704",
+    "brand": "Mikasa",
+    "qty": "15 Ctns",
+    "price_ngn": null,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 2,
+    "name": "Mikasa Gourmet Basic by Unravelled",
+    "model": "KN206-016",
+    "brand": "Mikasa",
+    "qty": "14 Ctns",
+    "price_ngn": 405075,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 3,
+    "name": "Mikasa Quatro Crystal Bowl",
+    "model": "VZ400-760",
+    "brand": "Mikasa",
+    "qty": "24 Units",
+    "price_ngn": 285000,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 4,
+    "name": "Mikasa 16pc Gourmet Basic Wispy Floral",
+    "model": "KN206/016",
+    "brand": "Mikasa",
+    "qty": "19 Ctns",
+    "price_ngn": 470000,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 5,
+    "name": "Mikasa 20pc Dinner Set Cameo Gold",
+    "model": "HK302/705",
+    "brand": "Mikasa",
+    "qty": "15 Ctns",
+    "price_ngn": 570000,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 6,
+    "name": "Mikasa 16pc Set Tuscan Flower",
+    "model": "CW426/704",
+    "brand": "Mikasa",
+    "qty": "14 Ctns",
+    "price_ngn": 610575,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 7,
+    "name": "Mikasa Oxford 12pc Set",
+    "model": "CX016/703",
+    "brand": "Mikasa",
+    "qty": "6 Ctns",
+    "price_ngn": 297000,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 8,
+    "name": "Mikasa 16pc Set Magnolia",
+    "model": "CW428/704",
+    "brand": "Mikasa",
+    "qty": "22 Ctns",
+    "price_ngn": 475025,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 9,
+    "name": "Mikasa Parchment Set (6 Soup, 6 Salad, 6 Saucer)",
+    "model": "L3438",
+    "brand": "Mikasa",
+    "qty": "1 Set",
+    "price_ngn": 257000,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 10,
+    "name": "Mikasa Saville Row 12pc Set",
+    "model": "CX028/704",
+    "brand": "Mikasa",
+    "qty": "6 Ctns",
+    "price_ngn": 300000,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 11,
+    "name": "Studio Nova 16pc Set Tempo",
+    "model": "KT350/016",
+    "brand": "Studio Nova",
+    "qty": "11 Ctns",
+    "price_ngn": 315000,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 12,
+    "name": "Studio Nova 16pc Set Greek Key",
+    "model": "PR305/016",
+    "brand": "Studio Nova",
+    "qty": "7 Ctns",
+    "price_ngn": 416000,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 13,
+    "name": "Studio Nova 16pc Set Pezze White",
+    "model": "MW201/016",
+    "brand": "Studio Nova",
+    "qty": "24 Ctns",
+    "price_ngn": 405075,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 14,
+    "name": "Studio Nova 16pc Set Pezze Green",
+    "model": "MW204/016",
+    "brand": "Studio Nova",
+    "qty": "3 Ctns",
+    "price_ngn": 405075,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 15,
+    "name": "Studio Nova 16pc Set Pezze Black",
+    "model": "MW204/016",
+    "brand": "Studio Nova",
+    "qty": "13 Ctns",
+    "price_ngn": 405075,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 16,
+    "name": "Studio Nova 16pc Set Mosaic Stone",
+    "model": "HG407-016",
+    "brand": "Studio Nova",
+    "qty": "6 Ctns",
+    "price_ngn": 350000,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 17,
+    "name": "Studio Nova 16pc Set Saphire Mosaic Stone",
+    "model": "HG407-016",
+    "brand": "Studio Nova",
+    "qty": "7 Ctns",
+    "price_ngn": 350000,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 18,
+    "name": "Studio Nova 16pc Set Argyle",
+    "model": "Y0750-016",
+    "brand": "Studio Nova",
+    "qty": "7 Ctns",
+    "price_ngn": 350900,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 19,
+    "name": "Noritake 10pc Set Champagne Pearls",
+    "model": "4811",
+    "brand": "Noritake",
+    "qty": "3 Ctns",
+    "price_ngn": 275900,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 20,
+    "name": "Noritake 8pc Serving Big Bowl Ambience",
+    "model": "7969",
+    "brand": "Noritake",
+    "qty": "18 Ctns",
+    "price_ngn": 175800,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 21,
+    "name": "Noritake 20pc Set White Palace",
+    "model": "4753",
+    "brand": "Noritake",
+    "qty": "1 Set",
+    "price_ngn": 659709,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 22,
+    "name": "Noritake 16pc Place Setting Safari Rosewood",
+    "model": "8043",
+    "brand": "Noritake",
+    "qty": "7 Ctns",
+    "price_ngn": null,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 23,
+    "name": "Studio Nova 4pc Covered Casserole",
+    "model": "0351",
+    "brand": "Studio Nova",
+    "qty": "8 Ctns",
+    "price_ngn": 498400,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 24,
+    "name": "Mikasa Nativity Satin Plaque 15\" Germany",
+    "model": "SA961/895",
+    "brand": "Mikasa",
+    "qty": "3 Ctns",
+    "price_ngn": 635000,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 25,
+    "name": "Noritake 4pc Place Setting Cafe Mango",
+    "model": "E921",
+    "brand": "Noritake",
+    "qty": "4 Ctns",
+    "price_ngn": 475000,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 26,
+    "name": "Noritake 4pc Place Setting Cafe Honey",
+    "model": "E923",
+    "brand": "Noritake",
+    "qty": "4 Ctns",
+    "price_ngn": 475000,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 27,
+    "name": "Noritake 4pc Place Setting Cafe Vanilla",
+    "model": null,
+    "brand": "Noritake",
+    "qty": "2 Ctns",
+    "price_ngn": 475000,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 28,
+    "name": "Mikasa 3pc Stoneware Set for Children",
+    "model": "CC018/703",
+    "brand": "Mikasa",
+    "qty": "3 Ctns",
+    "price_ngn": 297790,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 29,
+    "name": "Mikasa Nouveau 16pc Dinner Set Bone China",
+    "model": "AN045/704",
+    "brand": "Mikasa",
+    "qty": "1 Ctn",
+    "price_ngn": 707360,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 30,
+    "name": "Mikasa Picture 6x9 Frame (Cadre)",
+    "model": "SA751/834",
+    "brand": "Mikasa",
+    "qty": "1 Ctn (6pcs)",
+    "price_ngn": null,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 31,
+    "name": "Mikasa Fashion Plates 16pc Dinner Set Classic White",
+    "model": "FN900-016",
+    "brand": "Mikasa",
+    "qty": "1 Ctn",
+    "price_ngn": 295000,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 32,
+    "name": "Mikasa Fashion Plates 16pc Dinner Set Country Craft Plum",
+    "model": "FN301-016",
+    "brand": "Mikasa",
+    "qty": "1 Ctn",
+    "price_ngn": 295000,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 33,
+    "name": "Mikasa Soup Bowl Tuscan Flower",
+    "model": "CW427",
+    "brand": "Mikasa",
+    "qty": "2 pcs",
+    "price_ngn": null,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  },
+  {
+    "id": 34,
+    "name": "Mikasa Soup Bowl Tuscan Flower",
+    "model": "CW426",
+    "brand": "Mikasa",
+    "qty": "2 pcs",
+    "price_ngn": null,
+    "location": "Nigeria",
+    "category": "Fine China & Crystal"
+  }
+]

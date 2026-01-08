@@ -1,0 +1,62 @@
+{
+  "lastUpdated": "2025-01-06",
+  "totalItems": 375,
+  "categories": {
+    "custom-gift-items": {
+      "name": "Custom Gift Items",
+      "count": 0,
+      "subcategories": {
+        "apparel": { "name": "Apparel", "count": 0 },
+        "corporate-gifts": { "name": "Corporate Gifts", "count": 0 },
+        "electronics": { "name": "Electronics", "count": 0 },
+        "writing-instruments": { "name": "Writing Instruments", "count": 0 }
+      }
+    },
+    "home-decor": {
+      "name": "Home Decor & Accessories",
+      "count": 23,
+      "subcategories": {
+        "furniture": { "name": "Furniture", "count": 5 },
+        "tables": { "name": "Tables", "count": 8 },
+        "lamps": { "name": "Lamps", "count": 2 },
+        "vases": { "name": "Vases", "count": 5 },
+        "mirrors": { "name": "Mirrors", "count": 3 }
+      }
+    },
+    "household": {
+      "name": "Household Items",
+      "count": 0,
+      "subcategories": {
+        "cookware": { "name": "Cookware", "count": 0 },
+        "crystal-drinkware": { "name": "Crystal Drinkware", "count": 0 },
+        "crystal-vases": { "name": "Crystal Vases", "count": 0 },
+        "cutlery": { "name": "Cutlery", "count": 0 },
+        "fine-bone-china": { "name": "Fine Bone China Dinner Sets", "count": 0 },
+        "miscellaneous": { "name": "Miscellaneous", "count": 0 },
+        "mugs": { "name": "Mugs", "count": 0 },
+        "picture-frames": { "name": "Picture Frames", "count": 0 },
+        "trays": { "name": "Trays", "count": 0 }
+      }
+    },
+    "specialty": {
+      "name": "Specialty Items",
+      "count": 352,
+      "subcategories": {
+        "auto-parts": { "name": "Auto Parts", "count": 0 },
+        "ladies-handbags": { "name": "Ladies Handbags", "count": 350 },
+        "cosmetics": { "name": "Cosmetics", "count": 2 }
+      }
+    },
+    "sale-items": {
+      "name": "Sale Items",
+      "count": 0,
+      "subcategories": {}
+    }
+  },
+  "summary": {
+    "usaInventory": 352,
+    "nigeriaInventory": 23,
+    "imagesAvailable": 272,
+    "pendingImages": 103
+  }
+}

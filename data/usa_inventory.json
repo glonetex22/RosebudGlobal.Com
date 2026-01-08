@@ -1,0 +1,1037 @@
+{
+  "home_goods": [
+    {
+      "name": "Rose Bud Gold Metallic Cosmetic Bag",
+      "brand": "Rose Bud Global",
+      "model": null,
+      "sku": null,
+      "price_usd": null,
+      "qty": "138 pcs",
+      "category": "Cosmetics & Bags",
+      "location": "USA"
+    },
+    {
+      "name": "Rose Bud Multi-color Cosmetic Bag New",
+      "brand": "Rose Bud Global",
+      "model": null,
+      "sku": null,
+      "price_usd": null,
+      "qty": "199 pcs",
+      "category": "Cosmetics & Bags",
+      "location": "USA"
+    },
+    {
+      "name": "Lenox American by Design 3 piece salad set",
+      "brand": "Lenox",
+      "model": null,
+      "sku": "6352843",
+      "price_usd": 100.0,
+      "qty": "6 pcs",
+      "category": "Lenox & Gorham",
+      "location": "USA"
+    },
+    {
+      "name": "Kate Spade Block Party 4pc Place Setting",
+      "brand": "Kate Spade",
+      "model": null,
+      "sku": "826579",
+      "price_usd": 80.0,
+      "qty": null,
+      "category": "Fine China & Crystal",
+      "location": "USA"
+    },
+    {
+      "name": "Mikasa Circle Black Dessert Set",
+      "brand": "Mikasa",
+      "model": null,
+      "sku": "816303",
+      "price_usd": 240.0,
+      "qty": "2 pcs",
+      "category": "Fine China & Crystal",
+      "location": "USA"
+    },
+    {
+      "name": "Gorham Sentimental Traditions 8x10 Floral Frame",
+      "brand": "Gorham",
+      "model": null,
+      "sku": "6144752",
+      "price_usd": 43.0,
+      "qty": null,
+      "category": "Home Decor & Accessories",
+      "location": "USA"
+    },
+    {
+      "name": "Dansk Flamestone Ivory Casserole Dish 4qt",
+      "brand": "Dansk",
+      "model": null,
+      "sku": "805339",
+      "price_usd": 72.0,
+      "qty": null,
+      "category": "Fine China & Crystal",
+      "location": "USA"
+    },
+    {
+      "name": "Le Creuset Casserole Dish",
+      "brand": "Le Creuset",
+      "model": "02414791091",
+      "sku": null,
+      "price_usd": 300.0,
+      "qty": null,
+      "category": "Fine China & Crystal",
+      "location": "USA"
+    },
+    {
+      "name": "Lenox Federal Platinum Chocolate 5pc Place Set",
+      "brand": "Lenox",
+      "model": null,
+      "sku": "802623",
+      "price_usd": 143.0,
+      "qty": "8 pcs",
+      "category": "Lenox & Gorham",
+      "location": "USA"
+    },
+    {
+      "name": "Lenox Floral Nouveau Rose Bowl Clear Non-Lead Crystal",
+      "brand": "Lenox",
+      "model": null,
+      "sku": "814815",
+      "price_usd": 43.0,
+      "qty": null,
+      "category": "Crystal & Glassware",
+      "location": "USA"
+    },
+    {
+      "name": "Lenox Rose Vase 5.5\"",
+      "brand": "Lenox",
+      "model": null,
+      "sku": "823769",
+      "price_usd": 95.0,
+      "qty": null,
+      "category": "Home Decor & Accessories",
+      "location": "USA"
+    },
+    {
+      "name": "Lenox Butterfly Meadow Large Canister",
+      "brand": "Lenox",
+      "model": null,
+      "sku": "6108138",
+      "price_usd": 86.0,
+      "qty": null,
+      "category": "Lenox & Gorham",
+      "location": "USA"
+    },
+    {
+      "name": "Gorham Mary Mary Quite Contrary Hurricane",
+      "brand": "Gorham",
+      "model": null,
+      "sku": "825312",
+      "price_usd": 72.0,
+      "qty": null,
+      "category": "Home Decor & Accessories",
+      "location": "USA"
+    },
+    {
+      "name": "Lenox Wedding Promises Platinum Heart Favors Set of 10",
+      "brand": "Lenox",
+      "model": null,
+      "sku": "6141931",
+      "price_usd": 72.0,
+      "qty": null,
+      "category": "Lenox & Gorham",
+      "location": "USA"
+    },
+    {
+      "name": "Lenox Grande Minuet Clock",
+      "brand": "Lenox",
+      "model": null,
+      "sku": "761561",
+      "price_usd": 72.0,
+      "qty": null,
+      "category": "Home Decor & Accessories",
+      "location": "USA"
+    },
+    {
+      "name": "Lenox Gorham Merry Go Round Little Girl Striped Frame 4x6",
+      "brand": "Lenox-Gorham",
+      "model": null,
+      "sku": "825096",
+      "price_usd": null,
+      "qty": "1 pc",
+      "category": "Home Decor & Accessories",
+      "location": "USA"
+    },
+    {
+      "name": "Lenox Urban Accents Chip and Dip Platter",
+      "brand": "Lenox",
+      "model": null,
+      "sku": "823581",
+      "price_usd": 134.0,
+      "qty": null,
+      "category": "Lenox & Gorham",
+      "location": "USA"
+    },
+    {
+      "name": "Lenox Gorham Merry Go Round Little Girl Frame with Feet 4x6",
+      "brand": "Lenox-Gorham",
+      "model": null,
+      "sku": "828009",
+      "price_usd": null,
+      "qty": "4 pcs",
+      "category": "Home Decor & Accessories",
+      "location": "USA"
+    },
+    {
+      "name": "Lenox Gorham Merry Go Round Little Girl Sheep Frame 4x6",
+      "brand": "Lenox-Gorham",
+      "model": null,
+      "sku": "825145",
+      "price_usd": null,
+      "qty": "2 pcs",
+      "category": "Home Decor & Accessories",
+      "location": "USA"
+    },
+    {
+      "name": "Lenox Gorham Merry Go Round Little Boy Blue Frame 4x6",
+      "brand": "Lenox-Gorham",
+      "model": null,
+      "sku": "825085",
+      "price_usd": null,
+      "qty": "4 pcs",
+      "category": "Home Decor & Accessories",
+      "location": "USA"
+    },
+    {
+      "name": "Vera Wang Wedgwood LK Guest Book",
+      "brand": "Vera Wang",
+      "model": null,
+      "sku": "4001516",
+      "price_usd": 75.0,
+      "qty": "4 pcs",
+      "category": "Home Decor & Accessories",
+      "location": "USA"
+    },
+    {
+      "name": "Kate Spade Garden Street Vase Blue",
+      "brand": "Kate Spade",
+      "model": null,
+      "sku": "775446",
+      "price_usd": 100.0,
+      "qty": "2 pcs",
+      "category": "Home Decor & Accessories",
+      "location": "USA"
+    },
+    {
+      "name": "Kate Spade Garden Street Vase Turquoise",
+      "brand": "Kate Spade",
+      "model": null,
+      "sku": "782489",
+      "price_usd": 100.0,
+      "qty": "1 pc",
+      "category": "Home Decor & Accessories",
+      "location": "USA"
+    },
+    {
+      "name": "Kate Spade Cloverdale Dot Gold Large Cylinder Vase Full Lead Crystal",
+      "brand": "Kate Spade",
+      "model": null,
+      "sku": "773313",
+      "price_usd": 250.0,
+      "qty": "1 pc",
+      "category": "Crystal & Glassware",
+      "location": "USA"
+    },
+    {
+      "name": "Lenox Gorham Sentimental Traditions Invitation Frame Crystal",
+      "brand": "Lenox-Gorham",
+      "model": null,
+      "sku": "6180889",
+      "price_usd": 80.0,
+      "qty": "2 pcs",
+      "category": "Home Decor & Accessories",
+      "location": "USA"
+    },
+    {
+      "name": "Lenox Mediterra 16\" Large Oval Platter",
+      "brand": "Lenox",
+      "model": null,
+      "sku": "6443170",
+      "price_usd": 215.0,
+      "qty": "3 pcs",
+      "category": "Lenox & Gorham",
+      "location": "USA"
+    },
+    {
+      "name": "Mikasa Park Lane Covered Butter",
+      "brand": "Mikasa",
+      "model": "SKU101/366",
+      "sku": null,
+      "price_usd": 53.0,
+      "qty": "1 pc",
+      "category": "Fine China & Crystal",
+      "location": "USA"
+    },
+    {
+      "name": "Marquis by Waterford Addison Iced Beverage Pair",
+      "brand": "Waterford",
+      "model": "60019225",
+      "sku": null,
+      "price_usd": null,
+      "qty": "1 pc",
+      "category": "Crystal & Glassware",
+      "location": "USA"
+    },
+    {
+      "name": "Kathy Ireland Home by Gorham Condo Amethyst DOF Set of 4",
+      "brand": "Gorham",
+      "model": null,
+      "sku": "845546",
+      "price_usd": 67.0,
+      "qty": "1 pc",
+      "category": "Crystal & Glassware",
+      "location": "USA"
+    },
+    {
+      "name": "Johnson Bros England Friendly Village Covered Vegetable Dish",
+      "brand": "Johnson Bros",
+      "model": "A4038101037",
+      "sku": null,
+      "price_usd": 75.0,
+      "qty": "4 pcs",
+      "category": "Fine China & Crystal",
+      "location": "USA"
+    },
+    {
+      "name": "Johnson Bros England Friendly Village 4pc Mug Set",
+      "brand": "Johnson Bros",
+      "model": "2425622902",
+      "sku": null,
+      "price_usd": 30.0,
+      "qty": "2 pcs",
+      "category": "Fine China & Crystal",
+      "location": "USA"
+    },
+    {
+      "name": "Johnson Bros England Friendly Village Large Jug",
+      "brand": "Johnson Bros",
+      "model": "2425622902",
+      "sku": null,
+      "price_usd": 55.0,
+      "qty": "1 pc",
+      "category": "Fine China & Crystal",
+      "location": "USA"
+    },
+    {
+      "name": "FineLife Golf Mug and Pen Set",
+      "brand": "FineLife",
+      "model": null,
+      "sku": null,
+      "price_usd": null,
+      "qty": "1 pc",
+      "category": "Home Decor & Accessories",
+      "location": "USA"
+    },
+    {
+      "name": "Fisher Price Fun with Friends Musical Table 6-36 Months",
+      "brand": "Fisher Price",
+      "model": null,
+      "sku": null,
+      "price_usd": null,
+      "qty": "1 pc",
+      "category": "Baby & Kids",
+      "location": "USA"
+    },
+    {
+      "name": "Glass Art Platter",
+      "brand": "Various",
+      "model": null,
+      "sku": null,
+      "price_usd": null,
+      "qty": "1 pc",
+      "category": "Home Decor & Accessories",
+      "location": "USA"
+    },
+    {
+      "name": "Olivia Riegel Roxbury 5x7 Frame",
+      "brand": "Olivia Riegel",
+      "model": "RT0304",
+      "sku": null,
+      "price_usd": null,
+      "qty": "1 pc",
+      "category": "Olivia Riegel",
+      "location": "USA"
+    },
+    {
+      "name": "Olivia Riegel Picture Frame",
+      "brand": "Olivia Riegel",
+      "model": "RT5102",
+      "sku": null,
+      "price_usd": null,
+      "qty": "1 pc",
+      "category": "Olivia Riegel",
+      "location": "USA"
+    },
+    {
+      "name": "Olivia Riegel Picture Frame 4x6",
+      "brand": "Olivia Riegel",
+      "model": "RT0301",
+      "sku": null,
+      "price_usd": null,
+      "qty": "1 pc",
+      "category": "Olivia Riegel",
+      "location": "USA"
+    },
+    {
+      "name": "Olivia Riegel Picture Frame 7x10",
+      "brand": "Olivia Riegel",
+      "model": "SM1106",
+      "sku": null,
+      "price_usd": null,
+      "qty": "1 pc",
+      "category": "Olivia Riegel",
+      "location": "USA"
+    },
+    {
+      "name": "Olivia Riegel Picture Frame 7x10",
+      "brand": "Olivia Riegel",
+      "model": "RT5103",
+      "sku": null,
+      "price_usd": null,
+      "qty": "1 pc",
+      "category": "Olivia Riegel",
+      "location": "USA"
+    },
+    {
+      "name": "Olivia Riegel Picture Frame Black Small Stones 7x10",
+      "brand": "Olivia Riegel",
+      "model": null,
+      "sku": null,
+      "price_usd": null,
+      "qty": "1 pc",
+      "category": "Olivia Riegel",
+      "location": "USA"
+    },
+    {
+      "name": "Olivia Riegel Picture Frame Crystal Joan 8x10",
+      "brand": "Olivia Riegel",
+      "model": "RT1162",
+      "sku": null,
+      "price_usd": null,
+      "qty": "1 pc",
+      "category": "Olivia Riegel",
+      "location": "USA"
+    },
+    {
+      "name": "Olivia Riegel Picture Frame Tina 5x7",
+      "brand": "Olivia Riegel",
+      "model": "RT0301",
+      "sku": null,
+      "price_usd": null,
+      "qty": "1 pc",
+      "category": "Olivia Riegel",
+      "location": "USA"
+    },
+    {
+      "name": "Olivia Riegel Picture Frame Windsor",
+      "brand": "Olivia Riegel",
+      "model": "RT1737",
+      "sku": null,
+      "price_usd": null,
+      "qty": "1 pc",
+      "category": "Olivia Riegel",
+      "location": "USA"
+    },
+    {
+      "name": "Olivia Riegel Picture Frame",
+      "brand": "Olivia Riegel",
+      "model": "RT1736",
+      "sku": null,
+      "price_usd": null,
+      "qty": "1 pc",
+      "category": "Olivia Riegel",
+      "location": "USA"
+    },
+    {
+      "name": "Olivia Riegel Picture Frame Crystal Joan 4x6",
+      "brand": "Olivia Riegel",
+      "model": "RT1160",
+      "sku": null,
+      "price_usd": null,
+      "qty": "1 pc",
+      "category": "Olivia Riegel",
+      "location": "USA"
+    },
+    {
+      "name": "Lenox American by Design Annual Holiday Collector Plate",
+      "brand": "Lenox",
+      "model": "139450",
+      "sku": "8818809",
+      "price_usd": 19.97,
+      "qty": "13 pcs",
+      "category": "Lenox & Gorham",
+      "location": "USA",
+      "clearance": true
+    },
+    {
+      "name": "Two's Company 4x6 Picture Frame",
+      "brand": "Two's Company",
+      "model": null,
+      "sku": null,
+      "price_usd": null,
+      "qty": "2 pcs",
+      "category": "Home Decor & Accessories",
+      "location": "USA"
+    },
+    {
+      "name": "Lenox American by Design Pumpkin Teapot 5.8\"",
+      "brand": "Lenox",
+      "model": null,
+      "sku": "6245542",
+      "price_usd": null,
+      "qty": null,
+      "category": "Lenox & Gorham",
+      "location": "USA"
+    },
+    {
+      "name": "Ornaments 4 boxes",
+      "brand": "Various",
+      "model": null,
+      "sku": "RYD001-S6",
+      "price_usd": null,
+      "qty": "6 pcs",
+      "category": "Home Decor & Accessories",
+      "location": "USA"
+    },
+    {
+      "name": "Simply Fine Lenox Bowl Set (3 small, 1 medium, 1 large)",
+      "brand": "Lenox",
+      "model": null,
+      "sku": "804540",
+      "price_usd": 286.0,
+      "qty": "1 set",
+      "category": "Lenox & Gorham",
+      "location": "USA"
+    },
+    {
+      "name": "Tozai Home Decor Item",
+      "brand": "Tozai Home",
+      "model": "UNI 451PGO",
+      "sku": null,
+      "price_usd": null,
+      "qty": "1 pc",
+      "category": "Home Decor & Accessories",
+      "location": "USA"
+    },
+    {
+      "name": "Tozai Home Decor Item",
+      "brand": "Tozai Home",
+      "model": "UNI 451GGO",
+      "sku": null,
+      "price_usd": null,
+      "qty": "1 pc",
+      "category": "Home Decor & Accessories",
+      "location": "USA"
+    },
+    {
+      "name": "Angle Tear Mic LED Lights Warm White",
+      "brand": "Angle Tear",
+      "model": "TC-5120-0842",
+      "sku": null,
+      "price_usd": null,
+      "qty": "1 pc",
+      "category": "Home Decor & Accessories",
+      "location": "USA"
+    },
+    {
+      "name": "Jim Marvin Christmas Ornament",
+      "brand": "Jim Marvin",
+      "model": "HC-0413-0179",
+      "sku": null,
+      "price_usd": null,
+      "qty": null,
+      "category": "Home Decor & Accessories",
+      "location": "USA"
+    }
+  ],
+  "handbags": [
+    {
+      "sku": "RBG-3011-BLU",
+      "name": "Blue Genuine Embossed Crocodile Patent Leather Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628800837",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-W024-25-APR",
+      "name": "Apricot Embossed Genuine Leather Handbag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628800844",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-W024-25-BLK",
+      "name": "Black Embossed Genuine Leather Handbag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628800851",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-W024-25-BRN",
+      "name": "Brown Embossed Genuine Leather Handbag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628800868",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG2675-BLU",
+      "name": "Blue Embossed Crocodile Cow Leather Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628800875",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-UB001-BGE",
+      "name": "Beige Original Ostrich Leather Handbag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628800882",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-W026-BLU",
+      "name": "Blue Genuine Leather Hobo Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628800899",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG1175-GAZ",
+      "name": "Gazelle Fur Design Handbag with Leather Accents",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628800905",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-W033-BLK",
+      "name": "Black Genuine Leather Hobo Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628800912",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG2869-BRN",
+      "name": "Brown Genuine Grain Cow Leather Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628800929",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-W003-CML",
+      "name": "Camel Sheepskin Leather Draw String Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628800936",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-W035-BLK",
+      "name": "Black Genuine Leather Handbag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628800943",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-W038-BGE",
+      "name": "Beige Genuine Leather Hobo",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628800950",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG2874-ORG",
+      "name": "Orange Genuine Embossed Crocodile Cow Leather Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628800967",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG2064-BLU",
+      "name": "Blue Quilted Leather Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628800974",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG2373-BLU",
+      "name": "Blue Genuine Wash Cow Leather Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628800981",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-W003-BRN",
+      "name": "Brown Sheepskin Leather Draw String Bag",
+      "type": "Women's Fashion Backpack",
+      "ean": "679628801018",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-EP0001-BGE",
+      "name": "Beige El Porto Genuine Suede Leather Carrying Case",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801025",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-W024-25-BLU",
+      "name": "Blue Embossed Genuine Leather Handbag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801032",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-W003-GRN",
+      "name": "Green Sheepskin Leather Draw String Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801049",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG2044-BRN",
+      "name": "Rosebud Coffee Oil-tanned Leather Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801056",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-W033-BLU",
+      "name": "Blue Genuine Leather Hobo Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801063",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG1175-GAZL",
+      "name": "Gazelle and Leather Designer Hand Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801070",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-W035-BRN",
+      "name": "Brown Genuine Leather Handbag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801094",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-W002-ARMYGRN",
+      "name": "Army Green Tote Bag with Leather Trim",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801100",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "DEER001_BLU",
+      "name": "Rosebud Blue Deer Genuine Italian Leather Shoulder Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801117",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-W002-BLK",
+      "name": "Black Tote Bag with Leather Trim",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801124",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-W003-BLK",
+      "name": "Black Sheepskin Leather Draw String Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801148",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-W031-25S-APR",
+      "name": "Apricot Genuine Leather Handbag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801155",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-W028-25-PINK",
+      "name": "Pink Genuine Patent Leather Handbag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801162",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "7741_YEL",
+      "name": "Yellow Genuine Leather Fashion Handbag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801179",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-W034-20S-BLK",
+      "name": "Black Genuine Grain Cow Leather Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801186",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "MT163_BLK",
+      "name": "Black Genuine Grain Cow Leather Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801209",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG7675_BLU",
+      "name": "Blue Genuine Leather Handbag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801216",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG7376-BLK",
+      "name": "Black Genuine Grain Cow Leather Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801223",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "CD14006_BLU",
+      "name": "Blue Genuine Leather Handbag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801230",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "SD14032_SIL",
+      "name": "Silver Croco-Print Handbag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801247",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "SD14032_GLD",
+      "name": "Gold Croco-Print Handbag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801254",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "SHQ7529_SAPBLU",
+      "name": "Genuine Patent Leather Hobo Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801261",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "SHQ7485_BLK",
+      "name": "Genuine Croco Print Clutch Bag",
+      "type": "Women's Fashion Clutch Bag",
+      "ean": "679628801278",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "HQJUN7376_RED",
+      "name": "Red Genuine Grain Cow Leather Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801285",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "SHQ7529_BLK",
+      "name": "Black Genuine Patent Leather Hobo Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801292",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "WL1290_PUR",
+      "name": "Purple Women's Fashion Shoulder Bag",
+      "type": "Women's Fashion Shoulder Bag",
+      "ean": "679628801308",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "WL1290_BRN",
+      "name": "Brown Women's Fashion Shoulder Bag",
+      "type": "Women's Fashion Shoulder Bag",
+      "ean": "679628801315",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "HQJUL7541_BLK",
+      "name": "Black Women's Fashion Shoulder Bag",
+      "type": "Women's Fashion Shoulder Bag",
+      "ean": "679628801322",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "HQJUL7541_GRY",
+      "name": "Grey Women's Fashion Shoulder Bag",
+      "type": "Women's Fashion Shoulder Bag",
+      "ean": "679628801339",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "CDL14012-BLU",
+      "name": "Blue Genuine Grain Cow Leather Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801346",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-W026-BLK",
+      "name": "Black Genuine Leather Hobo Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801377",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-2441-GRY",
+      "name": "Women's Genuine Sheepskin Handbag Grey",
+      "type": "Women's Sheepskin Handbag",
+      "ean": "679628801384",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG-2044-BRN",
+      "name": "Women's Genuine Sheepskin Handbag Brown",
+      "type": "Women's Fashion Shoulder Bag",
+      "ean": "679628801391",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "IT614",
+      "name": "Ivanka Trump Women's Handbag Beige",
+      "type": "Ivanka Trump Women's Handbag",
+      "ean": "679628801407",
+      "brand": "Ivanka Trump",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG2874-BLU",
+      "name": "Blue Genuine Embossed Crocodile Cow Leather Bag",
+      "type": "Women's Fashion Handbag",
+      "ean": "679628801414",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    },
+    {
+      "sku": "RBG2319_ORG",
+      "name": "Orange Women's Fashion Clutch Bag",
+      "type": "Women's Fashion Clutch Bag",
+      "ean": "679628801421",
+      "brand": "Rose Bud Global",
+      "category": "Women's Handbags",
+      "location": "USA"
+    }
+  ],
+  "total_home_goods": 55,
+  "total_handbags": 53,
+  "grand_total": 108
+}

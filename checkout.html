@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - RoseBud Global</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/checkout.css">
+    <!-- PayPal SDK - Sandbox -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AeeEJxL75ee5MYIcWJdn6P2ijEhQOTn-fqPgkQazj5xDHRJZ7_W4ibVCOkx52DzgHxQu2uueJzXR33kr&currency=USD&intent=capture" data-sdk-integration-source="button-factory"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-white">
+        <div class="navbar-container">
+            <a href="index.html" class="logo">
+                <img src="images/Rosebud_Global_Logo.png" alt="RoseBud Global" class="logo-img">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="shop.html" class="nav-link">Shop</a></li>
+                <li><a href="supply-services.html" class="nav-link">Supply Services</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <button class="icon-btn search-btn" aria-label="Search">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M20 20L16 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <a href="account.html" class="icon-btn" aria-label="Account">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M5 20C5 16.6863 7.68629 14 11 14H13C16.3137 14 19 16.6863 19 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </a>
+                <a href="cart.html" class="icon-btn cart-btn" aria-label="Cart">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M6 6H21L19 16H8L6 6Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                        <path d="M6 6L5 3H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="10" cy="20" r="1" fill="currentColor"/>
+                        <circle cx="17" cy="20" r="1" fill="currentColor"/>
+                    </svg>
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Processing Overlay with Animation -->
+    <div class="processing-overlay" id="processingOverlay">
+        <div class="processing-content">
+            <h1 class="processing-title">Complete!</h1>
+            
+            <!-- Animated Progress Steps -->
+            <div class="process-steps">
+                <div class="process-step completed">
+                    <div class="step-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span>Shopping cart</span>
+                </div>
+                <div class="step-connector completed"></div>
+                <div class="process-step completed">
+                    <div class="step-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span>Checkout details</span>
+                </div>
+                <div class="step-connector"></div>
+                <div class="process-step inactive">
+                    <div class="step-number">3</div>
+                    <span>Order complete</span>
+                </div>
+            </div>
+            
+            <!-- Animated Processing Text -->
+            <div class="processing-animation">
+                <div class="spinner"></div>
+                <h2 class="processing-text">Processing Order<span class="dots"></span></h2>
+            </div>
+            
+            <!-- Processing Progress Bar -->
+            <div class="processing-progress">
+                <div class="progress-bar-animated"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="checkout-page">
+        <h1 class="page-title">Check Out</h1>
+        
+        <!-- Progress Steps -->
+        <div class="progress-steps">
+            <div class="step completed">
+                <div class="step-circle">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 12L10 17L20 7" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <span class="step-label">Shopping cart</span>
+            </div>
+            <div class="step active">
+                <div class="step-circle">2</div>
+                <span class="step-label">Checkout details</span>
+            </div>
+            <div class="step">
+                <div class="step-circle">3</div>
+                <span class="step-label">Order complete</span>
+            </div>
+        </div>
+
+        <!-- Error Message -->
+        <div class="error-message" id="errorMessage" style="display: none;">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <circle cx="10" cy="10" r="9" stroke="#EF4444" stroke-width="2"/>
+                <path d="M10 6V10" stroke="#EF4444" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="10" cy="14" r="1" fill="#EF4444"/>
+            </svg>
+            <span id="errorText">Please fill in all required fields.</span>
+        </div>
+
+        <!-- Checkout Content -->
+        <div class="checkout-content">
+            <!-- Checkout Forms -->
+            <div class="checkout-forms">
+                <!-- Contact Information -->
+                <div class="form-section">
+                    <h3>Contact Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">FIRST NAME</label>
+                            <input type="text" id="firstName" placeholder="First name" required>
+                            <span class="field-error">Required Field</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">LAST NAME</label>
+                            <input type="text" id="lastName" placeholder="Last name" required>
+                            <span class="field-error">Required Field</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">PHONE NUMBER</label>
+                        <input type="tel" id="phone" placeholder="Phone number" required>
+                        <span class="field-error">Required Field</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">EMAIL ADDRESS</label>
+                        <input type="email" id="email" placeholder="Your Email" required>
+                        <span class="field-error">Required Field</span>
+                    </div>
+                </div>
+
+                <!-- Shipping Address -->
+                <div class="form-section">
+                    <h3>Shipping Address</h3>
+                    <div class="form-group address-autocomplete-wrapper">
+                        <label for="streetAddress">STREET ADDRESS *</label>
+                        <input type="text" id="streetAddress" placeholder="Start typing your address..." required 
+                               autocomplete="off" oninput="handleAddressInput(this.value)" onfocus="showAddressSuggestions()">
+                        <div class="address-suggestions" id="addressSuggestions"></div>
+                        <span class="field-error">Required Field</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">COUNTRY *</label>
+                        <select id="country" required onchange="handleCountryChange()">
+                            <option value="">Select Country</option>
+                            <option value="US" selected>United States</option>
+                            <!-- US Export Approved Countries -->
+                            <option value="CA">Canada</option>
+                            <option value="MX">Mexico</option>
+                            <option value="GB">United Kingdom</option>
+                            <option value="DE">Germany</option>
+                            <option value="FR">France</option>
+                            <option value="IT">Italy</option>
+                            <option value="ES">Spain</option>
+                            <option value="NL">Netherlands</option>
+                            <option value="BE">Belgium</option>
+                            <option value="AT">Austria</option>
+                            <option value="CH">Switzerland</option>
+                            <option value="AU">Australia</option>
+                            <option value="NZ">New Zealand</option>
+                            <option value="JP">Japan</option>
+                            <option value="KR">South Korea</option>
+                            <option value="SG">Singapore</option>
+                            <option value="HK">Hong Kong</option>
+                            <option value="TW">Taiwan</option>
+                            <option value="IE">Ireland</option>
+                            <option value="DK">Denmark</option>
+                            <option value="SE">Sweden</option>
+                            <option value="NO">Norway</option>
+                            <option value="FI">Finland</option>
+                            <option value="PL">Poland</option>
+                            <option value="PT">Portugal</option>
+                            <option value="GR">Greece</option>
+                            <option value="CZ">Czech Republic</option>
+                            <option value="IL">Israel</option>
+                            <option value="AE">United Arab Emirates</option>
+                            <option value="SA">Saudi Arabia</option>
+                            <option value="BR">Brazil</option>
+                            <option value="AR">Argentina</option>
+                            <option value="CL">Chile</option>
+                            <option value="CO">Colombia</option>
+                            <option value="PE">Peru</option>
+                            <option value="NG">Nigeria</option>
+                            <option value="ZA">South Africa</option>
+                            <option value="GH">Ghana</option>
+                            <option value="KE">Kenya</option>
+                            <option value="PH">Philippines</option>
+                            <option value="TH">Thailand</option>
+                            <option value="MY">Malaysia</option>
+                            <option value="ID">Indonesia</option>
+                            <option value="VN">Vietnam</option>
+                            <option value="IN">India</option>
+                        </select>
+                        <span class="field-error">Required Field</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">TOWN / CITY *</label>
+                        <input type="text" id="city" placeholder="Town / City" required autocomplete="address-level2">
+                        <span class="field-error">Required Field</span>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="state">STATE</label>
+                            <input type="text" id="state" placeholder="State" autocomplete="address-level1">
+                        </div>
+                        <div class="form-group">
+                            <label for="zipCode">ZIP CODE</label>
+                            <input type="text" id="zipCode" placeholder="Zip Code" required autocomplete="postal-code">
+                            <span class="field-error">Required Field</span>
+                        </div>
+                    </div>
+                    <label class="checkbox-label" onclick="toggleBillingAddress()">
+                        <input type="checkbox" id="differentBilling">
+                        <span class="checkbox-custom"></span>
+                        Use a different billing address (optional)
+                    </label>
+                    
+                    <!-- Different Billing Address Fields -->
+                    <div class="billing-address-fields" id="billingAddressFields" style="display: none;">
+                        <div class="form-group">
+                            <label for="billingStreet">STREET ADDRESS</label>
+                            <input type="text" id="billingStreet" placeholder="Street Address">
+                        </div>
+                        <div class="form-group">
+                            <label for="billingAddress2">ADDRESS 2</label>
+                            <input type="text" id="billingAddress2" placeholder="Apt, Suite, Unit, etc.">
+                        </div>
+                        <div class="form-group">
+                            <label for="billingCity">CITY</label>
+                            <input type="text" id="billingCity" placeholder="City">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="billingState">STATE</label>
+                                <input type="text" id="billingState" placeholder="State">
+                            </div>
+                            <div class="form-group">
+                                <label for="billingZip">ZIP / POSTAL CODE</label>
+                                <input type="text" id="billingZip" placeholder="Zip / Postal Code">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="form-section">
+                    <h3>Payment method</h3>
+                    
+                    <!-- Payment Options -->
+                    <div class="payment-options">
+                        <label class="payment-option active" id="cardOption" onclick="selectPaymentMethod('card')">
+                            <input type="radio" name="paymentMethod" value="card" checked>
+                            <span class="payment-radio"></span>
+                            <span class="payment-label">Pay by Card Credit</span>
+                            <svg class="payment-icon" width="32" height="32" viewBox="0 0 24 24" fill="none">
+                                <rect x="2" y="4" width="20" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                                <path d="M2 10H22" stroke="currentColor" stroke-width="1.5"/>
+                                <circle cx="18" cy="14" r="2" stroke="currentColor" stroke-width="1.5"/>
+                            </svg>
+                        </label>
+                        
+                        <label class="payment-option" id="paypalOption" onclick="selectPaymentMethod('paypal')">
+                            <input type="radio" name="paymentMethod" value="paypal">
+                            <span class="payment-radio"></span>
+                            <img src="images/PayPal-logo.png" alt="PayPal" class="payment-logo paypal-logo">
+                        </label>
+                        
+                        <label class="payment-option" id="stripeOption" onclick="selectPaymentMethod('stripe')">
+                            <input type="radio" name="paymentMethod" value="stripe">
+                            <span class="payment-radio"></span>
+                            <img src="images/Stripe-logo.svg" alt="Stripe" class="payment-logo stripe-logo">
+                        </label>
+                        </label>
+                    </div>
+                    
+                    <!-- Card Fields (shown when card is selected) -->
+                    <div class="card-fields" id="cardFields">
+                        <div class="form-group">
+                            <label for="cardNumber">CARD NUMBER</label>
+                            <input type="text" id="cardNumber" placeholder="1234 1234 1234 1234" maxlength="19">
+                            <span class="field-error">Required Field</span>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="expDate">EXPIRATION DATE</label>
+                                <input type="text" id="expDate" placeholder="MM/YY" maxlength="5">
+                                <span class="field-error">Required Field</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="cvc">CVC</label>
+                                <input type="text" id="cvc" placeholder="CVC code" maxlength="4">
+                                <span class="field-error">Required Field</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Place Order Button -->
+                <button class="place-order-btn" id="placeOrderBtn" onclick="placeOrder()">Place Order</button>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <h2>Order summary</h2>
+                
+                <!-- Order Items -->
+                <div class="order-items" id="orderItems">
+                    <!-- Items will be dynamically inserted -->
+                </div>
+
+                <!-- Coupon Input -->
+                <div class="order-coupon">
+                    <input type="text" id="orderCouponCode" placeholder="(Coupon Code)">
+                    <button class="apply-btn" onclick="applyCoupon()">Apply</button>
+                </div>
+
+                <!-- Order Totals -->
+                <div class="order-totals">
+                    <div class="total-row coupon-row" id="couponRow" style="display: none;">
+                        <span class="coupon-info">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M15 5V19M9 5V19M3 9H21M3 15H21M5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            </svg>
+                            <span id="couponCodeDisplay">JenkateMW</span>
+                        </span>
+                        <span class="discount-amount">-$25.00 <button class="remove-coupon" onclick="removeCoupon()">[Remove]</button></span>
+                    </div>
+                    <div class="total-row">
+                        <span>Shipping</span>
+                        <span class="shipping-amount" id="shippingAmount">Free</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Subtotal</span>
+                        <span class="subtotal-amount" id="subtotalAmount">$99.00</span>
+                    </div>
+                    <div class="total-row grand-total">
+                        <span>Total</span>
+                        <span class="grand-total-amount" id="grandTotalAmount">$234.00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="images/Rosebud_Global_Logo_White.png" alt="RoseBud Global" class="footer-logo">
+                    <div class="footer-divider"></div>
+                    <span class="footer-tagline">Gift & Decoration Store</span>
+                </div>
+                <nav class="footer-nav">
+                    <a href="index.html">Home</a>
+                    <a href="shop.html">Shop</a>
+                    <a href="supply-services.html">Supply Services</a>
+                    <a href="contact.html">Contact Us</a>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-legal">
+                    <span>Copyright © 2026 Rosebud Global LLC. All rights reserved</span>
+                    <a href="privacy.html">Privacy Policy</a>
+                    <a href="termsofservice.html">Terms of Use</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#" aria-label="Instagram">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/>
+                            <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/>
+                            <circle cx="18" cy="6" r="1" fill="currentColor"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="Facebook">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M18 2H15C13.6739 2 12.4021 2.52678 11.4645 3.46447C10.5268 4.40215 10 5.67392 10 7V10H7V14H10V22H14V14H17L18 10H14V7C14 6.73478 14.1054 6.48043 14.2929 6.29289C14.4804 6.10536 14.7348 6 15 6H18V2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <a href="#" aria-label="YouTube">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect x="2" y="4" width="20" height="16" rx="4" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M10 8L16 12L10 16V8Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/checkout.js"></script>
+</body>
+</html>

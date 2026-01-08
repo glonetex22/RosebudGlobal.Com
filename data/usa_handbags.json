@@ -1,0 +1,705 @@
+[
+  {
+    "sku": "RBG-3011-BLU",
+    "name": "Blue Genuine Embossed Crocodile Patent Leather Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628800837",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-3011-BLU_1_BX64.png",
+      "RBG-3011-BLU_2_BX64.png"
+    ],
+    "primary_image": "RBG-3011-BLU_1_BX64.png"
+  },
+  {
+    "sku": "RBG-W024-25-APR",
+    "name": "Apricot Embossed Genuine Leather Handbag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628800844",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-W024-25-APR_1_BX64.png",
+      "RBG-W024-25-APR_2_BX64.png"
+    ],
+    "primary_image": "RBG-W024-25-APR_1_BX64.png"
+  },
+  {
+    "sku": "RBG-W024-25-BLK",
+    "name": "Black Embossed Genuine Leather Handbag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628800851",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-W024-25-APR_1_BX64.png",
+      "RBG-W024-25-APR_2_BX64.png"
+    ],
+    "primary_image": "RBG-W024-25-APR_1_BX64.png"
+  },
+  {
+    "sku": "RBG-W024-25-BRN",
+    "name": "Brown Embossed Genuine Leather Handbag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628800868",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-W024-25-APR_1_BX64.png",
+      "RBG-W024-25-APR_2_BX64.png"
+    ],
+    "primary_image": "RBG-W024-25-APR_1_BX64.png"
+  },
+  {
+    "sku": "RBG2675-BLU",
+    "name": "Blue Embossed Crocodile Cow Leather Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628800875",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA"
+  },
+  {
+    "sku": "RBG-UB001-BGE",
+    "name": "Beige Original Ostrich Leather Handbag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628800882",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-UB001-BGE_1_BX84.png",
+      "RBG-UB001-BGE_2_BX84.png",
+      "RBG-UB001-BGE_3_BX84.png",
+      "RBG-UB001-BGE_4_BX84.png",
+      "RBG-UB001-BGE_5_BX84.png"
+    ],
+    "primary_image": "RBG-UB001-BGE_1_BX84.png"
+  },
+  {
+    "sku": "RBG-W026-BLU",
+    "name": "Blue Genuine Leather Hobo Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628800899",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-W026-SKYBLU_1_BX66.png",
+      "RBG-W026-SKYBLU_2_BX66.png"
+    ],
+    "primary_image": "RBG-W026-SKYBLU_1_BX66.png"
+  },
+  {
+    "sku": "RBG1175-GAZ",
+    "name": "Gazelle Fur Design Handbag with Leather Accents",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628800905",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG1175_1.png",
+      "RBG1175_2.png",
+      "RBG1175_3.png",
+      "RBG1175_4.png",
+      "RBG1175_5.png"
+    ],
+    "primary_image": "RBG1175_1.png"
+  },
+  {
+    "sku": "RBG-W033-BLK",
+    "name": "Black Genuine Leather Hobo Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628800912",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-W033-BLU_1_BX67.png",
+      "RBG-W033-BLU_2_BX67.png"
+    ],
+    "primary_image": "RBG-W033-BLU_1_BX67.png"
+  },
+  {
+    "sku": "RBG2869-BRN",
+    "name": "Brown Genuine Grain Cow Leather Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628800929",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG2869-BRN_1_BX64.png",
+      "RBG2869-BRN_2_BX64.png"
+    ],
+    "primary_image": "RBG2869-BRN_1_BX64.png"
+  },
+  {
+    "sku": "RBG-W003-CML",
+    "name": "Camel Sheepskin Leather Draw String Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628800936",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-W003-CML_1_BX64.png",
+      "RBG-W003-CML_2_BX64.png"
+    ],
+    "primary_image": "RBG-W003-CML_1_BX64.png"
+  },
+  {
+    "sku": "RBG-W035-BLK",
+    "name": "Black Genuine Leather Handbag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628800943",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-W035-BLK_1_BX65.png",
+      "RBG-W035-BLK_2_BX65.png",
+      "RBG-W035-BLK_3_BX65.png"
+    ],
+    "primary_image": "RBG-W035-BLK_1_BX65.png"
+  },
+  {
+    "sku": "RBG-W038-BGE",
+    "name": "Beige Genuine Leather Hobo",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628800950",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-W038-BGE_1_BX67.png",
+      "RBG-W038-BGE_2_BX67.png"
+    ],
+    "primary_image": "RBG-W038-BGE_1_BX67.png"
+  },
+  {
+    "sku": "RBG2874-ORG",
+    "name": "Orange Genuine Embossed Crocodile Cow Leather Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628800967",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG2874-ORG_1_BX64.png",
+      "RBG2874-ORG_2_BX64.png"
+    ],
+    "primary_image": "RBG2874-ORG_1_BX64.png"
+  },
+  {
+    "sku": "RBG2064-BLU",
+    "name": "Blue Quilted Leather Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628800974",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG2064-BLU_1_BX84.png",
+      "RBG2064-BLU_2_BX84.png"
+    ],
+    "primary_image": "RBG2064-BLU_1_BX84.png"
+  },
+  {
+    "sku": "RBG2373-BLU",
+    "name": "Blue Genuine Wash Cow Leather Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628800981",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG2373-BLU_1_BX64.png",
+      "RBG2373-BLU_2_BX64.png"
+    ],
+    "primary_image": "RBG2373-BLU_1_BX64.png"
+  },
+  {
+    "sku": "RBG-W003-BRN",
+    "name": "Brown Sheepskin Leather Draw String Bag",
+    "type": "Women's Fashion Backpack",
+    "ean": "679628801018",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-W003-BRN_1_BX65.png",
+      "RBG-W003-BRN_2_BX65.png",
+      "RBG-W003-BRN_3_BX65.png"
+    ],
+    "primary_image": "RBG-W003-BRN_1_BX65.png"
+  },
+  {
+    "sku": "RBG-EP0001-BGE",
+    "name": "Beige El Porto Genuine Suede Leather Carrying Case",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801025",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-EP0001-BGE_BX41.png",
+      "RBG-EP0001-BGE_BX84.png"
+    ],
+    "primary_image": "RBG-EP0001-BGE_BX41.png"
+  },
+  {
+    "sku": "RBG-W024-25-BLU",
+    "name": "Blue Embossed Genuine Leather Handbag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801032",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-W024-25-APR_1_BX64.png",
+      "RBG-W024-25-APR_2_BX64.png"
+    ],
+    "primary_image": "RBG-W024-25-APR_1_BX64.png"
+  },
+  {
+    "sku": "RBG-W003-GRN",
+    "name": "Green Sheepskin Leather Draw String Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801049",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-W003-GRN_1_BX64.png",
+      "RBG-W003-GRN_2_BX64.png"
+    ],
+    "primary_image": "RBG-W003-GRN_1_BX64.png"
+  },
+  {
+    "sku": "RBG2044-BRN",
+    "name": "Rosebud Coffee Oil-tanned Leather Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801056",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG2044-BRN_1BX40.png"
+    ],
+    "primary_image": "RBG2044-BRN_1BX40.png"
+  },
+  {
+    "sku": "RBG-W033-BLU",
+    "name": "Blue Genuine Leather Hobo Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801063",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-W033-BLU_1_BX67.png",
+      "RBG-W033-BLU_2_BX67.png"
+    ],
+    "primary_image": "RBG-W033-BLU_1_BX67.png"
+  },
+  {
+    "sku": "RBG1175-GAZL",
+    "name": "Gazelle and Leather Designer Hand Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801070",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG1175-GAZL_1.png",
+      "RBG1175-GAZL_1_BX40.png",
+      "RBG1175-GAZL_1_BX65.png",
+      "RBG1175-GAZL_2.png",
+      "RBG1175-GAZL_2_BX40.png",
+      "RBG1175-GAZL_2_BX65.png",
+      "RBG1175-GAZL_3.png",
+      "RBG1175-GAZL_3_BX65.png",
+      "RBG1175-GAZL_4.png",
+      "RBG1175-GAZL_4_BX65.png",
+      "RBG1175-GAZL_5.png",
+      "RBG1175-GAZL_5_BX65.png"
+    ],
+    "primary_image": "RBG1175-GAZL_1.png"
+  },
+  {
+    "sku": "RBG-W035-BRN",
+    "name": "Brown Genuine Leather Handbag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801094",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-W035-BRN_1_BX65.png",
+      "RBG-W035-BRN_2_BX65.png"
+    ],
+    "primary_image": "RBG-W035-BRN_1_BX65.png"
+  },
+  {
+    "sku": "RBG-W002-ARMYGRN",
+    "name": "Army Green Tote Bag with Leather Trim",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801100",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-W002-ARMYGRN_1_BX84.png",
+      "RBG-W002-ARMYGRN_2_BX84.png"
+    ],
+    "primary_image": "RBG-W002-ARMYGRN_1_BX84.png"
+  },
+  {
+    "sku": "DEER001_BLU",
+    "name": "Rosebud Blue Deer Genuine Italian Leather Shoulder Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801117",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA"
+  },
+  {
+    "sku": "RBG-W002-BLK",
+    "name": "Black Tote Bag with Leather Trim",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801124",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-W002-BLK_1_BX65.png",
+      "RBG-W002-BLK_2_BX65.png"
+    ],
+    "primary_image": "RBG-W002-BLK_1_BX65.png"
+  },
+  {
+    "sku": "RBG-W003-BLK",
+    "name": "Black Sheepskin Leather Draw String Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801148",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-W003-BLK_1_BX656.png",
+      "RBG-W003-BLK_2_BX656.png"
+    ],
+    "primary_image": "RBG-W003-BLK_1_BX656.png"
+  },
+  {
+    "sku": "RBG-W031-25S-APR",
+    "name": "Apricot Genuine Leather Handbag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801155",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-W031-25S-APR_BX55G.png"
+    ],
+    "primary_image": "RBG-W031-25S-APR_BX55G.png"
+  },
+  {
+    "sku": "RBG-W028-25-PINK",
+    "name": "Pink Genuine Patent Leather Handbag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801162",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-W028-25-PINK_BX65.png"
+    ],
+    "primary_image": "RBG-W028-25-PINK_BX65.png"
+  },
+  {
+    "sku": "7741_YEL",
+    "name": "Yellow Genuine Leather Fashion Handbag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801179",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA"
+  },
+  {
+    "sku": "RBG-W034-20S-BLK",
+    "name": "Black Genuine Grain Cow Leather Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801186",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-W034-20S-BLK_1.png",
+      "RBG-W034-20S-BLK_1_BX67.png",
+      "RBG-W034-20S-BLK_2.PNG",
+      "RBG-W034-20S-BLK_2_BX67.PNG",
+      "rbg-w034-20s-blk_1.png",
+      "rbg-w034-20s-blk_2.png"
+    ],
+    "primary_image": "RBG-W034-20S-BLK_1.png"
+  },
+  {
+    "sku": "MT163_BLK",
+    "name": "Black Genuine Grain Cow Leather Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801209",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA"
+  },
+  {
+    "sku": "RBG7675_BLU",
+    "name": "Blue Genuine Leather Handbag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801216",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG7675_BLU_1_BX84.png",
+      "RBG7675_BLU_2_BX84.png"
+    ],
+    "primary_image": "RBG7675_BLU_1_BX84.png"
+  },
+  {
+    "sku": "RBG7376-BLK",
+    "name": "Black Genuine Grain Cow Leather Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801223",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA"
+  },
+  {
+    "sku": "CD14006_BLU",
+    "name": "Blue Genuine Leather Handbag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801230",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA"
+  },
+  {
+    "sku": "SD14032_SIL",
+    "name": "Silver Croco-Print Handbag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801247",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "SD14032_SIL_1_BX84.png",
+      "SD14032_SIL_2_BX84.png"
+    ],
+    "primary_image": "SD14032_SIL_1_BX84.png"
+  },
+  {
+    "sku": "SD14032_GLD",
+    "name": "Gold Croco-Print Handbag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801254",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "SD14032_GLD_1_BX84.png",
+      "SD14032_GLD_2_BX84.png"
+    ],
+    "primary_image": "SD14032_GLD_1_BX84.png"
+  },
+  {
+    "sku": "SHQ7529_SAPBLU",
+    "name": "Genuine Patent Leather Hobo Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801261",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "SHQ7529_SAPBLU_1_BX84.png",
+      "SHQ7529_SAPBLU_2_BX84.png"
+    ],
+    "primary_image": "SHQ7529_SAPBLU_1_BX84.png"
+  },
+  {
+    "sku": "SHQ7485_BLK",
+    "name": "Genuine Croco Print Clutch Bag",
+    "type": "Women's Fashion Clutch Bag",
+    "ean": "679628801278",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "SHQ7485_BLK_BX84.png"
+    ],
+    "primary_image": "SHQ7485_BLK_BX84.png"
+  },
+  {
+    "sku": "HQJUN7376_RED",
+    "name": "Red Genuine Grain Cow Leather Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801285",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA"
+  },
+  {
+    "sku": "SHQ7529_BLK",
+    "name": "Black Genuine Patent Leather Hobo Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801292",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "SHQ7529_BLK_1_BX84.png",
+      "SHQ7529_BLK_2_BX84.png"
+    ],
+    "primary_image": "SHQ7529_BLK_1_BX84.png"
+  },
+  {
+    "sku": "WL1290_PUR",
+    "name": "Purple Women's Fashion Shoulder Bag",
+    "type": "Women's Fashion Shoulder Bag",
+    "ean": "679628801308",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "WL1290_PUR_1_BX84.png",
+      "WL1290_PUR_2_BX84.png"
+    ],
+    "primary_image": "WL1290_PUR_1_BX84.png"
+  },
+  {
+    "sku": "WL1290_BRN",
+    "name": "Brown Women's Fashion Shoulder Bag",
+    "type": "Women's Fashion Shoulder Bag",
+    "ean": "679628801315",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "WL1290_BRN_1_BX84.png",
+      "WL1290_BRN_2_BX84.png"
+    ],
+    "primary_image": "WL1290_BRN_1_BX84.png"
+  },
+  {
+    "sku": "HQJUL7541_BLK",
+    "name": "Black Women's Fashion Shoulder Bag",
+    "type": "Women's Fashion Shoulder Bag",
+    "ean": "679628801322",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA"
+  },
+  {
+    "sku": "HQJUL7541_GRY",
+    "name": "Grey Women's Fashion Shoulder Bag",
+    "type": "Women's Fashion Shoulder Bag",
+    "ean": "679628801339",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA"
+  },
+  {
+    "sku": "CDL14012-BLU",
+    "name": "Blue Genuine Grain Cow Leather Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801346",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA"
+  },
+  {
+    "sku": "RBG-W026-BLK",
+    "name": "Black Genuine Leather Hobo Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801377",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-W026-SKYBLU_1_BX66.png",
+      "RBG-W026-SKYBLU_2_BX66.png"
+    ],
+    "primary_image": "RBG-W026-SKYBLU_1_BX66.png"
+  },
+  {
+    "sku": "RBG-2441-GRY",
+    "name": "Women's Genuine Sheepskin Handbag Grey",
+    "type": "Women's Sheepskin Handbag",
+    "ean": "679628801384",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG-2441-GRY_1_BX40.png",
+      "RBG-2441-GRY_2_BX40.png"
+    ],
+    "primary_image": "RBG-2441-GRY_1_BX40.png"
+  },
+  {
+    "sku": "RBG-2044-BRN",
+    "name": "Women's Genuine Sheepskin Handbag Brown",
+    "type": "Women's Fashion Shoulder Bag",
+    "ean": "679628801391",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA"
+  },
+  {
+    "sku": "IT614",
+    "name": "Ivanka Trump Women's Handbag Beige",
+    "type": "Ivanka Trump Women's Handbag",
+    "ean": "679628801407",
+    "brand": "Ivanka Trump",
+    "category": "Women's Handbags",
+    "location": "USA"
+  },
+  {
+    "sku": "RBG2874-BLU",
+    "name": "Blue Genuine Embossed Crocodile Cow Leather Bag",
+    "type": "Women's Fashion Handbag",
+    "ean": "679628801414",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG2874-BLU_1_BX64.png",
+      "RBG2874-BLU_2_BX64.png"
+    ],
+    "primary_image": "RBG2874-BLU_1_BX64.png"
+  },
+  {
+    "sku": "RBG2319_ORG",
+    "name": "Orange Women's Fashion Clutch Bag",
+    "type": "Women's Fashion Clutch Bag",
+    "ean": "679628801421",
+    "brand": "Rose Bud Global",
+    "category": "Women's Handbags",
+    "location": "USA",
+    "images": [
+      "RBG2319_1.png",
+      "RBG2319_2.png",
+      "RBG2319_3.png",
+      "RBG2319_4.png",
+      "RBG2319_5.png"
+    ],
+    "primary_image": "RBG2319_1.png"
+  }
+]

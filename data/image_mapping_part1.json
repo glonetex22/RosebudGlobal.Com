@@ -1,0 +1,334 @@
+{
+  "RBG-CD037-25C_MULTI": {
+    "images": [
+      "RBG-CD037-25C_MULTI_1.png",
+      "rbg-cd037-25c_multi_1.png"
+    ],
+    "primary": "RBG-CD037-25C_MULTI_1.png",
+    "count": 2
+  },
+  "RBG-CD022-25-BRN": {
+    "images": [
+      "rbg-cd022-25-brn.png"
+    ],
+    "primary": "rbg-cd022-25-brn.png",
+    "count": 1
+  },
+  "RBG-CDL028-25-ORG": {
+    "images": [
+      "rbg-cdl028-25-org_1.png",
+      "rbg-cdl028-25-org_2.png",
+      "rbg-cdl028-25-org_3.png",
+      "rbg-cdl028-25-org_4.png",
+      "rbg-cdl028-25-org_5.png"
+    ],
+    "primary": "rbg-cdl028-25-org_1.png",
+    "count": 5
+  },
+  "RBG-CDL036-22S-BLKGRN": {
+    "images": [
+      "RBG-CDL036-22S-BLKGRN_1.png",
+      "RBG-CDL036-22S-BLKGRN_2.PNG",
+      "RBG-CDL036-22S-BLKGRN_3.png",
+      "RBG-CDL036-22S-BLKGRN_4.png",
+      "RBG-CDL036-22S-BLKGRN_5.png",
+      "rbg-cdl036-22s-blkgrn_1.png",
+      "rbg-cdl036-22s-blkgrn_2.png",
+      "rbg-cdl036-22s-blkgrn_3.png",
+      "rbg-cdl036-22s-blkgrn_4.png",
+      "rbg-cdl036-22s-blkgrn_5.png"
+    ],
+    "primary": "RBG-CDL036-22S-BLKGRN_1.png",
+    "count": 10
+  },
+  "RBG-6290-RSERED": {
+    "images": [
+      "rbg-6290-rsered_1.png"
+    ],
+    "primary": "rbg-6290-rsered_1.png",
+    "count": 1
+  },
+  "RBG-2441-GRY": {
+    "images": [
+      "RBG-2441-GRY_1_BX40.png",
+      "RBG-2441-GRY_2_BX40.png"
+    ],
+    "primary": "RBG-2441-GRY_1_BX40.png",
+    "count": 2
+  },
+  "RBG-AL6039": {
+    "images": [
+      "RBG-AL6039_1.png",
+      "RBG-AL6039_2.png",
+      "RBG-AL6039_3.png",
+      "RBG-AL6039_4.png",
+      "RBG-AL6039_4.png",
+      "RBG-AL6039_6.png",
+      "RBG-AL6039_7.png",
+      "RBG-AL6039_8.png"
+    ],
+    "primary": "RBG-AL6039_1.png",
+    "count": 8
+  },
+  "RBG-7376": {
+    "images": [
+      "RBG-7376_1_BX84.png",
+      "RBG-7376_2_BX84.png"
+    ],
+    "primary": "RBG-7376_1_BX84.png",
+    "count": 2
+  },
+  "RBG-2881": {
+    "images": [
+      "rbg-2881_3.png",
+      "rbg-2881_4.png",
+      "rbg-2881_5.png"
+    ],
+    "primary": "rbg-2881_3.png",
+    "count": 3
+  },
+  "RBG-CD022-25-BLU": {
+    "images": [
+      "rbg-cd022-25-blu.png"
+    ],
+    "primary": "rbg-cd022-25-blu.png",
+    "count": 1
+  },
+  "RBG-CD008-26S-RED": {
+    "images": [
+      "rbg-cd008-26s-red_1.png",
+      "rbg-cd008-26s-red_2.png",
+      "rbg-cd008-26s-red_3.png"
+    ],
+    "primary": "rbg-cd008-26s-red_1.png",
+    "count": 3
+  },
+  "RBG-CD008-26S-PUR": {
+    "images": [
+      "RBG-CD008-26S-PUR_2.png",
+      "rbg-cd008-26s-pur_1.png"
+    ],
+    "primary": "RBG-CD008-26S-PUR_2.png",
+    "count": 2
+  },
+  "RBG-CDL036-22S-MIX": {
+    "images": [
+      "RBG-CDL036-22S-MIX.PNG",
+      "rbg-cdl036-22s-mix.png"
+    ],
+    "primary": "RBG-CDL036-22S-MIX.PNG",
+    "count": 2
+  },
+  "RBG-CD008-26S-BLK": {
+    "images": [
+      "rbg-cd008-26s-blk.png"
+    ],
+    "primary": "rbg-cd008-26s-blk.png",
+    "count": 1
+  },
+  "RBG-CD022-25-PNK": {
+    "images": [
+      "rbg-cd022-25-pnk_1.png",
+      "rbg-cd022-25-pnk_2.png",
+      "rbg-cd022-25-pnk_3.png"
+    ],
+    "primary": "rbg-cd022-25-pnk_1.png",
+    "count": 3
+  },
+  "RBG-6290-BGE": {
+    "images": [
+      "rbg-6290-bge_1.png",
+      "rbg-6290-bge_2.png",
+      "rbg-6290-bge_3.png",
+      "rbg-6290-bge_4.png",
+      "rbg-6290-bge_5.png"
+    ],
+    "primary": "rbg-6290-bge_1.png",
+    "count": 5
+  },
+  "RBG-CD135-6010-BLKWT": {
+    "images": [
+      "rbg-cd135-6010-blkwt_1.png",
+      "rbg-cd135-6010-blkwt_2.png",
+      "rbg-cd135-6010-blkwt_3.png"
+    ],
+    "primary": "rbg-cd135-6010-blkwt_1.png",
+    "count": 3
+  },
+  "RBG-CD257-160-BLU": {
+    "images": [
+      "rbg-cd257-160-blu.png"
+    ],
+    "primary": "rbg-cd257-160-blu.png",
+    "count": 1
+  },
+  "RBG-CD024-25-APR": {
+    "images": [
+      "rbg-cd024-25-apr.png"
+    ],
+    "primary": "rbg-cd024-25-apr.png",
+    "count": 1
+  },
+  "RBG-EP0001-2-BGE": {
+    "images": [
+      "RBG-EP0001-2-BGE_BX41.png"
+    ],
+    "primary": "RBG-EP0001-2-BGE_BX41.png",
+    "count": 1
+  },
+  "RBG-CD017-25-SBLU": {
+    "images": [
+      "rbg-cd017-25-sblu.png"
+    ],
+    "primary": "rbg-cd017-25-sblu.png",
+    "count": 1
+  },
+  "MULTI-COLOR COS_RBG": {
+    "images": [
+      "Multi-Color Cos_RBG_0001.png",
+      "Multi-Color Cos_RBG_0002.png"
+    ],
+    "primary": "Multi-Color Cos_RBG_0001.png",
+    "count": 2
+  },
+  "RBG-CD026-26-BLK": {
+    "images": [
+      "rbg-cd026-26-blk.png"
+    ],
+    "primary": "rbg-cd026-26-blk.png",
+    "count": 1
+  },
+  "RBG-CD017-25-APRVIN_MIX": {
+    "images": [
+      "rbg-cd017-25-aprvin_mix.png"
+    ],
+    "primary": "rbg-cd017-25-aprvin_mix.png",
+    "count": 1
+  },
+  "RBG-CD017-25-GGRNN": {
+    "images": [
+      "rbg-cd017-25-ggrnn_1.png",
+      "rbg-cd017-25-ggrnn_2.png",
+      "rbg-cd017-25-ggrnn_3.png"
+    ],
+    "primary": "rbg-cd017-25-ggrnn_1.png",
+    "count": 3
+  },
+  "RBG-CDL028-25-BLU": {
+    "images": [
+      "rbg-cdl028-25-blu.png"
+    ],
+    "primary": "rbg-cdl028-25-blu.png",
+    "count": 1
+  },
+  "RBG-CD017-25-BLK": {
+    "images": [
+      "rbg-cd017-25-blk.png"
+    ],
+    "primary": "rbg-cd017-25-blk.png",
+    "count": 1
+  },
+  "RBG-EP0001-BGE": {
+    "images": [
+      "RBG-EP0001-BGE_BX41.png",
+      "RBG-EP0001-BGE_BX84.png"
+    ],
+    "primary": "RBG-EP0001-BGE_BX41.png",
+    "count": 2
+  },
+  "RBG-CD031-25S-APR": {
+    "images": [
+      "rbg-cd031-25s-apr.png"
+    ],
+    "primary": "rbg-cd031-25s-apr.png",
+    "count": 1
+  },
+  "RBG-CD008-26S-MIX": {
+    "images": [
+      "rbg-cd008-26s-mix.png"
+    ],
+    "primary": "rbg-cd008-26s-mix.png",
+    "count": 1
+  },
+  "RBG-CDL028-25-BLK": {
+    "images": [
+      "rbg-cdl028-25-blk.png"
+    ],
+    "primary": "rbg-cdl028-25-blk.png",
+    "count": 1
+  },
+  "RBG-CD031-25S-BLU": {
+    "images": [
+      "rbg-cd031-25s-blu_1.png",
+      "rbg-cd031-25s-blu_2.png",
+      "rbg-cd031-25s-blu_3.png",
+      "rbg-cd031-25s-blu_4.png"
+    ],
+    "primary": "rbg-cd031-25s-blu_1.png",
+    "count": 4
+  },
+  "RBG-CD017-25-YEL": {
+    "images": [
+      "rbg-cd017-25-yel.png"
+    ],
+    "primary": "rbg-cd017-25-yel.png",
+    "count": 1
+  },
+  "RBG-CD024-25-BRN": {
+    "images": [
+      "rbg-cd024-25-brn.png"
+    ],
+    "primary": "rbg-cd024-25-brn.png",
+    "count": 1
+  },
+  "RBG-3011-BLU": {
+    "images": [
+      "RBG-3011-BLU_1_BX64.png",
+      "RBG-3011-BLU_2_BX64.png"
+    ],
+    "primary": "RBG-3011-BLU_1_BX64.png",
+    "count": 2
+  },
+  "RBG-CD017-25-APR": {
+    "images": [
+      "rbg-cd017-25-apr.png"
+    ],
+    "primary": "rbg-cd017-25-apr.png",
+    "count": 1
+  },
+  "RBG-CDL028-25-VIN": {
+    "images": [
+      "rbg-cdl028-25-vin.png"
+    ],
+    "primary": "rbg-cdl028-25-vin.png",
+    "count": 1
+  },
+  "RBG-CDL028-25-PINK": {
+    "images": [
+      "rbg-cdl028-25-pink.png"
+    ],
+    "primary": "rbg-cdl028-25-pink.png",
+    "count": 1
+  },
+  "RBG-CD026-26-DBLU": {
+    "images": [
+      "rbg-cd026-26-dblu.png"
+    ],
+    "primary": "rbg-cd026-26-dblu.png",
+    "count": 1
+  },
+  "RBG-CD031-25S-AQUA": {
+    "images": [
+      "rbg-cd031-25s-aqua.png"
+    ],
+    "primary": "rbg-cd031-25s-aqua.png",
+    "count": 1
+  },
+  "RBG-CD017-25-VIN": {
+    "images": [
+      "rbg-cd017-25-vin.png"
+    ],
+    "primary": "rbg-cd017-25-vin.png",
+    "count": 1
+  }
+}

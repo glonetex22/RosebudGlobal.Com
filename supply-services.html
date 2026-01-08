@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supply Services - RoseBud Global</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/supply-services.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-white">
+        <div class="navbar-container">
+            <a href="index.html" class="logo">
+                <img src="images/Rosebud_Global_Logo.png" alt="RoseBud Global" class="logo-img">
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="shop.html" class="nav-link">Shop</a></li>
+                <li><a href="supply-services.html" class="nav-link active">Supply Services</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <button class="icon-btn search-btn" aria-label="Search">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M20 20L16 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <a href="#" class="icon-btn" aria-label="Account">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M5 20C5 16.6863 7.68629 14 11 14H13C16.3137 14 19 16.6863 19 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                </a>
+                <button class="icon-btn cart-btn" aria-label="Cart" onclick="toggleCart()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M6 6H21L19 16H8L6 6Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                        <path d="M6 6L5 3H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="10" cy="20" r="1" fill="currentColor"/>
+                        <circle cx="17" cy="20" r="1" fill="currentColor"/>
+                    </svg>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="supply-hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Supply Services</h1>
+            <p class="hero-subtitle">Wholesale & Corporate Solutions for Your Business</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="supply-page">
+        <!-- Breadcrumbs -->
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="index.html" class="breadcrumb-link">Home</a>
+            <span class="breadcrumb-separator">›</span>
+            <span class="breadcrumb-current">Supply Services</span>
+        </nav>
+
+        <!-- Intro Section -->
+        <section class="intro-section">
+            <h2 class="section-title">Partner With Us</h2>
+            <p class="section-description">RoseBud Global offers comprehensive supply services for businesses of all sizes. Whether you're a retailer looking for wholesale products, a corporation seeking custom corporate gifts, or an event planner needing bulk orders, we have the solutions to meet your needs.</p>
+        </section>
+
+        <!-- Services Grid -->
+        <section class="services-section">
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <path d="M6 12H42V36C42 38.2091 40.2091 40 38 40H10C7.79086 40 6 38.2091 6 36V12Z" stroke="#D63585" stroke-width="2.5"/>
+                            <path d="M6 12L24 24L42 12" stroke="#D63585" stroke-width="2.5"/>
+                            <path d="M6 8C6 6.89543 6.89543 6 8 6H40C41.1046 6 42 6.89543 42 8V12H6V8Z" stroke="#D63585" stroke-width="2.5"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Wholesale Distribution</h3>
+                    <p class="service-description">Access our complete catalog at wholesale prices. Perfect for retailers, gift shops, and home decor stores looking to stock quality products from trusted brands.</p>
+                    <ul class="service-features">
+                        <li>Competitive wholesale pricing</li>
+                        <li>Minimum order quantities available</li>
+                        <li>Regular restocking support</li>
+                        <li>Exclusive retailer discounts</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <rect x="6" y="10" width="36" height="28" rx="4" stroke="#D63585" stroke-width="2.5"/>
+                            <path d="M6 18H42" stroke="#D63585" stroke-width="2.5"/>
+                            <path d="M16 26H24" stroke="#D63585" stroke-width="2.5" stroke-linecap="round"/>
+                            <path d="M16 32H32" stroke="#D63585" stroke-width="2.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Corporate Gifting</h3>
+                    <p class="service-description">Elevate your corporate gifting with premium products. From employee appreciation gifts to client thank-you packages, we create memorable experiences.</p>
+                    <ul class="service-features">
+                        <li>Custom gift packaging</li>
+                        <li>Branded gift solutions</li>
+                        <li>Bulk order discounts</li>
+                        <li>Nationwide delivery</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <path d="M24 4L28 16H40L30 24L34 36L24 28L14 36L18 24L8 16H20L24 4Z" stroke="#D63585" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Custom Branding</h3>
+                    <p class="service-description">Add your company logo or custom designs to our products. Perfect for promotional items, corporate events, and branded merchandise.</p>
+                    <ul class="service-features">
+                        <li>Logo printing & engraving</li>
+                        <li>Custom color options</li>
+                        <li>Design consultation</li>
+                        <li>Sample approval process</li>
+                    </ul>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="18" stroke="#D63585" stroke-width="2.5"/>
+                            <path d="M24 12V24L32 28" stroke="#D63585" stroke-width="2.5" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Event Planning Support</h3>
+                    <p class="service-description">From weddings to corporate events, we provide bulk product supply with flexible delivery schedules and event-specific customization.</p>
+                    <ul class="service-features">
+                        <li>Wedding registry services</li>
+                        <li>Event favors & gifts</li>
+                        <li>Timed delivery coordination</li>
+                        <li>Return policy for unused items</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Section -->
+        <section class="process-section">
+            <h2 class="section-title">How It Works</h2>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Contact Us</h3>
+                    <p class="step-description">Reach out through our contact form or call us directly to discuss your requirements.</p>
+                </div>
+                <div class="process-arrow">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <path d="M8 20H32" stroke="#D63585" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M24 12L32 20L24 28" stroke="#D63585" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Get a Quote</h3>
+                    <p class="step-description">Receive a customized quote based on your order volume and specifications.</p>
+                </div>
+                <div class="process-arrow">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <path d="M8 20H32" stroke="#D63585" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M24 12L32 20L24 28" stroke="#D63585" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Approve Samples</h3>
+                    <p class="step-description">Review product samples and approve designs before production begins.</p>
+                </div>
+                <div class="process-arrow">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <path d="M8 20H32" stroke="#D63585" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M24 12L32 20L24 28" stroke="#D63585" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Delivery</h3>
+                    <p class="step-description">Your order is produced and delivered to your specified location on schedule.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Brands Section -->
+        <section class="brands-section">
+            <h2 class="section-title">Brands We Carry</h2>
+            <p class="section-description">We are authorized distributors for premium brands in fine china, crystal, home decor, and specialty gifts.</p>
+            <div class="brand-logos">
+                <div class="brand-logo"><img src="images/brands-new/lenox-logo.png" alt="Lenox"></div>
+                <div class="brand-logo"><img src="images/brands-new/noritake-seeklogo.png" alt="Noritake"></div>
+                <div class="brand-logo"><img src="images/brands-new/mikasa-seeklogo.png" alt="Mikasa"></div>
+                <div class="brand-logo"><img src="images/brands-new/kate-spade-logo.png" alt="Kate Spade"></div>
+                <div class="brand-logo"><img src="images/brands-new/olivia-riegel-transparent.png" alt="Olivia Riegel"></div>
+                <div class="brand-logo"><img src="images/brands-new/tozai-home-transparent.png" alt="Tozai Home"></div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2 class="cta-title">Ready to Get Started?</h2>
+                <p class="cta-description">Contact our supply services team today to discuss your business needs and receive a customized quote.</p>
+                <div class="cta-buttons">
+                    <a href="contact.html" class="cta-btn primary">Contact Us</a>
+                    <a href="tel:5551234567" class="cta-btn secondary">Call (555) 123-4567</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="newsletter-bg">
+            <img src="images/Newsletter_Card.png" alt="" class="newsletter-bg-image">
+        </div>
+        <div class="newsletter-card-container">
+            <div class="newsletter-card">
+                <div class="newsletter-header">
+                    <h2 class="newsletter-title">Join Our Newsletter</h2>
+                    <p class="newsletter-description">Sign up for deals, new products and promotions</p>
+                </div>
+                <div class="newsletter-form-wrapper">
+                    <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+                        <div class="newsletter-input-row">
+                            <div class="newsletter-icon-input">
+                                <svg class="newsletter-email-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M2.88 5.88L12 12L21.12 5.88C20.74 4.8 19.71 4 18.5 4H5.5C4.29 4 3.26 4.8 2.88 5.88Z" fill="#D63585"/>
+                                    <path d="M21.33 7.69L12 14L2.67 7.69C2.56 8.1 2.5 8.54 2.5 9V17C2.5 18.66 3.84 20 5.5 20H18.5C20.16 20 21.5 18.66 21.5 17V9C21.5 8.54 21.44 8.1 21.33 7.69Z" fill="#D63585"/>
+                                </svg>
+                                <input type="email" class="newsletter-input" placeholder="Email address" required>
+                            </div>
+                            <button type="submit" class="newsletter-submit-btn">Signup</button>
+                        </div>
+                        <div class="newsletter-underline"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <img src="images/Rosebud_Global_Logo_White.png" alt="RoseBud Global" class="footer-logo">
+                    <span class="footer-divider"></span>
+                    <p class="footer-tagline">Gift & Decoration Store</p>
+                </div>
+                <nav class="footer-nav">
+                    <a href="index.html" class="footer-link">Home</a>
+                    <a href="shop.html" class="footer-link">Shop</a>
+                    <a href="supply-services.html" class="footer-link">Supply Services</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-legal">
+                    <p class="copyright">Copyright © 2026 Rosebud Global LLC. All rights reserved</p>
+                    <a href="privacy.html" class="legal-link">Privacy Policy</a>
+                    <a href="termsofservice.html" class="legal-link">Terms of Use</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#" class="social-link" aria-label="Instagram">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1.5"/>
+                            <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.5"/>
+                            <circle cx="18" cy="6" r="1.5" fill="currentColor"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Facebook">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M18 2H15C13.6739 2 12.4021 2.52678 11.4645 3.46447C10.5268 4.40215 10 5.67392 10 7V10H7V14H10V22H14V14H17L18 10H14V7C14 6.73478 14.1054 6.48043 14.2929 6.29289C14.4804 6.10536 14.7348 6 15 6H18V2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="YouTube">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <rect x="2" y="4" width="20" height="16" rx="4" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M10 9L15 12L10 15V9Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Shopping Cart</h3>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p class="empty-cart">Your cart is empty</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <button class="checkout-btn" onclick="handleCheckout()">Checkout</button>
+        </div>
+    </div>
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+    <script>
+        function handleNewsletterSubmit(event) {
+            event.preventDefault();
+            const emailInput = event.target.querySelector('input[type="email"]');
+            alert(`Thank you for subscribing!\n\nWe've sent a confirmation to: ${emailInput.value}`);
+            emailInput.value = '';
+        }
+    </script>
+</body>
+</html>

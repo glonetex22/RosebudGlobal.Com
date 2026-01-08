@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - RoseBud Global</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/contact.css">
+    <style>
+        /* Contact Card Animation */
+        .contact-card {
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(214, 53, 133, 0.15);
+        }
+        .contact-card.animate {
+            animation: cardPulse 0.5s ease;
+        }
+        @keyframes cardPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.95); }
+            100% { transform: scale(1); }
+        }
+        .card-icon img {
+            transition: transform 0.3s ease;
+        }
+        .contact-card:hover .card-icon img {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        /* Inquiry Cart Items Display */
+        .inquiry-cart-section { background: #EFF6FF; border: 2px solid #2563EB; border-radius: 12px; padding: 24px; margin-bottom: 32px; display: none; }
+        .inquiry-cart-section.visible { display: block; }
+        .inquiry-cart-section h4 { font-family: 'Poppins', sans-serif; font-size: 18px; font-weight: 600; color: #2563EB; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        .inquiry-cart-section h4 svg { width: 24px; height: 24px; }
+        .inquiry-items-list { display: flex; flex-direction: column; gap: 12px; }
+        .inquiry-item { display: flex; gap: 16px; background: white; padding: 16px; border-radius: 8px; align-items: center; }
+        .inquiry-item img { width: 80px; height: 80px; object-fit: cover; border-radius: 8px; background: #F3F5F7; flex-shrink: 0; }
+        .inquiry-item-info { flex: 1; }
+        .inquiry-item-name { font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 600; color: #141718; margin-bottom: 4px; }
+        .inquiry-item-description { font-family: 'Inter', sans-serif; font-size: 13px; color: #6C7275; line-height: 1.4; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .inquiry-item-qty { font-family: 'Poppins', sans-serif; font-size: 14px; color: #2563EB; font-weight: 600; }
+        .inquiry-item-remove { background: none; border: none; color: #EF4444; cursor: pointer; padding: 8px; font-size: 18px; }
+        .inquiry-item-remove:hover { color: #DC2626; }
+        .clear-inquiry-btn { background: none; border: 1px solid #6C7275; color: #6C7275; padding: 8px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; margin-top: 12px; }
+        .clear-inquiry-btn:hover { background: #F3F5F7; }
+        
+        /* Legacy single product preview */
+        .inquiry-product-preview { background: #F3F5F7; border-radius: 8px; padding: 24px; margin-bottom: 32px; display: none; }
+        .inquiry-product-preview.visible { display: block; }
+        .inquiry-product-preview h4 { font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 600; color: #141718; margin-bottom: 16px; }
+        .inquiry-product-card { display: flex; gap: 16px; background: white; padding: 16px; border-radius: 8px; }
+        .inquiry-product-card img { width: 100px; height: 100px; object-fit: cover; border-radius: 8px; background: #F3F5F7; }
+        .inquiry-product-info { flex: 1; }
+        .inquiry-product-name { font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 600; color: #141718; margin-bottom: 8px; }
+        .inquiry-product-description { font-family: 'Inter', sans-serif; font-size: 14px; color: #6C7275; margin-bottom: 8px; line-height: 1.5; }
+        .inquiry-product-price { font-family: 'Poppins', sans-serif; font-size: 18px; font-weight: 600; color: #D63585; }
+        .inquiry-product-sku { font-size: 12px; color: #6C7275; margin-top: 4px; }
+        .form-group.has-error input, .form-group.has-error select { border-color: #D63585; }
+        .form-group .error-message { color: #D63585; font-size: 12px; margin-top: 4px; display: none; }
+        .form-group.has-error .error-message { display: block; }
+        .success-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 10000; }
+        .success-modal-overlay.active { display: flex; }
+        .success-modal { background: white; border-radius: 16px; padding: 48px; max-width: 480px; text-align: center; }
+        .success-modal .success-icon { width: 80px; height: 80px; background: #38CB89; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; }
+        .success-modal h3 { font-family: 'Poppins', sans-serif; font-size: 24px; font-weight: 600; color: #141718; margin-bottom: 16px; }
+        .success-modal p { font-family: 'Inter', sans-serif; font-size: 16px; color: #6C7275; line-height: 1.6; margin-bottom: 24px; }
+        .success-modal .close-btn { background: #D63585; color: white; border: none; padding: 12px 32px; border-radius: 8px; font-family: 'Inter', sans-serif; font-weight: 500; font-size: 16px; cursor: pointer; }
+        .success-modal .close-btn:hover { background: #B82D71; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-white">
+        <div class="navbar-container">
+            <a href="index.html" class="logo"><img src="images/Rosebud_Global_Logo.png" alt="RoseBud Global" class="logo-img"></a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="shop.html" class="nav-link">Shop</a></li>
+                <li><a href="supply-services.html" class="nav-link">Supply Services</a></li>
+                <li><a href="contact.html" class="nav-link active">Contact</a></li>
+            </ul>
+            <div class="nav-icons">
+                <button class="icon-btn search-btn" aria-label="Search" onclick="toggleSearch()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M20 20L16 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </button>
+                <a href="javascript:void(0)" class="icon-btn" aria-label="Account" onclick="goToAccount()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M5 20C5 16.6863 7.68629 14 11 14H13C16.3137 14 19 16.6863 19 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </a>
+                <button class="icon-btn cart-btn" aria-label="Cart" onclick="toggleCart()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M6 6H21L19 16H8L6 6Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M6 6L5 3H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="20" r="1" fill="currentColor"/><circle cx="17" cy="20" r="1" fill="currentColor"/></svg>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="contact-page">
+        <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="index.html" class="breadcrumb-link">Home</a>
+            <span class="breadcrumb-separator">›</span>
+            <span class="breadcrumb-current">Contact Us</span>
+        </nav>
+
+        <section class="contact-header">
+            <h1 class="contact-headline">We believe in sustainable decor. We're passionate about life at home.</h1>
+            <p class="contact-subheadline">Our features timeless furniture, with natural fabrics, curved lines, plenty of mirrors and classic design.</p>
+        </section>
+
+        <section class="about-section">
+            <div class="about-image"><img src="images/hero/Tozai_Home.png" alt="RoseBud Global Showroom"></div>
+            <div class="about-content">
+                <h2 class="about-title">About Us</h2>
+                <p class="about-text"><span class="highlight">RoseBud Global</span> is a gift & decorations store based in New Jersey, USA. Est since 2019.</p>
+                <p class="about-text">Our customer service is always prepared to support you 24/7</p>
+                <a href="shop.html" class="shop-now-link">Shop Now <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4.16667 10H15.8333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M10.8333 5L15.8333 10L10.8333 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+        </section>
+
+        <section class="contact-info-section">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="contact-cards">
+                <div class="contact-card" onclick="animateCard(this)">
+                    <div class="card-icon">
+                        <img src="images/icon-store.png" alt="Address" style="width: 32px; height: 32px; filter: brightness(0) saturate(100%) invert(29%) sepia(93%) saturate(1352%) hue-rotate(314deg) brightness(91%) contrast(92%);">
+                    </div>
+                    <h3 class="card-label">ADDRESS</h3>
+                    <p class="card-value">New Jersey, USA</p>
+                </div>
+                <div class="contact-card" onclick="animateCard(this); window.location.href='mailto:contact@rosebudglobal.com'">
+                    <div class="card-icon">
+                        <img src="images/icon-mail.png" alt="Email" style="width: 32px; height: 32px; filter: brightness(0) saturate(100%) invert(29%) sepia(93%) saturate(1352%) hue-rotate(314deg) brightness(91%) contrast(92%);">
+                    </div>
+                    <h3 class="card-label">CONTACT US</h3>
+                    <p class="card-value">contact@rosebudglobal.com</p>
+                </div>
+                <div class="contact-card" onclick="animateCard(this); window.location.href='tel:+18885550123'">
+                    <div class="card-icon">
+                        <img src="images/icon-call.png" alt="Phone" style="width: 32px; height: 32px; filter: brightness(0) saturate(100%) invert(29%) sepia(93%) saturate(1352%) hue-rotate(314deg) brightness(91%) contrast(92%);">
+                    </div>
+                    <h3 class="card-label">PHONE</h3>
+                    <p class="card-value">+1 (888) 555-0123</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-form-section">
+            <div class="form-container">
+                <!-- Inquiry Cart Items Display -->
+                <div class="inquiry-cart-section" id="inquiryCartSection">
+                    <h4>
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M9 5H7C5.89543 5 5 5.89543 5 7V19C5 20.1046 5.89543 21 7 21H17C18.1046 21 19 20.1046 19 19V7C19 5.89543 18.1046 5 17 5H15" stroke="currentColor" stroke-width="2"/><rect x="9" y="3" width="6" height="4" rx="1" stroke="currentColor" stroke-width="2"/></svg>
+                        Inquiry Items
+                    </h4>
+                    <div class="inquiry-items-list" id="inquiryItemsList">
+                        <!-- Items populated dynamically -->
+                    </div>
+                    <button type="button" class="clear-inquiry-btn" onclick="clearInquiryCart()">Clear All Items</button>
+                </div>
+                
+                <div class="inquiry-product-preview" id="inquiryProductPreview">
+                    <h4>Product Inquiry</h4>
+                    <div class="inquiry-product-card">
+                        <img src="" alt="Product" id="inquiryProductImage">
+                        <div class="inquiry-product-info">
+                            <p class="inquiry-product-name" id="inquiryProductName"></p>
+                            <p class="inquiry-product-description" id="inquiryProductDescription"></p>
+                            <p class="inquiry-product-price" id="inquiryProductPrice"></p>
+                            <p class="inquiry-product-sku" id="inquiryProductSku"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <form class="contact-form" id="contactForm" onsubmit="handleContactSubmit(event)" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">FIRST NAME *</label>
+                            <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
+                            <span class="error-message">First name is required</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">LAST NAME *</label>
+                            <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
+                            <span class="error-message">Last name is required</span>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="company">COMPANY</label>
+                            <input type="text" id="company" name="company" placeholder="Company Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="industry">INDUSTRY</label>
+                            <select id="industry" name="industry">
+                                <option value="">Select Industry</option>
+                                <option value="retail">Retail</option>
+                                <option value="hospitality">Hospitality</option>
+                                <option value="corporate">Corporate</option>
+                                <option value="healthcare">Healthcare</option>
+                                <option value="automotive">Automotive</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">EMAIL ADDRESS *</label>
+                            <input type="email" id="email" name="email" placeholder="Your Email" required>
+                            <span class="error-message">Valid email is required</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">MOBILE NUMBER *</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000" required>
+                            <span class="error-message">Mobile number is required</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">COMMENTS</label>
+                        <textarea id="message" name="message" placeholder="Your message or inquiry details" rows="6"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387193.30591910525!2d-74.25986432970719!3d40.697149422113014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY!5e0!3m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </section>
+    </main>
+
+    <section class="values-section">
+        <div class="value-card"><div class="value-icon"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><path d="M6 24V36C6 38.2091 7.79086 40 10 40H38C40.2091 40 42 38.2091 42 36V24" stroke="#D63585" stroke-width="2.5"/><path d="M6 16L24 6L42 16" stroke="#D63585" stroke-width="2.5"/></svg></div><h3 class="value-title">Free Shipping</h3><p class="value-text">Order above $200</p></div>
+        <div class="value-card"><div class="value-icon"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="8" y="8" width="32" height="32" rx="4" stroke="#D63585" stroke-width="2.5"/></svg></div><h3 class="value-title">Money-back</h3><p class="value-text">30 days guarantee</p></div>
+        <div class="value-card"><div class="value-icon"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" stroke="#D63585" stroke-width="2.5"/><path d="M24 14V24L30 30" stroke="#D63585" stroke-width="2.5" stroke-linecap="round"/></svg></div><h3 class="value-title">Secure Payments</h3><p class="value-text">Secured by Stripe</p></div>
+        <div class="value-card"><div class="value-icon"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><path d="M39.1067 30.08V35.08" stroke="#D63585" stroke-width="2.5"/></svg></div><h3 class="value-title">24/7 Support</h3><p class="value-text">Phone and Email support</p></div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand"><img src="images/Rosebud_Global_Logo_White.png" alt="RoseBud Global" class="footer-logo"><span class="footer-divider"></span><p class="footer-tagline">Gift & Decoration Store</p></div>
+                <nav class="footer-nav">
+                    <a href="index.html" class="footer-link">Home</a>
+                    <a href="shop.html" class="footer-link">Shop</a>
+                    <a href="supply-services.html" class="footer-link">Supply Services</a>
+                    <a href="contact.html" class="footer-link">Contact</a>
+                </nav>
+            </div>
+            <div class="footer-bottom">
+                <div class="footer-legal">
+                    <p class="copyright">Copyright © 2026 Rosebud Global LLC. All rights reserved</p>
+                    <a href="privacy.html" class="legal-link">Privacy Policy</a>
+                    <a href="termsofservice.html" class="legal-link">Terms of Use</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="success-modal-overlay" id="successModal">
+        <div class="success-modal">
+            <div class="success-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none"><path d="M5 12L10 17L20 7" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <h3>Thank You!</h3>
+            <p>Thank you for your inquiry. One of our sales reps will reach out to you shortly via email or phone.</p>
+            <button class="close-btn" onclick="closeSuccessModal()">Close</button>
+        </div>
+    </div>
+
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header"><h3>Shopping Cart</h3><button class="close-cart" onclick="toggleCart()">&times;</button></div>
+        <div class="cart-items" id="cartItems"><p class="empty-cart">Your cart is empty</p></div>
+        <div class="cart-footer"><div class="cart-total"><span>Total:</span><span id="cartTotal">$0.00</span></div><button class="checkout-btn" onclick="handleCheckout()">Checkout</button></div>
+    </div>
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+    <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const inquiryType = urlParams.get('inquiry');
+            
+            // Check for inquiry cart items
+            if (inquiryType === 'cart') {
+                loadInquiryCart();
+            }
+            // Check for single product inquiry (legacy)
+            else if (inquiryType === 'custom' || inquiryType === 'quote') {
+                const inquiryProduct = JSON.parse(sessionStorage.getItem('inquiryProduct') || '{}');
+                if (inquiryProduct.name) {
+                    document.getElementById('inquiryProductPreview').classList.add('visible');
+                    document.getElementById('inquiryProductImage').src = inquiryProduct.image || 'images/avatar-placeholder.png';
+                    document.getElementById('inquiryProductImage').onerror = function() { this.src = 'images/avatar-placeholder.png'; };
+                    document.getElementById('inquiryProductName').textContent = inquiryProduct.name;
+                    document.getElementById('inquiryProductDescription').textContent = inquiryProduct.description || 'Premium quality product from RoseBud Global.';
+                    document.getElementById('inquiryProductPrice').textContent = inquiryProduct.price > 0 ? '$' + parseFloat(inquiryProduct.price).toFixed(2) : 'Contact for Pricing';
+                    document.getElementById('inquiryProductSku').textContent = 'SKU: ' + (inquiryProduct.sku || 'N/A');
+                    document.getElementById('message').value = 'Product Inquiry:\n\nProduct: ' + inquiryProduct.name + '\nSKU: ' + (inquiryProduct.sku || 'N/A') + '\nCategory: ' + (inquiryProduct.category || 'N/A') + '\n\nPlease provide pricing and availability.';
+                }
+            }
+            
+            // Also check if there are items in inquiry cart without URL param
+            const inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+            if (inquiryCart.length > 0 && !inquiryType) {
+                loadInquiryCart();
+            }
+            
+            document.querySelectorAll('#contactForm input[required]').forEach(function(input) {
+                input.addEventListener('blur', function() { validateField(this); });
+                input.addEventListener('input', function() { if (this.parentElement.classList.contains('has-error')) validateField(this); });
+            });
+            
+            if (typeof updateCartCount === 'function') updateCartCount();
+        });
+        
+        // Load and display inquiry cart items
+        function loadInquiryCart() {
+            const inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+            
+            if (inquiryCart.length === 0) return;
+            
+            const section = document.getElementById('inquiryCartSection');
+            const list = document.getElementById('inquiryItemsList');
+            
+            section.classList.add('visible');
+            
+            list.innerHTML = inquiryCart.map((item, index) => `
+                <div class="inquiry-item">
+                    <img src="${item.image || 'images/avatar-placeholder.png'}" alt="${item.name}" onerror="this.src='images/avatar-placeholder.png'">
+                    <div class="inquiry-item-info">
+                        <p class="inquiry-item-name">${item.name}</p>
+                        <p class="inquiry-item-description">${item.description || 'Premium quality product'}</p>
+                        <p class="inquiry-item-qty">Quantity: ${item.quantity}</p>
+                    </div>
+                    <button class="inquiry-item-remove" onclick="removeInquiryItem(${index})" title="Remove">×</button>
+                </div>
+            `).join('');
+            
+            // Pre-fill message with inquiry items
+            const itemsList = inquiryCart.map(item => `- ${item.name} (Qty: ${item.quantity})`).join('\n');
+            document.getElementById('message').value = `Product Inquiry:\n\n${itemsList}\n\nPlease provide pricing and availability for the above items.`;
+        }
+        
+        // Remove item from inquiry cart
+        function removeInquiryItem(index) {
+            const inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+            inquiryCart.splice(index, 1);
+            localStorage.setItem('rosebudInquiryCart', JSON.stringify(inquiryCart));
+            
+            if (inquiryCart.length === 0) {
+                document.getElementById('inquiryCartSection').classList.remove('visible');
+                document.getElementById('message').value = '';
+            } else {
+                loadInquiryCart();
+            }
+        }
+        
+        // Clear all inquiry items
+        function clearInquiryCart() {
+            if (confirm('Are you sure you want to clear all inquiry items?')) {
+                localStorage.removeItem('rosebudInquiryCart');
+                document.getElementById('inquiryCartSection').classList.remove('visible');
+                document.getElementById('message').value = '';
+            }
+        }
+        
+        // Animate contact card on click
+        function animateCard(card) {
+            card.classList.add('animate');
+            setTimeout(() => {
+                card.classList.remove('animate');
+            }, 500);
+        }
+        
+        function validateField(field) {
+            var parent = field.parentElement;
+            var isValid = field.value.trim() !== '';
+            if (field.type === 'email' && field.value) isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value);
+            if (field.type === 'tel' && field.value) isValid = /^[\d\s\-\+\(\)]{10,}$/.test(field.value.replace(/\s/g, ''));
+            if (isValid) parent.classList.remove('has-error');
+            else parent.classList.add('has-error');
+            return isValid;
+        }
+        
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            var isFormValid = true;
+            document.querySelectorAll('#contactForm input[required]').forEach(function(field) { if (!validateField(field)) isFormValid = false; });
+            if (!isFormValid) return;
+            console.log('Contact Form Submission:', new FormData(event.target));
+            document.getElementById('successModal').classList.add('active');
+            event.target.reset();
+            sessionStorage.removeItem('inquiryProduct');
+            document.getElementById('inquiryProductPreview').classList.remove('visible');
+        }
+        
+        function closeSuccessModal() { document.getElementById('successModal').classList.remove('active'); }
+    </script>
+</body>
+</html>

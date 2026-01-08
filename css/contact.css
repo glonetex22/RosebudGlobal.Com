@@ -1,0 +1,514 @@
+/* ========================================
+   CONTACT PAGE STYLES - Figma Design
+   ======================================== */
+
+/* Navbar White Variant */
+.navbar-white {
+    background: #FFFFFF;
+    border-bottom: 1px solid #F3F5F7;
+}
+
+.navbar-white .nav-link {
+    color: #6C7275;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.navbar-white .nav-link:hover,
+.navbar-white .nav-link.active {
+    color: #141718;
+}
+
+.navbar-white .icon-btn {
+    color: #141718;
+}
+
+.navbar-white .cart-count {
+    background: #D63585;
+    color: #FFFFFF;
+}
+
+/* ========================================
+   CONTACT PAGE MAIN CONTENT
+   ======================================== */
+.contact-page {
+    padding: 16px 160px 80px;
+    background: #FFFFFF;
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 40px;
+}
+
+.breadcrumb-link {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    color: #605F5F;
+    text-decoration: none;
+}
+
+.breadcrumb-link:hover {
+    color: #D63585;
+}
+
+.breadcrumb-separator {
+    color: #605F5F;
+    font-size: 14px;
+}
+
+.breadcrumb-current {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 24px;
+    color: #121212;
+}
+
+/* Header Section */
+.contact-header {
+    margin-bottom: 48px;
+}
+
+.contact-headline {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 54px;
+    line-height: 58px;
+    letter-spacing: -1px;
+    color: #141718;
+    margin: 0 0 24px;
+    max-width: 834px;
+}
+
+.contact-subheadline {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 26px;
+    color: #141718;
+    margin: 0;
+    max-width: 834px;
+}
+
+/* ========================================
+   ABOUT SECTION
+   ======================================== */
+.about-section {
+    display: flex;
+    margin-bottom: 48px;
+}
+
+.about-image {
+    width: 560px;
+    height: 413px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.about-content {
+    flex: 1;
+    background: #F3F5F7;
+    padding: 0 0 0 72px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 24px;
+}
+
+.about-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 44px;
+    letter-spacing: -0.4px;
+    color: #121212;
+    margin: 0;
+}
+
+.about-text {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 26px;
+    color: #141718;
+    margin: 0;
+    max-width: 452px;
+}
+
+.about-text .highlight {
+    color: #343839;
+}
+
+.shop-now-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 28px;
+    letter-spacing: -0.4px;
+    color: #121212;
+    text-decoration: none;
+    border-bottom: 1px solid #121212;
+    padding-bottom: 4px;
+    width: fit-content;
+}
+
+.shop-now-link:hover {
+    color: #D63585;
+    border-color: #D63585;
+}
+
+/* ========================================
+   CONTACT INFO SECTION
+   ======================================== */
+.contact-info-section {
+    margin-bottom: 40px;
+}
+
+.section-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 44px;
+    letter-spacing: -0.4px;
+    color: #121212;
+    text-align: center;
+    margin: 0 0 40px;
+}
+
+.contact-cards {
+    display: flex;
+    gap: 24px;
+}
+
+.contact-card {
+    flex: 1;
+    background: #F3F5F7;
+    padding: 16px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.card-icon {
+    width: 32px;
+    height: 32px;
+}
+
+.card-label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 16px;
+    text-transform: uppercase;
+    color: #6C7275;
+    margin: 0;
+}
+
+.card-value {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 26px;
+    color: #141718;
+    text-align: center;
+    margin: 0;
+}
+
+/* ========================================
+   CONTACT FORM SECTION
+   ======================================== */
+.contact-form-section {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.form-container {
+    width: 544px;
+}
+
+/* Inquiry Product Preview */
+.inquiry-product-preview {
+    background: #F8F9FA;
+    border: 1px solid #E8ECEF;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.inquiry-product-preview h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #141718;
+    margin: 0 0 16px;
+}
+
+.inquiry-product-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.inquiry-product-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #F3F5F7;
+}
+
+.inquiry-product-info {
+    flex: 1;
+}
+
+.inquiry-product-name {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: #141718;
+    margin: 0 0 4px;
+}
+
+.inquiry-product-sku {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    color: #6C7275;
+    margin: 0;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.contact-form .form-row {
+    display: flex;
+    gap: 24px;
+}
+
+.contact-form .form-row .form-group {
+    flex: 1;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-group label {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 12px;
+    text-transform: uppercase;
+    color: #6C7275;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    background: #FFFFFF;
+    border: 1px solid #CBCBCB;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 26px;
+    color: #141718;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input,
+.form-group select {
+    height: 40px;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 140px;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #6C7275;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #D63585;
+}
+
+.submit-btn {
+    width: fit-content;
+    background: #141718;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 40px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 28px;
+    letter-spacing: -0.4px;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: #D63585;
+}
+
+.map-container {
+    width: 548px;
+    height: 404px;
+    background: #F3F5F7;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 100%;
+}
+
+/* ========================================
+   VALUES SECTION
+   ======================================== */
+.values-section {
+    display: flex;
+    gap: 24px;
+    padding: 16px 160px;
+    background: #F3F5F7;
+}
+
+.value-card {
+    flex: 1;
+    background: #F3F5F7;
+    padding: 48px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.value-icon {
+    width: 48px;
+    height: 48px;
+}
+
+.value-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+    color: #141718;
+    margin: 0;
+}
+
+.value-text {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 24px;
+    color: #6C7275;
+    margin: 0;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 1200px) {
+    .contact-page,
+    .values-section {
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+    
+    .about-section {
+        flex-direction: column;
+    }
+    
+    .about-image {
+        width: 100%;
+        height: 300px;
+    }
+    
+    .about-content {
+        padding: 40px;
+    }
+    
+    .contact-form-section {
+        flex-direction: column;
+    }
+    
+    .form-container,
+    .map-container {
+        width: 100%;
+    }
+}
+
+@media (max-width: 992px) {
+    .contact-headline {
+        font-size: 36px;
+        line-height: 42px;
+    }
+    
+    .contact-cards {
+        flex-direction: column;
+    }
+    
+    .values-section {
+        flex-wrap: wrap;
+    }
+    
+    .value-card {
+        flex: 1 1 calc(50% - 12px);
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-page,
+    .values-section {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    
+    .contact-headline {
+        font-size: 28px;
+        line-height: 34px;
+    }
+    
+    .about-title,
+    .section-title {
+        font-size: 28px;
+        line-height: 34px;
+    }
+    
+    .value-card {
+        flex: 1 1 100%;
+    }
+}
