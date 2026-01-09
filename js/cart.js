@@ -4,7 +4,7 @@
    ======================================== */
 
 // Build version - increment this to force cart reset on new deployments
-const CART_BUILD_VERSION = '3.4.0';
+const CART_BUILD_VERSION = '3.8.0';
 
 // Cart expiry duration (7 days in milliseconds)
 const CART_EXPIRY_DAYS = 7;
@@ -178,17 +178,29 @@ function toggleCart() {
     }
 }
 
-// Update cart count in header
+// Update cart count in header (includes both cart and inquiry items)
 function updateCartCount() {
     const cartCountElements = document.querySelectorAll('.cart-count, #cartCount');
-    const totalItems = cart.reduce((sum, item) => {
+    
+    // Count regular cart items
+    const cartTotal = cart.reduce((sum, item) => {
         const qty = parseInt(item.quantity) || 0;
         return sum + qty;
     }, 0);
     
+    // Count inquiry cart items
+    const inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+    const inquiryTotal = inquiryCart.reduce((sum, item) => {
+        const qty = parseInt(item.quantity) || 0;
+        return sum + qty;
+    }, 0);
+    
+    // Total count (whichever is greater, or combined)
+    const totalItems = cartTotal + inquiryTotal;
+    
     cartCountElements.forEach(el => {
         el.textContent = totalItems;
-        // Hide badge when cart is empty (0 items)
+        // Hide badge when empty (0 items)
         el.style.display = totalItems > 0 ? 'flex' : 'none';
     });
 }
@@ -215,9 +227,67 @@ function clearCart() {
 function renderSidebarCart() {
     const cartItems = document.getElementById('cartItems');
     const cartTotalEl = document.getElementById('cartTotal');
+    const checkoutBtn = document.querySelector('.cart-sidebar .checkout-btn');
+    const cartHeader = document.querySelector('.cart-sidebar .cart-header h3');
     
     // Only render if sidebar exists and we're not on the cart page
     if (!cartItems || document.querySelector('.cart-items-section')) return;
+    
+    // Get inquiry cart items
+    const inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+    
+    // Check if we have inquiry items or regular cart items
+    const hasInquiryItems = inquiryCart.length > 0;
+    const hasCartItems = cart.length > 0;
+    
+    // If we have inquiry items, show inquiry cart mode
+    if (hasInquiryItems) {
+        if (cartHeader) cartHeader.textContent = 'Inquiry Cart';
+        if (checkoutBtn) {
+            checkoutBtn.textContent = 'Make an Inquiry';
+            checkoutBtn.style.background = '#377DFF';
+            checkoutBtn.onclick = function() { window.location.href = 'contact.html?inquiry=cart'; };
+        }
+        
+        let html = '';
+        inquiryCart.forEach((item, index) => {
+            const imgSrc = item.image || 'images/avatar-placeholder.png';
+            const itemName = item.name || 'Unknown Item';
+            const itemSku = item.sku || 'N/A';
+            
+            html += `
+                <div class="cart-item">
+                    <div class="cart-item-image">
+                        <img src="${imgSrc}" alt="${itemName}" onerror="this.src='images/avatar-placeholder.png'">
+                    </div>
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${itemName}</div>
+                        <div class="cart-item-sku">${itemSku}</div>
+                        <div class="cart-item-price" style="color: #377DFF;">Inquiry Item</div>
+                        <div class="cart-item-qty">
+                            <button class="qty-btn" onclick="updateInquirySidebarQty(${index}, -1)">−</button>
+                            <span>${item.quantity || 1}</span>
+                            <button class="qty-btn" onclick="updateInquirySidebarQty(${index}, 1)">+</button>
+                            <span class="cart-item-remove" onclick="removeInquirySidebarItem(${index})">Remove</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        cartItems.innerHTML = html;
+        if (cartTotalEl) cartTotalEl.parentElement.style.display = 'none';
+        return;
+    }
+    
+    // Regular shopping cart mode
+    if (cartHeader) cartHeader.textContent = 'Shopping Cart';
+    if (checkoutBtn) {
+        checkoutBtn.textContent = 'Checkout';
+        checkoutBtn.style.background = '#D63585';
+        checkoutBtn.onclick = handleCheckout;
+    }
+    if (cartTotalEl) cartTotalEl.parentElement.style.display = 'flex';
     
     if (cart.length === 0) {
         cartItems.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
@@ -259,6 +329,29 @@ function renderSidebarCart() {
     
     cartItems.innerHTML = html;
     if (cartTotalEl) cartTotalEl.textContent = '$' + total.toFixed(2);
+}
+
+// Update inquiry quantity in sidebar
+function updateInquirySidebarQty(index, delta) {
+    let inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+    if (inquiryCart[index]) {
+        inquiryCart[index].quantity = (inquiryCart[index].quantity || 1) + delta;
+        if (inquiryCart[index].quantity <= 0) {
+            inquiryCart.splice(index, 1);
+        }
+    }
+    localStorage.setItem('rosebudInquiryCart', JSON.stringify(inquiryCart));
+    updateCartCount();
+    renderSidebarCart();
+}
+
+// Remove inquiry item from sidebar
+function removeInquirySidebarItem(index) {
+    let inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+    inquiryCart.splice(index, 1);
+    localStorage.setItem('rosebudInquiryCart', JSON.stringify(inquiryCart));
+    updateCartCount();
+    renderSidebarCart();
 }
 
 // Update quantity in sidebar cart

@@ -365,7 +365,7 @@
                     document.getElementById('inquiryProductImage').onerror = function() { this.src = 'images/avatar-placeholder.png'; };
                     document.getElementById('inquiryProductName').textContent = inquiryProduct.name;
                     document.getElementById('inquiryProductDescription').textContent = inquiryProduct.description || 'Premium quality product from RoseBud Global.';
-                    document.getElementById('inquiryProductPrice').textContent = inquiryProduct.price > 0 ? '$' + parseFloat(inquiryProduct.price).toFixed(2) : 'Contact for Pricing';
+                    document.getElementById('inquiryProductPrice').textContent = inquiryProduct.price > 0 ? '$' + parseFloat(inquiryProduct.price).toFixed(2) : 'Request Quote';
                     document.getElementById('inquiryProductSku').textContent = 'SKU: ' + (inquiryProduct.sku || 'N/A');
                     document.getElementById('message').value = 'Product Inquiry:\n\nProduct: ' + inquiryProduct.name + '\nSKU: ' + (inquiryProduct.sku || 'N/A') + '\nCategory: ' + (inquiryProduct.category || 'N/A') + '\n\nPlease provide pricing and availability.';
                 }

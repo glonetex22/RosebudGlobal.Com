@@ -240,6 +240,19 @@ button { cursor: pointer; border: none; background: transparent; font-family: in
 .add-to-cart-btn { position: absolute; bottom: 16px; left: 16px; right: 16px; padding: 8px 24px; background-color: var(--primary); color: var(--white); font-weight: 500; text-align: center; border-radius: var(--radius-md); opacity: 0; transform: translateY(10px); transition: all 0.3s ease; }
 .product-card:hover .add-to-cart-btn { opacity: 1; transform: translateY(0); }
 .add-to-cart-btn:hover { background-color: var(--primary-dark); }
+
+/* Home Page Dual Action Buttons */
+.home-product-actions { position: absolute; bottom: 16px; left: 16px; right: 16px; display: flex; flex-direction: column; gap: 8px; opacity: 0; transform: translateY(10px); transition: all 0.3s ease; }
+.product-card:hover .home-product-actions { opacity: 1; transform: translateY(0); }
+.home-action-btn { width: 100%; padding: 10px 16px; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; text-align: center; border: none; }
+.btn-primary-inquiry { background: #377DFF; color: white; }
+.btn-primary-inquiry:hover { background: #2563EB; }
+.btn-primary-cart { background: #D63585; color: white; }
+.btn-primary-cart:hover { background: #B82D71; }
+.btn-secondary { background: white; color: #141718; border: 1px solid #E8ECEF !important; }
+.btn-secondary:hover { background: #F3F5F7; }
+/* Hide old single button when dual actions present */
+.product-card:has(.home-product-actions) .add-to-cart-btn:not(.home-action-btn) { display: none; }
 .product-info { display: flex; flex-direction: column; gap: 4px; }
 .product-rating .stars { color: var(--gold); font-size: 14px; letter-spacing: 2px; }
 .product-name { font-weight: 600; font-size: 16px; line-height: 26px; color: var(--neutral-07); }

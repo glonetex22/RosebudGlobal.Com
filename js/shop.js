@@ -555,6 +555,21 @@ function renderProducts() {
     updateResultsCount();
 }
 
+// Color constants
+const PRIMARY_INQUIRY = '#377DFF';
+const PRIMARY_CART = '#D63585';
+
+// Category resolver - determines which button is primary
+function getPrimaryAction(category) {
+    const cat = (category || '').toLowerCase();
+    const inquiryCategories = ['custom gift items', 'home decor', 'specialty items', 'home decor & accessories', 'wholesale'];
+    const cartCategories = ['household items', 'household', 'sale', 'sale items', 'fine china', 'fine china & crystal'];
+    
+    if (inquiryCategories.some(c => cat.includes(c))) return 'INQUIRY';
+    if (cartCategories.some(c => cat.includes(c))) return 'CART';
+    return 'CART'; // Default
+}
+
 function createProductCard(product) {
     const hasImage = product.images && product.images.length > 0;
     const imageUrl = hasImage ? product.image : 'images/avatar-placeholder.png';
@@ -562,20 +577,13 @@ function createProductCard(product) {
         ? `$${product.price.toFixed(2)}` 
         : 'Contact for Price';
     
-    // Check if this product needs "Make an Inquiry" button
+    // Determine primary action based on category
     const category = (product.category || '').toLowerCase();
-    const inquiryCategories = ['custom gift items', 'home decor', 'specialty items', 'home decor & accessories', 'wholesale'];
-    const needsInquiry = inquiryCategories.some(cat => category.includes(cat));
+    const primaryAction = getPrimaryAction(category);
+    const hasNoPrice = product.price === 0;
     
-    // Determine button text and style
-    let buttonText, buttonClass;
-    if (needsInquiry || product.price === 0) {
-        buttonText = 'Make an Inquiry';
-        buttonClass = 'inquiry-btn';
-    } else {
-        buttonText = shopConfig.labels.addToCart;
-        buttonClass = '';
-    }
+    // If no price, always show inquiry as primary
+    const effectivePrimary = hasNoPrice ? 'INQUIRY' : primaryAction;
     
     let badges = '';
     if (product.badges && product.badges.length > 0) {
@@ -595,6 +603,10 @@ function createProductCard(product) {
         ? `<span class="multi-image-indicator">${product.images.length} photos</span>` 
         : '';
     
+    // Both buttons always present - primary/secondary styling based on category
+    const inquiryIsPrimary = effectivePrimary === 'INQUIRY';
+    const cartIsPrimary = effectivePrimary === 'CART';
+    
     return `
         <div class="product-card" onclick="viewProduct(${product.id})">
             <div class="product-image-container">
@@ -610,16 +622,27 @@ function createProductCard(product) {
                         <path d="M10 17.5L9.08333 16.6667C4.58333 12.5833 1.66667 9.95833 1.66667 6.79167C1.66667 4.16667 3.75 2.08333 6.375 2.08333C7.86667 2.08333 9.3 2.79167 10 3.89167C10.7 2.79167 12.1333 2.08333 13.625 2.08333C16.25 2.08333 18.3333 4.16667 18.3333 6.79167C18.3333 9.95833 15.4167 12.5833 10.9167 16.6667L10 17.5Z" stroke="currentColor" stroke-width="1.5"/>
                     </svg>
                 </button>
-                <button class="add-to-cart-btn ${buttonClass}" onclick="event.stopPropagation(); ${needsInquiry || product.price === 0 ? `addToInquiryCartFromShop(${product.id})` : `addProductToCart(${product.id})`}">
-                    ${buttonText}
-                </button>
+                <div class="product-actions-dual">
+                    <button class="action-btn ${inquiryIsPrimary ? 'btn-primary-inquiry' : 'btn-secondary'}" 
+                            onclick="event.stopPropagation(); addToInquiryCartFromShop(${product.id})">
+                        Make an Inquiry
+                    </button>
+                    <button class="action-btn ${cartIsPrimary ? 'btn-primary-cart' : 'btn-secondary'}" 
+                            onclick="event.stopPropagation(); addProductToCart(${product.id})"
+                            ${hasNoPrice ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>
+                        Add to Cart
+                    </button>
+                </div>
             </div>
             <div class="product-info">
                 <div class="product-rating">
                     ${renderStars(product.rating || 5)}
                 </div>
                 <h3 class="product-name">${product.name}</h3>
-                <p class="product-brand">${product.brand || 'Rose Bud Global'}</p>
+                <div class="product-meta">
+                    <span class="product-sku">${product.sku || ''}</span>
+                    <span class="product-category-tag">${product.category || ''}</span>
+                </div>
                 <div class="product-price">
                     <span class="current-price ${product.price === 0 ? 'contact-price' : ''}">${priceDisplay}</span>
                 </div>
@@ -722,16 +745,134 @@ function showAddedToCartFeedback(productName) {
 }
 
 function toggleWishlist(productId) {
+    // Check if user is logged in
+    const isLoggedIn = localStorage.getItem('rosebudLoggedIn') === 'true';
+    
+    if (!isLoggedIn) {
+        // Show sign-up required modal
+        showWishlistSignupModal();
+        return;
+    }
+    
     let wishlist = JSON.parse(localStorage.getItem('rosebudWishlist') || '[]');
     
     const index = wishlist.indexOf(productId);
     if (index > -1) {
         wishlist.splice(index, 1);
+        showWishlistNotification('Removed from wishlist');
     } else {
         wishlist.push(productId);
+        showWishlistNotification('Added to wishlist');
     }
     
     localStorage.setItem('rosebudWishlist', JSON.stringify(wishlist));
+    
+    // Update wishlist button appearance
+    updateWishlistButtons();
+}
+
+function showWishlistSignupModal() {
+    // Remove existing modal if any
+    const existingModal = document.getElementById('wishlistSignupModal');
+    if (existingModal) existingModal.remove();
+    
+    const modal = document.createElement('div');
+    modal.id = 'wishlistSignupModal';
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10001;
+    `;
+    modal.innerHTML = `
+        <div style="
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 400px;
+            text-align: center;
+            margin: 20px;
+        ">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" style="margin-bottom: 16px;">
+                <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z" fill="#D63585"/>
+            </svg>
+            <h3 style="font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 600; color: #141718; margin-bottom: 12px;">Sign Up Required</h3>
+            <p style="font-family: 'Inter', sans-serif; font-size: 14px; color: #6C7275; line-height: 1.6; margin-bottom: 24px;">
+                You must be signed-up to add this item to your wishlist. 
+                <a href="signup.html" style="color: #D63585; text-decoration: underline; font-weight: 500;">Sign-Up Now</a>
+            </p>
+            <div style="display: flex; gap: 12px; justify-content: center;">
+                <button onclick="document.getElementById('wishlistSignupModal').remove()" style="
+                    padding: 12px 24px;
+                    border: 1px solid #E8ECEF;
+                    background: white;
+                    border-radius: 8px;
+                    font-family: 'Inter', sans-serif;
+                    font-size: 14px;
+                    cursor: pointer;
+                ">Cancel</button>
+                <a href="signup.html" style="
+                    padding: 12px 24px;
+                    background: #D63585;
+                    color: white;
+                    border-radius: 8px;
+                    font-family: 'Inter', sans-serif;
+                    font-size: 14px;
+                    text-decoration: none;
+                ">Sign Up</a>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    
+    // Close on backdrop click
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) modal.remove();
+    });
+}
+
+function showWishlistNotification(message) {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: #D63585;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        z-index: 10000;
+        font-family: 'Poppins', sans-serif;
+        font-size: 14px;
+    `;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.transition = 'opacity 0.3s ease';
+        notification.style.opacity = '0';
+        setTimeout(() => notification.remove(), 300);
+    }, 2000);
+}
+
+function updateWishlistButtons() {
+    const wishlist = JSON.parse(localStorage.getItem('rosebudWishlist') || '[]');
+    document.querySelectorAll('.wishlist-btn').forEach(btn => {
+        const productId = parseInt(btn.getAttribute('onclick')?.match(/\d+/)?.[0]);
+        if (productId && wishlist.includes(productId)) {
+            btn.classList.add('active');
+            btn.querySelector('svg path')?.setAttribute('fill', '#D63585');
+        } else {
+            btn.classList.remove('active');
+            btn.querySelector('svg path')?.setAttribute('fill', 'none');
+        }
+    });
 }
 
 // ========================================
@@ -887,6 +1028,13 @@ function addToInquiryCartFromShop(productId) {
     
     localStorage.setItem('rosebudInquiryCart', JSON.stringify(inquiryCart));
     
+    // Update cart count (now includes inquiry items)
+    if (typeof updateCartCount === 'function') updateCartCount();
+    
+    // Show sidebar with inquiry items
+    if (typeof renderSidebarCart === 'function') renderSidebarCart();
+    if (typeof toggleCart === 'function') toggleCart();
+    
     // Show notification
     showInquiryNotification(product.name);
 }
@@ -897,12 +1045,12 @@ function showInquiryNotification(name) {
         position: fixed;
         top: 100px;
         right: 20px;
-        background: #2563EB;
+        background: #377DFF;
         color: white;
         padding: 16px 24px;
         border-radius: 8px;
         z-index: 10000;
-        box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+        box-shadow: 0 4px 20px rgba(55, 125, 255, 0.3);
         font-family: 'Poppins', sans-serif;
         max-width: 320px;
     `;

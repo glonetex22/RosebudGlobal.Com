@@ -7,13 +7,13 @@
 const inventory = [
     { name: 'Custom 100% Cotton Dyed Terry Hand Towels', sku: 'RBG-C2600', manufacturer: 'RoseBud Global', category: 'Custom Gift Items', price: 0, image: 'images/new-items/New Items - Custom Towels.png' },
     { name: 'Special Shaped Plate Series Ceramic Plate', sku: 'RBG-P31005', manufacturer: 'OH OHERE', category: 'Fine China & Crystal', price: 0, image: 'images/new-items/plate-cleaned.png' },
-    { name: 'Custom Exotic Material Loveseat', sku: 'RBG-F29055', manufacturer: 'RoseBud Global', category: 'Specialty Items', price: 0, image: 'images/new-items/New Item - Exotic Loveseat.png' },
-    { name: 'Olivia Riegel Priscilla Picture Frame', sku: 'RT1189', manufacturer: 'Olivia Riegel', category: 'Specialty Items', price: 300, image: 'images/new-items/New Item - Frame.webp' },
+    { name: 'Custom Exotic Material Loveseat', sku: 'RBG-F29055', manufacturer: 'RoseBud Global', category: 'Home Decor & Accessories', price: 0, image: 'images/new-items/New Item - Exotic Loveseat.png' },
+    { name: 'Olivia Riegel Priscilla Picture Frame', sku: 'RT1189', manufacturer: 'Olivia Riegel', category: 'Household Items', subcategory: 'Picture Frames', price: 300, image: 'images/new-items/New Item - Frame.webp' },
     { name: 'Noritake Fine China Dinner Set', sku: 'NOR-2024-001', manufacturer: 'Noritake', category: 'Fine China & Crystal', price: 450, image: 'images/hero/Noritake.webp' },
     { name: 'Mikasa Italian Countryside Collection', sku: 'MIK-IC-500', manufacturer: 'Mikasa', category: 'Fine China & Crystal', price: 275, image: '' },
     { name: 'Lenox Butterfly Meadow Dinnerware', sku: 'LNX-BM-100', manufacturer: 'Lenox', category: 'Fine China & Crystal', price: 320, image: '' },
-    { name: 'Two\'s Company Decorative Vases', sku: 'TC-DV-200', manufacturer: 'Two\'s Company', category: 'Home Decor', price: 85, image: 'images/Twos_Company.png' },
-    { name: 'Tozai Home Candle Holders Set', sku: 'TZH-CH-150', manufacturer: 'Tozai Home', category: 'Home Decor', price: 120, image: 'images/hero/Tozai_Home.png' },
+    { name: 'Two\'s Company Decorative Vases', sku: 'TC-DV-200', manufacturer: 'Two\'s Company', category: 'Home Decor & Accessories', price: 85, image: 'images/Twos_Company.png' },
+    { name: 'Tozai Home Candle Holders Set', sku: 'TZH-CH-150', manufacturer: 'Tozai Home', category: 'Home Decor & Accessories', price: 120, image: 'images/hero/Tozai_Home.png' },
     { name: 'Studio Nova Porcelain Collection', sku: 'SN-PC-300', manufacturer: 'Studio Nova', category: 'Fine China & Crystal', price: 195, image: '' },
     { name: 'Custom Wireless Earbuds', sku: 'RBG-WE-001', manufacturer: 'RoseBud Global', category: 'Custom Gift Items', price: 0, image: 'images/custom-gifts/Custom Wireless Earplugs.png' },
     { name: 'Custom Power Bank Charger', sku: 'RBG-PB-002', manufacturer: 'RoseBud Global', category: 'Custom Gift Items', price: 0, image: 'images/custom-gifts/Custom Charge bank.png' },
@@ -36,7 +36,7 @@ const brandLogos = [
 let cart = [];
 
 // Build version check (must match cart.js)
-const MAIN_BUILD_VERSION = '3.4.0';
+const MAIN_BUILD_VERSION = '3.8.0';
 
 // Initialize cart from localStorage
 function initCartFromStorage() {
@@ -433,8 +433,9 @@ function toggleCart() {
 }
 
 function addToCart(name, price, sku) {
+    // For price = 0, add to inquiry cart instead (no popup)
     if (price === 0) {
-        alert(`Contact us for wholesale pricing on:\n${name}\nSKU: ${sku}\n\nEmail: sales@rosebudglobal.com\nPhone: (555) 123-4567`);
+        addToInquiryCartDirect(name, sku);
         return;
     }
     
@@ -464,6 +465,39 @@ function addToCart(name, price, sku) {
     
     // Show notification
     showCartNotification(`${name} added to cart!`);
+}
+
+// Add item to inquiry cart directly (from main.js)
+function addToInquiryCartDirect(name, sku) {
+    const product = inventory.find(p => p.sku === sku) || {};
+    let inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+    
+    const existingIndex = inquiryCart.findIndex(item => item.sku === sku);
+    
+    const inquiryItem = {
+        name: name,
+        sku: sku,
+        image: product.image || 'images/avatar-placeholder.png',
+        category: product.category || '',
+        description: 'Premium quality product from RoseBud Global.',
+        quantity: 1
+    };
+    
+    if (existingIndex > -1) {
+        inquiryCart[existingIndex].quantity++;
+    } else {
+        inquiryCart.push(inquiryItem);
+    }
+    
+    localStorage.setItem('rosebudInquiryCart', JSON.stringify(inquiryCart));
+    
+    // Update cart count and show sidebar
+    if (typeof updateCartCount === 'function') updateCartCount();
+    if (typeof renderSidebarCart === 'function') renderSidebarCart();
+    if (typeof toggleCart === 'function') toggleCart();
+    
+    // Show notification
+    showCartNotification(`${name} added to inquiry cart!`);
 }
 
 function updateQty(sku, delta) {
@@ -907,6 +941,136 @@ function goToProduct(id, sku) {
     window.location.href = `product.html?id=${id}&sku=${encodeURIComponent(sku)}`;
 }
 
+// ========================================
+// HOME PAGE INQUIRY FUNCTION
+// ========================================
+
+function addToInquiryFromHome(name, sku, image) {
+    let inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+    
+    const existingIndex = inquiryCart.findIndex(item => item.sku === sku);
+    
+    const inquiryItem = {
+        name: name,
+        sku: sku,
+        image: image || 'images/avatar-placeholder.png',
+        category: 'Wholesale',
+        description: 'Premium quality product from RoseBud Global.',
+        quantity: 1
+    };
+    
+    if (existingIndex > -1) {
+        inquiryCart[existingIndex].quantity++;
+    } else {
+        inquiryCart.push(inquiryItem);
+    }
+    
+    localStorage.setItem('rosebudInquiryCart', JSON.stringify(inquiryCart));
+    
+    // Update cart count
+    if (typeof updateCartCount === 'function') updateCartCount();
+    
+    // Show sidebar
+    if (typeof renderSidebarCart === 'function') renderSidebarCart();
+    if (typeof toggleCart === 'function') toggleCart();
+    
+    // Show notification
+    showCartNotification(`${name} added to inquiry!`);
+}
+
+// ========================================
+// HOME PAGE WISHLIST WITH AUTH GATE
+// ========================================
+
+function handleHomeWishlist(event, sku) {
+    event.stopPropagation();
+    
+    const isLoggedIn = localStorage.getItem('rosebudLoggedIn') === 'true';
+    
+    if (!isLoggedIn) {
+        showHomeWishlistModal();
+        return;
+    }
+    
+    // Toggle wishlist
+    let wishlist = JSON.parse(localStorage.getItem('rosebudWishlist') || '[]');
+    const index = wishlist.indexOf(sku);
+    
+    if (index > -1) {
+        wishlist.splice(index, 1);
+        showCartNotification('Removed from wishlist');
+    } else {
+        wishlist.push(sku);
+        showCartNotification('Added to wishlist');
+    }
+    
+    localStorage.setItem('rosebudWishlist', JSON.stringify(wishlist));
+}
+
+function showHomeWishlistModal() {
+    const existingModal = document.getElementById('homeWishlistModal');
+    if (existingModal) existingModal.remove();
+    
+    const modal = document.createElement('div');
+    modal.id = 'homeWishlistModal';
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0,0,0,0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10001;
+    `;
+    modal.innerHTML = `
+        <div style="
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 400px;
+            text-align: center;
+            margin: 20px;
+        ">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" style="margin-bottom: 16px;">
+                <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z" fill="#D63585"/>
+            </svg>
+            <h3 style="font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 600; color: #141718; margin-bottom: 12px;">Sign Up Required</h3>
+            <p style="font-family: 'Inter', sans-serif; font-size: 14px; color: #6C7275; line-height: 1.6; margin-bottom: 24px;">
+                You must be signed-up to add this item to your wishlist. 
+                <a href="signup.html" style="color: #D63585; text-decoration: underline; font-weight: 500;">Sign-up Now</a>
+            </p>
+            <div style="display: flex; gap: 12px; justify-content: center;">
+                <button onclick="document.getElementById('homeWishlistModal').remove()" style="
+                    padding: 12px 24px;
+                    border: 1px solid #E8ECEF;
+                    background: white;
+                    border-radius: 8px;
+                    font-family: 'Inter', sans-serif;
+                    font-size: 14px;
+                    cursor: pointer;
+                ">Cancel</button>
+                <a href="signup.html" style="
+                    padding: 12px 24px;
+                    background: #D63585;
+                    color: white;
+                    border-radius: 8px;
+                    font-family: 'Inter', sans-serif;
+                    font-size: 14px;
+                    text-decoration: none;
+                ">Sign Up</a>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+    
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) modal.remove();
+    });
+}
+
 // Load search products on page load
 document.addEventListener('DOMContentLoaded', loadSearchProducts);
 
@@ -914,5 +1078,7 @@ document.addEventListener('DOMContentLoaded', loadSearchProducts);
 window.goToAccount = goToAccount;
 window.toggleSearch = toggleSearch;
 window.goToProduct = goToProduct;
+window.addToInquiryFromHome = addToInquiryFromHome;
+window.handleHomeWishlist = handleHomeWishlist;
 
-console.log('RoseBud Global v2.9.0 - Loaded');
+console.log('RoseBud Global v3.8.0 - Loaded');

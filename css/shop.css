@@ -1320,19 +1320,137 @@
 }
 
 /* ========================================
-   INQUIRY BUTTON STYLING
+   DUAL ACTION BUTTONS - PRIMARY/SECONDARY
+   ======================================== */
+
+.product-actions-dual {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    right: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+}
+
+.product-card:hover .product-actions-dual {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.action-btn {
+    width: 100%;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+/* Primary Inquiry Button - Blue */
+.btn-primary-inquiry {
+    background: #377DFF;
+    color: white;
+    border: none;
+}
+
+.btn-primary-inquiry:hover {
+    background: #2563EB;
+}
+
+/* Primary Cart Button - Pink */
+.btn-primary-cart {
+    background: #D63585;
+    color: white;
+    border: none;
+}
+
+.btn-primary-cart:hover {
+    background: #B82D71;
+}
+
+/* Secondary Button - Outline */
+.btn-secondary {
+    background: white;
+    color: #141718;
+    border: 1px solid #E8ECEF;
+}
+
+.btn-secondary:hover {
+    background: #F3F5F7;
+    border-color: #D0D5DD;
+}
+
+/* Product Meta (SKU + Category) */
+.product-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.product-sku {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    color: #D63585;
+    font-weight: 500;
+}
+
+.product-category-tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: #6C7275;
+    background: #F3F5F7;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+/* Hide old single button when dual is present */
+.product-card:has(.product-actions-dual) .add-to-cart-btn:not(.action-btn) {
+    display: none;
+}
+
+/* ========================================
+   INQUIRY BUTTON STYLING (Legacy)
    ======================================== */
 
 .add-to-cart-btn.inquiry-btn {
-    background: #2563EB !important;
+    background: #377DFF !important;
 }
 
 .add-to-cart-btn.inquiry-btn:hover {
-    background: #1D4ED8 !important;
+    background: #2563EB !important;
 }
 
 /* Sale Badge */
 .badge-sale {
     background: #EF4444 !important;
     color: white !important;
+}
+
+/* ========================================
+   RESPONSIVE DUAL BUTTONS
+   ======================================== */
+
+@media (max-width: 768px) {
+    .product-actions-dual {
+        opacity: 1;
+        transform: translateY(0);
+        position: relative;
+        bottom: auto;
+        left: auto;
+        right: auto;
+        margin-top: 12px;
+    }
+    
+    .action-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
 }

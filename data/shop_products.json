@@ -2657,5 +2657,23 @@
     "description": "Luxurious exotic material loveseat with premium craftsmanship. Custom orders available.",
     "inStock": true,
     "location": "USA"
+  },
+  {
+    "id": 135,
+    "sku": "RT1189",
+    "name": "Olivia Riegel Priscilla Picture Frame",
+    "price": 300.00,
+    "image": "images/new-items/New Item - Frame.webp",
+    "images": [
+      "images/new-items/New Item - Frame.webp"
+    ],
+    "rating": 5,
+    "badges": [],
+    "category": "Household Items",
+    "subcategory": "Picture Frames",
+    "brand": "Olivia Riegel",
+    "description": "Elegant Priscilla picture frame by Olivia Riegel. Features intricate detailing and premium craftsmanship.",
+    "inStock": true,
+    "location": "USA"
   }
 ]

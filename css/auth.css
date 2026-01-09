@@ -31,7 +31,7 @@
     font-size: 40px;
     line-height: 44px;
     letter-spacing: -1px;
-    color: #141718;
+    color: #D63585;
     margin: 0 0 8px;
 }
 
@@ -44,7 +44,7 @@
 }
 
 .auth-subtitle a {
-    color: #38CB89;
+    color: #D63585;
     text-decoration: none;
     font-weight: 600;
 }
@@ -178,12 +178,12 @@
 }
 
 .auth-btn.primary {
-    background: #141718;
+    background: #D63585;
     color: white;
 }
 
 .auth-btn.primary:hover {
-    background: #2a2d2e;
+    background: #B82D71;
 }
 
 .auth-btn.secondary {
