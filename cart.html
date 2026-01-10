@@ -120,7 +120,7 @@
                                 <path d="M8 14L16 14" stroke="#6C7275" stroke-width="1.5" stroke-linecap="round"/>
                                 <path d="M8 17L13 17" stroke="#6C7275" stroke-width="1.5" stroke-linecap="round"/>
                             </svg>
-                            <input type="text" id="couponCode" placeholder="Coupon Code">
+                            <input type="text" id="couponInput" placeholder="Coupon Code">
                         </div>
                         <button class="apply-coupon-btn" onclick="applyCoupon()">Apply</button>
                     </div>
@@ -157,7 +157,7 @@
                 <div class="summary-totals">
                     <div class="summary-row">
                         <span>Subtotal</span>
-                        <span id="cartSubtotal">$0.00</span>
+                        <span id="subtotalAmount">$0.00</span>
                     </div>
                     <div class="summary-row coupon-row" id="couponDiscount" style="display: none;">
                         <span class="coupon-applied">
@@ -171,7 +171,7 @@
                     </div>
                     <div class="summary-row total-row">
                         <span>Total</span>
-                        <span id="cartTotal">$0.00</span>
+                        <span id="totalAmount">$0.00</span>
                     </div>
                 </div>
 

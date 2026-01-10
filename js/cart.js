@@ -1,33 +1,59 @@
 /* ========================================
    CART SYSTEM - JavaScript
-   Version 3.2.0 - Cart persistence for 7 days, UI fixes
+   Version 4.1.2 - Single Cart with Mode Switching
    ======================================== */
 
-// Build version - increment this to force cart reset on new deployments
-const CART_BUILD_VERSION = '3.8.0';
+// Build version
+const CART_BUILD_VERSION = '4.1.2';
 
 // Cart expiry duration (7 days in milliseconds)
 const CART_EXPIRY_DAYS = 7;
 const CART_EXPIRY_MS = CART_EXPIRY_DAYS * 24 * 60 * 60 * 1000;
+
+// Color constants
+const PRIMARY_INQUIRY = '#377DFF';
+const PRIMARY_CART = '#D63585';
 
 // Cart State - Initialize empty
 let cart = [];
 let appliedCoupon = null;
 let shippingMethod = 'free';
 
-// Check if this is a new build and reset cart if needed
+// ========================================
+// CART MODE MANAGEMENT (Exclusive modes)
+// ========================================
+
+function getCartMode() {
+    const inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+    const regularCart = JSON.parse(localStorage.getItem('rosebudCart') || '[]');
+    
+    if (inquiryCart.length > 0) return 'inquiry';
+    if (regularCart.length > 0) return 'cart';
+    return 'none';
+}
+
+function canAddToInquiry() {
+    const regularCart = JSON.parse(localStorage.getItem('rosebudCart') || '[]');
+    return regularCart.length === 0;
+}
+
+function canAddToCart() {
+    const inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+    return inquiryCart.length === 0;
+}
+
+// ========================================
+// BUILD VERSION & EXPIRY CHECKS
+// ========================================
+
 function checkBuildVersion() {
     const savedVersion = localStorage.getItem('rosebudBuildVersion');
     if (savedVersion !== CART_BUILD_VERSION) {
-        // New build detected - but DON'T clear cart, just update version
         localStorage.setItem('rosebudBuildVersion', CART_BUILD_VERSION);
         console.log('New build detected - keeping cart data');
-        return false; // Keep cart data
     }
-    return false; // Same build, keep cart
 }
 
-// Check if cart has expired (older than 7 days)
 function isCartExpired() {
     const cartTimestamp = localStorage.getItem('rosebudCartTimestamp');
     if (!cartTimestamp) return false;
@@ -42,17 +68,19 @@ function isCartExpired() {
     return false;
 }
 
-// Load cart from localStorage with validation
+// ========================================
+// CART INITIALIZATION
+// ========================================
+
 function initCart() {
-    // First check if we need to reset for new build
     checkBuildVersion();
     
-    // Check if cart has expired
     if (isCartExpired()) {
         cart = [];
         localStorage.removeItem('rosebudCart');
         localStorage.removeItem('rosebudCartTimestamp');
         localStorage.removeItem('rosebudCoupon');
+        localStorage.removeItem('rosebudInquiryCart');
         return;
     }
     
@@ -60,7 +88,6 @@ function initCart() {
         const savedCart = localStorage.getItem('rosebudCart');
         if (savedCart) {
             const parsed = JSON.parse(savedCart);
-            // Validate and normalize cart items
             cart = parsed.filter(item => item && item.name).map(item => ({
                 id: item.id || item.sku || 'unknown',
                 sku: item.sku || item.id || 'unknown',
@@ -73,13 +100,10 @@ function initCart() {
                 category: item.category || '',
                 brand: item.brand || ''
             }));
-            // Re-save normalized cart
-            saveCart();
         }
     } catch (e) {
-        console.warn('Error loading cart, resetting:', e);
+        console.warn('Error loading cart:', e);
         cart = [];
-        localStorage.removeItem('rosebudCart');
     }
     
     try {
@@ -92,7 +116,7 @@ function initCart() {
     }
 }
 
-// Available coupons (demo purposes)
+// Available coupons
 const coupons = {
     'SAVE10': { discount: 10, type: 'percent' },
     'SAVE20': { discount: 20, type: 'percent' },
@@ -107,26 +131,27 @@ const shippingCosts = {
     'pickup': 21
 };
 
-// Initialize cart on page load
+// ========================================
+// DOM READY INITIALIZATION
+// ========================================
+
 document.addEventListener('DOMContentLoaded', function() {
     initCart();
     updateCartCount();
-    renderSidebarCart(); // Always render sidebar cart for consistency
+    renderSidebarCart();
     
-    // Check if on cart page (has cart-items-section)
     if (document.querySelector('.cart-items-section')) {
         renderCartPageItems();
         updateCartSummary();
         checkForCustomItems();
     }
     
-    // Check if on checkout page
-    if (document.getElementById('orderItems')) {
+    if (document.getElementById('orderItems') || window.location.pathname.includes('checkout.html')) {
         loadCheckoutItems();
         checkInquiryMode();
+        setupCheckoutExitWarning();
     }
     
-    // Update shipping option styling
     document.querySelectorAll('.shipping-option').forEach(option => {
         option.addEventListener('change', function() {
             document.querySelectorAll('.shipping-option').forEach(opt => opt.classList.remove('selected'));
@@ -135,32 +160,122 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Check if checkout is in inquiry mode (for custom/specialty items)
+// ========================================
+// CHECKOUT EXIT WARNING POPUP
+// ========================================
+
+function setupCheckoutExitWarning() {
+    const popupHTML = `
+        <div id="checkoutExitPopup" class="checkout-exit-popup" style="display: none;">
+            <div class="checkout-exit-overlay"></div>
+            <div class="checkout-exit-modal">
+                <h3>Are you sure you want to exit the screen?</h3>
+                <p>Your item may be removed from the cart.</p>
+                <div class="checkout-exit-buttons">
+                    <button class="exit-btn exit-cancel" onclick="closeCheckoutExitPopup()">Cancel</button>
+                    <button class="exit-btn exit-home" onclick="exitToHome()">Home</button>
+                    <button class="exit-btn exit-login" onclick="exitToLogin()">Login</button>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    const popupStyles = `
+        <style>
+            .checkout-exit-popup { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000; }
+            .checkout-exit-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); }
+            .checkout-exit-modal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 32px; border-radius: 16px; text-align: center; max-width: 400px; width: 90%; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); }
+            .checkout-exit-modal h3 { font-family: 'Poppins', sans-serif; font-size: 20px; font-weight: 600; color: #141718; margin: 0 0 12px 0; }
+            .checkout-exit-modal p { font-family: 'Inter', sans-serif; font-size: 14px; color: #6C7275; margin: 0 0 24px 0; }
+            .checkout-exit-buttons { display: flex; gap: 12px; justify-content: center; }
+            .exit-btn { padding: 12px 24px; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; border: none; }
+            .exit-cancel { background: #F3F5F7; color: #141718; }
+            .exit-cancel:hover { background: #E8ECEF; }
+            .exit-home { background: #D63585; color: white; }
+            .exit-home:hover { background: #B82D71; }
+            .exit-login { background: #377DFF; color: white; }
+            .exit-login:hover { background: #2563EB; }
+        </style>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', popupStyles + popupHTML);
+    
+    document.querySelectorAll('a[href]').forEach(link => {
+        const href = link.getAttribute('href');
+        if (href && !href.includes('checkout') && !href.includes('order-complete') && !href.startsWith('#') && !href.startsWith('javascript')) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.pendingNavigation = href;
+                showCheckoutExitPopup();
+            });
+        }
+    });
+    
+    window.addEventListener('beforeunload', function(e) {
+        const cartItems = JSON.parse(localStorage.getItem('rosebudCart') || '[]');
+        const inquiryItems = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+        if (cartItems.length > 0 || inquiryItems.length > 0) {
+            e.preventDefault();
+            e.returnValue = 'Your cart items may be lost. Are you sure you want to leave?';
+            return e.returnValue;
+        }
+    });
+}
+
+function showCheckoutExitPopup() {
+    const popup = document.getElementById('checkoutExitPopup');
+    if (popup) popup.style.display = 'block';
+}
+
+function closeCheckoutExitPopup() {
+    const popup = document.getElementById('checkoutExitPopup');
+    if (popup) popup.style.display = 'none';
+    window.pendingNavigation = null;
+}
+
+function exitToHome() {
+    closeCheckoutExitPopup();
+    window.location.href = 'index.html';
+}
+
+function exitToLogin() {
+    closeCheckoutExitPopup();
+    window.location.href = 'login.html';
+}
+
+window.showCheckoutExitPopup = showCheckoutExitPopup;
+window.closeCheckoutExitPopup = closeCheckoutExitPopup;
+window.exitToHome = exitToHome;
+window.exitToLogin = exitToLogin;
+
+// ========================================
+// INQUIRY MODE CHECK
+// ========================================
+
 function checkInquiryMode() {
     const urlParams = new URLSearchParams(window.location.search);
     const mode = urlParams.get('mode');
     const checkoutMode = localStorage.getItem('rosebudCheckoutMode');
     
     if (mode === 'inquiry' || checkoutMode === 'inquiry') {
-        // Update page title
         const title = document.getElementById('checkoutTitle');
         if (title) title.textContent = 'Order Inquiry';
         
-        // Show inquiry banner
         const banner = document.getElementById('inquiryBanner');
         if (banner) banner.style.display = 'flex';
         
-        // Hide payment section
         const paymentSection = document.getElementById('paymentSection');
         if (paymentSection) paymentSection.style.display = 'none';
         
-        // Update button text
         const orderBtn = document.getElementById('placeOrderBtn');
         if (orderBtn) orderBtn.textContent = 'Submit Inquiry';
     }
 }
 
-// Toggle cart sidebar (for pages with sidebar)
+// ========================================
+// CART SIDEBAR TOGGLE
+// ========================================
+
 function toggleCart() {
     const sidebar = document.getElementById('cartSidebar');
     const overlay = document.getElementById('cartOverlay');
@@ -172,101 +287,96 @@ function toggleCart() {
     overlay.classList.toggle('open');
     document.body.style.overflow = isOpen ? '' : 'hidden';
     
-    // Re-render cart when opening
-    if (!isOpen) {
-        renderSidebarCart();
-    }
+    if (!isOpen) renderSidebarCart();
 }
 
-// Update cart count in header (includes both cart and inquiry items)
+// ========================================
+// CART COUNT UPDATE
+// ========================================
+
 function updateCartCount() {
     const cartCountElements = document.querySelectorAll('.cart-count, #cartCount');
     
-    // Count regular cart items
-    const cartTotal = cart.reduce((sum, item) => {
-        const qty = parseInt(item.quantity) || 0;
-        return sum + qty;
-    }, 0);
-    
-    // Count inquiry cart items
+    // Combined count from BOTH carts (only one will have items due to blocking)
+    const cartTotal = cart.reduce((sum, item) => sum + (parseInt(item.quantity) || 0), 0);
     const inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
-    const inquiryTotal = inquiryCart.reduce((sum, item) => {
-        const qty = parseInt(item.quantity) || 0;
-        return sum + qty;
-    }, 0);
-    
-    // Total count (whichever is greater, or combined)
+    const inquiryTotal = inquiryCart.reduce((sum, item) => sum + (parseInt(item.quantity) || 0), 0);
     const totalItems = cartTotal + inquiryTotal;
     
     cartCountElements.forEach(el => {
         el.textContent = totalItems;
-        // Hide badge when empty (0 items)
         el.style.display = totalItems > 0 ? 'flex' : 'none';
     });
 }
 
-// Clear cart (for testing or reset)
+// ========================================
+// CLEAR CART
+// ========================================
+
 function clearCart() {
     cart = [];
     appliedCoupon = null;
     localStorage.removeItem('rosebudCart');
     localStorage.removeItem('rosebudCoupon');
     updateCartCount();
-    
-    // Re-render if on cart page
     if (document.querySelector('.cart-items-section')) {
         renderCartPageItems();
         updateCartSummary();
     }
-    
-    // Re-render sidebar
     renderSidebarCart();
 }
 
-// Render sidebar cart (slide-out panel on all pages)
+// ========================================
+// SIDEBAR CART RENDERING (Mode Switching)
+// ========================================
+
 function renderSidebarCart() {
     const cartItems = document.getElementById('cartItems');
     const cartTotalEl = document.getElementById('cartTotal');
     const checkoutBtn = document.querySelector('.cart-sidebar .checkout-btn');
     const cartHeader = document.querySelector('.cart-sidebar .cart-header h3');
+    const cartFooter = document.querySelector('.cart-sidebar .cart-footer');
     
-    // Only render if sidebar exists and we're not on the cart page
     if (!cartItems || document.querySelector('.cart-items-section')) return;
     
-    // Get inquiry cart items
     const inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
     
-    // Check if we have inquiry items or regular cart items
-    const hasInquiryItems = inquiryCart.length > 0;
-    const hasCartItems = cart.length > 0;
-    
-    // If we have inquiry items, show inquiry cart mode
-    if (hasInquiryItems) {
+    // ========== INQUIRY MODE ==========
+    if (inquiryCart.length > 0) {
         if (cartHeader) cartHeader.textContent = 'Inquiry Cart';
         if (checkoutBtn) {
             checkoutBtn.textContent = 'Make an Inquiry';
-            checkoutBtn.style.background = '#377DFF';
-            checkoutBtn.onclick = function() { window.location.href = 'contact.html?inquiry=cart'; };
+            checkoutBtn.style.background = PRIMARY_INQUIRY;
+            checkoutBtn.style.boxShadow = '0 4px 12px rgba(55, 125, 255, 0.3)';
+            checkoutBtn.onclick = function() { window.location.href = 'contact.html'; };
+        }
+        
+        // Update footer layout for inquiry mode
+        if (cartFooter) {
+            const totalLabel = cartFooter.querySelector('.cart-total span:first-child');
+            if (totalLabel) totalLabel.textContent = 'Inquiry Cart';
         }
         
         let html = '';
+        let total = 0;
+        
         inquiryCart.forEach((item, index) => {
-            const imgSrc = item.image || 'images/avatar-placeholder.png';
-            const itemName = item.name || 'Unknown Item';
-            const itemSku = item.sku || 'N/A';
+            const price = parseFloat(item.price) || 0;
+            const qty = parseInt(item.quantity) || 1;
+            total += price * qty;
             
             html += `
                 <div class="cart-item">
                     <div class="cart-item-image">
-                        <img src="${imgSrc}" alt="${itemName}" onerror="this.src='images/avatar-placeholder.png'">
+                        <img src="${item.image || 'images/avatar-placeholder.png'}" alt="${item.name}" onerror="this.src='images/avatar-placeholder.png'">
                     </div>
                     <div class="cart-item-info">
-                        <div class="cart-item-name">${itemName}</div>
-                        <div class="cart-item-sku">${itemSku}</div>
-                        <div class="cart-item-price" style="color: #377DFF;">Inquiry Item</div>
+                        <div class="cart-item-name">${item.name || 'Unknown'}</div>
+                        <div class="cart-item-sku" style="color: ${PRIMARY_INQUIRY};">${item.sku || ''}</div>
+                        <div class="cart-item-price">$${price.toFixed(2)}</div>
                         <div class="cart-item-qty">
                             <button class="qty-btn" onclick="updateInquirySidebarQty(${index}, -1)">−</button>
-                            <span>${item.quantity || 1}</span>
+                            <span>${qty}</span>
                             <button class="qty-btn" onclick="updateInquirySidebarQty(${index}, 1)">+</button>
                             <span class="cart-item-remove" onclick="removeInquirySidebarItem(${index})">Remove</span>
                         </div>
@@ -276,18 +386,24 @@ function renderSidebarCart() {
         });
         
         cartItems.innerHTML = html;
-        if (cartTotalEl) cartTotalEl.parentElement.style.display = 'none';
+        if (cartTotalEl) cartTotalEl.textContent = '$' + total.toFixed(2);
         return;
     }
     
-    // Regular shopping cart mode
+    // ========== PURCHASE MODE ==========
     if (cartHeader) cartHeader.textContent = 'Shopping Cart';
     if (checkoutBtn) {
         checkoutBtn.textContent = 'Checkout';
-        checkoutBtn.style.background = '#D63585';
+        checkoutBtn.style.background = PRIMARY_CART;
+        checkoutBtn.style.boxShadow = 'none';
         checkoutBtn.onclick = handleCheckout;
     }
-    if (cartTotalEl) cartTotalEl.parentElement.style.display = 'flex';
+    
+    // Update footer layout for purchase mode
+    if (cartFooter) {
+        const totalLabel = cartFooter.querySelector('.cart-total span:first-child');
+        if (totalLabel) totalLabel.textContent = 'Total:';
+    }
     
     if (cart.length === 0) {
         cartItems.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
@@ -301,20 +417,16 @@ function renderSidebarCart() {
     cart.forEach((item, index) => {
         const price = parseFloat(item.price) || 0;
         const qty = parseInt(item.quantity) || 1;
-        const itemTotal = price * qty;
-        total += itemTotal;
-        const imgSrc = item.image || 'images/avatar-placeholder.png';
-        const itemName = item.name || 'Unknown Item';
-        const itemId = item.sku || item.id || 'N/A';
+        total += price * qty;
         
         html += `
             <div class="cart-item">
                 <div class="cart-item-image">
-                    <img src="${imgSrc}" alt="${itemName}" onerror="this.src='images/avatar-placeholder.png'">
+                    <img src="${item.image || 'images/avatar-placeholder.png'}" alt="${item.name}" onerror="this.src='images/avatar-placeholder.png'">
                 </div>
                 <div class="cart-item-info">
-                    <div class="cart-item-name">${itemName}</div>
-                    <div class="cart-item-sku">${itemId}</div>
+                    <div class="cart-item-name">${item.name || 'Unknown'}</div>
+                    <div class="cart-item-sku" style="color: ${PRIMARY_CART};">${item.sku || ''}</div>
                     <div class="cart-item-price">$${price.toFixed(2)}</div>
                     <div class="cart-item-qty">
                         <button class="qty-btn" onclick="updateSidebarQty(${index}, -1)">−</button>
@@ -331,21 +443,21 @@ function renderSidebarCart() {
     if (cartTotalEl) cartTotalEl.textContent = '$' + total.toFixed(2);
 }
 
-// Update inquiry quantity in sidebar
+// ========================================
+// SIDEBAR QUANTITY FUNCTIONS
+// ========================================
+
 function updateInquirySidebarQty(index, delta) {
     let inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
     if (inquiryCart[index]) {
         inquiryCart[index].quantity = (inquiryCart[index].quantity || 1) + delta;
-        if (inquiryCart[index].quantity <= 0) {
-            inquiryCart.splice(index, 1);
-        }
+        if (inquiryCart[index].quantity <= 0) inquiryCart.splice(index, 1);
     }
     localStorage.setItem('rosebudInquiryCart', JSON.stringify(inquiryCart));
     updateCartCount();
     renderSidebarCart();
 }
 
-// Remove inquiry item from sidebar
 function removeInquirySidebarItem(index) {
     let inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
     inquiryCart.splice(index, 1);
@@ -354,20 +466,16 @@ function removeInquirySidebarItem(index) {
     renderSidebarCart();
 }
 
-// Update quantity in sidebar cart
 function updateSidebarQty(index, delta) {
     if (cart[index]) {
         cart[index].quantity += delta;
-        if (cart[index].quantity <= 0) {
-            cart.splice(index, 1);
-        }
+        if (cart[index].quantity <= 0) cart.splice(index, 1);
     }
     saveCart();
     updateCartCount();
     renderSidebarCart();
 }
 
-// Remove item from sidebar cart
 function removeSidebarItem(index) {
     cart.splice(index, 1);
     saveCart();
@@ -375,7 +483,10 @@ function removeSidebarItem(index) {
     renderSidebarCart();
 }
 
-// Handle checkout button click
+// ========================================
+// CHECKOUT HANDLER
+// ========================================
+
 function handleCheckout() {
     if (cart.length === 0) {
         showNotification('Your cart is empty', 'error');
@@ -384,9 +495,16 @@ function handleCheckout() {
     window.location.href = 'cart.html';
 }
 
-// Add item to cart
+// ========================================
+// ADD TO CART (with exclusive mode check)
+// ========================================
+
 function addToCart(product) {
-    // Normalize values
+    if (!canAddToCart()) {
+        showNotification('You have to Submit an Inquiry before adding a purchase item.', 'error');
+        return false;
+    }
+    
     const normalizedProduct = {
         id: product.id || product.sku || 'unknown',
         sku: product.sku || product.id || 'unknown',
@@ -400,9 +518,7 @@ function addToCart(product) {
         brand: product.brand || ''
     };
     
-    const existingItem = cart.find(item => 
-        item.id === normalizedProduct.id && item.color === normalizedProduct.color
-    );
+    const existingItem = cart.find(item => item.id === normalizedProduct.id && item.color === normalizedProduct.color);
     
     if (existingItem) {
         existingItem.quantity += normalizedProduct.quantity;
@@ -414,17 +530,56 @@ function addToCart(product) {
     updateCartCount();
     renderSidebarCart();
     
-    // Open sidebar if exists
     const sidebar = document.getElementById('cartSidebar');
-    if (sidebar && !sidebar.classList.contains('open')) {
-        toggleCart();
-    }
+    if (sidebar && !sidebar.classList.contains('open')) toggleCart();
     
-    // Show notification
     showNotification(`${normalizedProduct.name} added to cart!`);
+    return true;
 }
 
-// Remove item from cart (cart page)
+// ========================================
+// ADD TO INQUIRY CART (with exclusive mode check)
+// ========================================
+
+function addToInquiryCart(product) {
+    if (!canAddToInquiry()) {
+        showNotification('To make an inquiry, complete your Cart transactions first.', 'error');
+        return false;
+    }
+    
+    let inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+    
+    const normalizedProduct = {
+        id: product.id || product.sku || 'unknown',
+        sku: product.sku || product.id || 'unknown',
+        name: product.name || 'Unknown Item',
+        price: parseFloat(product.price) || 0,
+        image: product.image || 'images/avatar-placeholder.png',
+        quantity: parseInt(product.quantity) || 1,
+        category: product.category || ''
+    };
+    
+    const existingItem = inquiryCart.find(item => item.id === normalizedProduct.id);
+    
+    if (existingItem) {
+        existingItem.quantity += normalizedProduct.quantity;
+    } else {
+        inquiryCart.push(normalizedProduct);
+    }
+    
+    localStorage.setItem('rosebudInquiryCart', JSON.stringify(inquiryCart));
+    updateCartCount();
+    renderSidebarCart();
+    
+    // Do NOT auto-open sidebar - just update badge
+    showNotification(`${normalizedProduct.name} added to inquiry!`, 'inquiry');
+    return true;
+}
+
+// ========================================
+// CART PAGE FUNCTIONS
+// ========================================
+
 function removeFromCart(index) {
     cart.splice(index, 1);
     saveCart();
@@ -434,10 +589,8 @@ function removeFromCart(index) {
     checkForCustomItems();
 }
 
-// Update item quantity (cart page)
 function updateQuantity(index, delta) {
     const newQty = cart[index].quantity + delta;
-    
     if (newQty <= 0) {
         removeFromCart(index);
     } else {
@@ -449,14 +602,15 @@ function updateQuantity(index, delta) {
     }
 }
 
-// Save cart to localStorage
 function saveCart() {
     localStorage.setItem('rosebudCart', JSON.stringify(cart));
-    // Update timestamp whenever cart is saved
     localStorage.setItem('rosebudCartTimestamp', Date.now().toString());
 }
 
-// Render cart page items (full cart page)
+// ========================================
+// RENDER CART PAGE ITEMS
+// ========================================
+
 function renderCartPageItems() {
     const container = document.getElementById('cartItems');
     const emptyCart = document.getElementById('emptyCart');
@@ -464,8 +618,55 @@ function renderCartPageItems() {
     
     if (!container) return;
     
+    const inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+    
+    // Inquiry items on cart page
+    if (inquiryCart.length > 0) {
+        if (emptyCart) emptyCart.style.display = 'none';
+        
+        if (checkoutBtn) {
+            checkoutBtn.textContent = 'Make an Inquiry';
+            checkoutBtn.style.background = PRIMARY_INQUIRY;
+            checkoutBtn.onclick = function(e) { e.preventDefault(); window.location.href = 'contact.html'; };
+            checkoutBtn.removeAttribute('href');
+            checkoutBtn.disabled = false;
+        }
+        
+        let html = '';
+        inquiryCart.forEach((item, index) => {
+            html += `
+                <div class="cart-item inquiry-item">
+                    <div class="item-product">
+                        <div class="item-image">
+                            <img src="${item.image || 'images/avatar-placeholder.png'}" alt="${item.name}" onerror="this.src='images/avatar-placeholder.png'">
+                        </div>
+                        <div class="item-details">
+                            <span class="item-name">${item.name || 'Unknown'}</span>
+                            <span class="item-color" style="color: ${PRIMARY_INQUIRY};">Inquiry Item</span>
+                            <span class="item-sku">${item.sku || ''}</span>
+                            <button class="item-remove" onclick="removeInquiryCartItem(${index})">
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4L12 12M12 4L4 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                                Remove
+                            </button>
+                        </div>
+                    </div>
+                    <div class="item-quantity">
+                        <button class="qty-btn" onclick="updateInquiryCartQty(${index}, -1)">−</button>
+                        <span class="qty-value">${item.quantity || 1}</span>
+                        <button class="qty-btn" onclick="updateInquiryCartQty(${index}, 1)">+</button>
+                    </div>
+                    <div class="item-price" style="color: ${PRIMARY_INQUIRY};">Inquiry</div>
+                    <div class="item-subtotal" style="color: ${PRIMARY_INQUIRY};">—</div>
+                </div>
+            `;
+        });
+        
+        container.innerHTML = html;
+        return;
+    }
+    
+    // Regular cart items
     if (cart.length === 0) {
-        // Show empty cart state
         if (emptyCart) {
             container.innerHTML = '';
             container.appendChild(emptyCart);
@@ -476,41 +677,40 @@ function renderCartPageItems() {
     }
     
     if (emptyCart) emptyCart.style.display = 'none';
-    if (checkoutBtn) checkoutBtn.disabled = false;
+    if (checkoutBtn) {
+        checkoutBtn.textContent = 'Checkout';
+        checkoutBtn.style.background = PRIMARY_CART;
+        checkoutBtn.onclick = function(e) { e.preventDefault(); proceedToCheckout(); };
+        checkoutBtn.removeAttribute('href');
+        checkoutBtn.disabled = false;
+    }
     
     let html = '';
     cart.forEach((item, index) => {
         const price = parseFloat(item.price) || 0;
         const qty = parseInt(item.quantity) || 1;
         const subtotal = price * qty;
-        const itemName = item.name || 'Unknown Item';
-        const itemColor = item.color || 'Default';
-        const itemImage = item.image || 'images/avatar-placeholder.png';
         
         html += `
             <div class="cart-item${item.isCustom ? ' custom-item' : ''}">
                 <div class="item-product">
                     <div class="item-image">
-                        <img src="${itemImage}" alt="${itemName}" onerror="this.src='images/avatar-placeholder.png'">
+                        <img src="${item.image || 'images/avatar-placeholder.png'}" alt="${item.name}" onerror="this.src='images/avatar-placeholder.png'">
                     </div>
                     <div class="item-details">
-                        <span class="item-name">${itemName}</span>
-                        <span class="item-color">Color: ${itemColor}</span>
+                        <span class="item-name">${item.name || 'Unknown'}</span>
+                        <span class="item-color">Color: ${item.color || 'Default'}</span>
                         ${item.isCustom ? '<span class="custom-badge">Custom Item</span>' : ''}
                         <button class="item-remove" onclick="removeFromCart(${index})">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                            </svg>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4L12 12M12 4L4 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                             Remove
                         </button>
                     </div>
                 </div>
                 <div class="item-quantity">
-                    <div class="quantity-control">
-                        <button class="qty-btn" onclick="updateQuantity(${index}, -1)">−</button>
-                        <span class="qty-value">${qty}</span>
-                        <button class="qty-btn" onclick="updateQuantity(${index}, 1)">+</button>
-                    </div>
+                    <button class="qty-btn" onclick="updateQuantity(${index}, -1)">−</button>
+                    <span class="qty-value">${qty}</span>
+                    <button class="qty-btn" onclick="updateQuantity(${index}, 1)">+</button>
                 </div>
                 <div class="item-price">$${price.toFixed(2)}</div>
                 <div class="item-subtotal">$${subtotal.toFixed(2)}</div>
@@ -519,355 +719,238 @@ function renderCartPageItems() {
     });
     
     container.innerHTML = html;
-    
-    // Re-add hidden empty cart element for future use
-    if (emptyCart) {
-        emptyCart.style.display = 'none';
-        container.appendChild(emptyCart);
-    }
 }
 
-// Update cart summary
+function removeInquiryCartItem(index) {
+    let inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+    inquiryCart.splice(index, 1);
+    localStorage.setItem('rosebudInquiryCart', JSON.stringify(inquiryCart));
+    renderCartPageItems();
+    updateCartSummary();
+    updateCartCount();
+}
+
+function updateInquiryCartQty(index, delta) {
+    let inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+    if (inquiryCart[index]) {
+        inquiryCart[index].quantity = (inquiryCart[index].quantity || 1) + delta;
+        if (inquiryCart[index].quantity <= 0) inquiryCart.splice(index, 1);
+    }
+    localStorage.setItem('rosebudInquiryCart', JSON.stringify(inquiryCart));
+    renderCartPageItems();
+    updateCartSummary();
+    updateCartCount();
+}
+
+// ========================================
+// UPDATE CART SUMMARY
+// ========================================
+
 function updateCartSummary() {
-    const subtotal = cart.reduce((sum, item) => {
-        const price = parseFloat(item.price) || 0;
-        const qty = parseInt(item.quantity) || 1;
-        return sum + (price * qty);
-    }, 0);
-    let discount = 0;
+    const subtotalEl = document.getElementById('subtotalAmount');
+    const discountEl = document.getElementById('discountAmount');
+    const shippingEl = document.getElementById('shippingAmount');
+    const totalEl = document.getElementById('totalAmount');
     
+    const inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+    if (inquiryCart.length > 0) {
+        if (subtotalEl) subtotalEl.textContent = '—';
+        if (discountEl) discountEl.textContent = '—';
+        if (shippingEl) shippingEl.textContent = '—';
+        if (totalEl) totalEl.textContent = 'Inquiry';
+        return;
+    }
+    
+    const subtotal = cart.reduce((sum, item) => sum + ((parseFloat(item.price) || 0) * (parseInt(item.quantity) || 1)), 0);
+    
+    let discount = 0;
     if (appliedCoupon) {
-        if (appliedCoupon.type === 'percent') {
-            discount = subtotal * (appliedCoupon.discount / 100);
-        } else {
-            discount = appliedCoupon.discount;
-        }
+        discount = appliedCoupon.type === 'percent' ? subtotal * (appliedCoupon.discount / 100) : appliedCoupon.discount;
     }
     
     const shipping = shippingCosts[shippingMethod] || 0;
     const total = subtotal - discount + shipping;
     
-    // Update UI elements
-    const subtotalEl = document.getElementById('cartSubtotal');
-    const totalEl = document.getElementById('cartTotal');
-    const couponRow = document.getElementById('couponDiscount');
-    const discountEl = document.getElementById('discountAmount');
-    const couponCodeEl = document.getElementById('appliedCouponCode');
+    if (subtotalEl) subtotalEl.textContent = '$' + subtotal.toFixed(2);
+    if (discountEl) discountEl.textContent = discount > 0 ? '-$' + discount.toFixed(2) : '$0.00';
+    if (shippingEl) shippingEl.textContent = shipping > 0 ? '$' + shipping.toFixed(2) : 'Free';
+    if (totalEl) totalEl.textContent = '$' + total.toFixed(2);
+}
+
+function checkForCustomItems() {
+    const hasCustom = cart.some(item => item.isCustom || item.price === 0);
+    const inquiryNote = document.getElementById('inquiryNote');
+    const checkoutBtn = document.getElementById('checkoutBtn');
     
-    if (subtotalEl) subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
-    if (totalEl) totalEl.textContent = `$${total.toFixed(2)}`;
-    
-    if (couponRow && appliedCoupon) {
-        couponRow.style.display = 'flex';
-        if (discountEl) discountEl.textContent = `-$${discount.toFixed(2)}`;
-        if (couponCodeEl) couponCodeEl.textContent = appliedCoupon.code;
-    } else if (couponRow) {
-        couponRow.style.display = 'none';
+    if (hasCustom) {
+        if (inquiryNote) inquiryNote.style.display = 'block';
+        if (checkoutBtn) {
+            checkoutBtn.textContent = 'Make an Inquiry';
+            checkoutBtn.style.background = PRIMARY_INQUIRY;
+        }
+        localStorage.setItem('rosebudCheckoutMode', 'inquiry');
+    } else {
+        if (inquiryNote) inquiryNote.style.display = 'none';
+        localStorage.removeItem('rosebudCheckoutMode');
     }
 }
 
-// Update shipping method
-function updateShipping() {
-    const selectedOption = document.querySelector('input[name="shipping"]:checked');
-    if (selectedOption) {
-        shippingMethod = selectedOption.value;
-        
-        // Update visual selection
-        document.querySelectorAll('.shipping-option').forEach(opt => {
-            opt.classList.remove('selected');
-        });
-        selectedOption.closest('.shipping-option').classList.add('selected');
-        
-        updateCartSummary();
-    }
-}
+// ========================================
+// COUPON FUNCTIONS
+// ========================================
 
-// Apply coupon
 function applyCoupon() {
-    const input = document.getElementById('couponCode');
+    const input = document.getElementById('couponInput');
     if (!input) return;
     
     const code = input.value.trim().toUpperCase();
+    if (!code) {
+        showNotification('Please enter a coupon code', 'error');
+        return;
+    }
     
     if (coupons[code]) {
-        appliedCoupon = {
-            code: code,
-            ...coupons[code]
-        };
+        appliedCoupon = { code, ...coupons[code] };
         localStorage.setItem('rosebudCoupon', JSON.stringify(appliedCoupon));
         updateCartSummary();
-        input.value = '';
-        showNotification('Coupon applied successfully!');
+        showNotification(`Coupon "${code}" applied!`);
+        
+        const couponDisplay = document.getElementById('appliedCoupon');
+        if (couponDisplay) {
+            couponDisplay.innerHTML = `<span class="coupon-code">${code}</span><button class="remove-coupon" onclick="removeCoupon()">×</button>`;
+            couponDisplay.style.display = 'flex';
+        }
     } else {
         showNotification('Invalid coupon code', 'error');
     }
 }
 
-// Remove coupon
 function removeCoupon() {
     appliedCoupon = null;
     localStorage.removeItem('rosebudCoupon');
     updateCartSummary();
+    
+    const couponDisplay = document.getElementById('appliedCoupon');
+    if (couponDisplay) couponDisplay.style.display = 'none';
+    
+    const input = document.getElementById('couponInput');
+    if (input) input.value = '';
+    
     showNotification('Coupon removed');
 }
 
-// Check for custom items and show banner
-function checkForCustomItems() {
-    const banner = document.getElementById('customItemsBanner');
-    if (!banner) return;
+function selectShipping(method) {
+    shippingMethod = method;
+    updateCartSummary();
     
-    const hasCustomItems = cart.some(item => item.isCustom || 
-        (item.category && item.category.toLowerCase().includes('custom')) ||
-        (item.category && item.category.toLowerCase().includes('specialty'))
-    );
-    
-    banner.style.display = hasCustomItems ? 'block' : 'none';
-    
-    // Store this state for checkout
-    localStorage.setItem('rosebudHasCustomItems', hasCustomItems ? 'true' : 'false');
-    
-    return hasCustomItems;
+    document.querySelectorAll('.shipping-option').forEach(opt => opt.classList.remove('selected'));
+    const selectedOption = document.querySelector(`input[value="${method}"]`);
+    if (selectedOption) {
+        selectedOption.closest('.shipping-option').classList.add('selected');
+        selectedOption.checked = true;
+    }
 }
 
-// Check if cart contains only custom/specialty items
-function hasOnlyCustomItems() {
-    return cart.length > 0 && cart.every(item => 
-        item.isCustom || 
-        (item.category && item.category.toLowerCase().includes('custom')) ||
-        (item.category && item.category.toLowerCase().includes('specialty'))
-    );
+// ========================================
+// CHECKOUT FUNCTIONS
+// ========================================
+
+function proceedAsGuest() {
+    proceedToCheckout('guest');
 }
 
-// Check if cart has any custom items
-function hasAnyCustomItems() {
-    return cart.some(item => 
-        item.isCustom || 
-        (item.category && item.category.toLowerCase().includes('custom')) ||
-        (item.category && item.category.toLowerCase().includes('specialty'))
-    );
-}
-
-// Close custom items banner
-function closeBanner() {
-    const banner = document.getElementById('customItemsBanner');
-    if (banner) banner.style.display = 'none';
-}
-
-// Proceed as guest
-function proceedAsGuest(event) {
-    if (event) event.preventDefault();
-    
+function proceedToCheckout(mode) {
     if (cart.length === 0) {
         showNotification('Your cart is empty', 'error');
         return;
     }
     
-    // Check for custom/specialty items
-    if (hasAnyCustomItems()) {
-        localStorage.setItem('rosebudCheckoutMode', 'inquiry');
-        window.location.href = 'checkout.html?mode=inquiry';
-    } else {
-        localStorage.setItem('rosebudCheckoutMode', 'guest');
-        window.location.href = 'checkout.html?guest=true';
-    }
+    localStorage.setItem('rosebudCheckoutMode', mode || 'cart');
+    
+    const hasCustom = cart.some(item => item.isCustom || item.price === 0);
+    window.location.href = hasCustom ? 'checkout.html?mode=inquiry' : 'checkout.html';
 }
 
-// Proceed to checkout
-function proceedToCheckout() {
-    console.log('proceedToCheckout called');
-    console.log('Cart length:', cart.length);
-    
-    if (cart.length === 0) {
-        // Show notification but still allow navigation for testing
-        showNotification('Your cart is empty - add items first', 'warning');
-    }
-    
-    // Check for custom/specialty items - convert to order inquiry
-    if (hasAnyCustomItems()) {
-        console.log('Navigating to inquiry mode');
-        localStorage.setItem('rosebudCheckoutMode', 'inquiry');
-        window.location.href = 'checkout.html?mode=inquiry';
-    } else {
-        console.log('Navigating to standard checkout');
-        localStorage.setItem('rosebudCheckoutMode', 'standard');
-        window.location.href = 'checkout.html';
-    }
-}
-
-// Load checkout items
 function loadCheckoutItems() {
     const container = document.getElementById('orderItems');
     if (!container) return;
     
+    const inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+    
+    if (inquiryCart.length > 0) {
+        let html = '';
+        inquiryCart.forEach(item => {
+            html += `
+                <div class="order-item">
+                    <div class="order-item-image">
+                        <img src="${item.image || 'images/avatar-placeholder.png'}" alt="${item.name}" onerror="this.src='images/avatar-placeholder.png'">
+                    </div>
+                    <div class="order-item-details">
+                        <span class="order-item-name">${item.name}</span>
+                        <span class="order-item-qty">Qty: ${item.quantity}</span>
+                    </div>
+                    <div class="order-item-price" style="color: ${PRIMARY_INQUIRY};">Inquiry</div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+        
+        const subtotalEl = document.getElementById('checkoutSubtotal');
+        const totalEl = document.getElementById('checkoutTotal');
+        if (subtotalEl) subtotalEl.textContent = '—';
+        if (totalEl) totalEl.textContent = 'Inquiry';
+        return;
+    }
+    
     if (cart.length === 0) {
-        container.innerHTML = '<p class="empty-order">No items in cart</p>';
+        container.innerHTML = '<p class="empty-order">No items in your order</p>';
         return;
     }
     
     let html = '';
-    cart.forEach((item, index) => {
+    let subtotal = 0;
+    
+    cart.forEach(item => {
         const price = parseFloat(item.price) || 0;
         const qty = parseInt(item.quantity) || 1;
-        const subtotal = price * qty;
-        const itemName = item.name || 'Unknown Item';
-        const itemColor = item.color || 'Default';
-        const itemImage = item.image || 'images/avatar-placeholder.png';
+        const itemTotal = price * qty;
+        subtotal += itemTotal;
         
         html += `
             <div class="order-item">
                 <div class="order-item-image">
-                    <img src="${itemImage}" alt="${itemName}" onerror="this.src='images/avatar-placeholder.png'">
+                    <img src="${item.image || 'images/avatar-placeholder.png'}" alt="${item.name}" onerror="this.src='images/avatar-placeholder.png'">
                 </div>
-                <div class="order-item-info">
-                    <div class="order-item-details">
-                        <span class="order-item-name">${itemName}</span>
-                        <span class="order-item-color">Color: ${itemColor}</span>
-                        <div class="order-item-qty">
-                            <button onclick="updateCheckoutQty(${index}, -1)">−</button>
-                            <span>${qty}</span>
-                            <button onclick="updateCheckoutQty(${index}, 1)">+</button>
-                        </div>
-                    </div>
-                    <div class="order-item-actions">
-                        <span class="order-item-price">$${subtotal.toFixed(2)}</span>
-                        <span class="order-item-remove" onclick="removeCheckoutItem(${index})">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                            </svg>
-                        </span>
-                    </div>
+                <div class="order-item-details">
+                    <span class="order-item-name">${item.name}</span>
+                    <span class="order-item-qty">Qty: ${qty}</span>
                 </div>
+                <div class="order-item-price">$${itemTotal.toFixed(2)}</div>
             </div>
         `;
     });
     
     container.innerHTML = html;
-    updateCheckoutSummary();
-}
-
-// Update quantity on checkout page
-function updateCheckoutQty(index, delta) {
-    if (cart[index]) {
-        const newQty = cart[index].quantity + delta;
-        if (newQty <= 0) {
-            removeCheckoutItem(index);
-        } else {
-            cart[index].quantity = newQty;
-            saveCart();
-            loadCheckoutItems();
-            updateCartCount();
-        }
-    }
-}
-
-// Remove item on checkout page
-function removeCheckoutItem(index) {
-    cart.splice(index, 1);
-    saveCart();
-    loadCheckoutItems();
-    updateCartCount();
-}
-
-// Update checkout summary
-function updateCheckoutSummary() {
-    const subtotal = cart.reduce((sum, item) => {
-        const price = parseFloat(item.price) || 0;
-        const qty = parseInt(item.quantity) || 1;
-        return sum + (price * qty);
-    }, 0);
-    let discount = 0;
     
-    if (appliedCoupon) {
-        if (appliedCoupon.type === 'percent') {
-            discount = subtotal * (appliedCoupon.discount / 100);
-        } else {
-            discount = appliedCoupon.discount;
-        }
-    }
+    const subtotalEl = document.getElementById('checkoutSubtotal');
+    const totalEl = document.getElementById('checkoutTotal');
+    
+    if (subtotalEl) subtotalEl.textContent = '$' + subtotal.toFixed(2);
     
     const shipping = shippingCosts[shippingMethod] || 0;
+    let discount = 0;
+    if (appliedCoupon) {
+        discount = appliedCoupon.type === 'percent' ? subtotal * (appliedCoupon.discount / 100) : appliedCoupon.discount;
+    }
+    
     const total = subtotal - discount + shipping;
-    
-    const subtotalEl = document.getElementById('orderSubtotal');
-    const shippingEl = document.getElementById('orderShipping');
-    const totalEl = document.getElementById('orderTotal');
-    const couponRow = document.getElementById('checkoutCouponDiscount');
-    
-    if (subtotalEl) subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
-    if (shippingEl) shippingEl.textContent = shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`;
-    if (totalEl) totalEl.textContent = `$${total.toFixed(2)}`;
-    
-    if (couponRow && appliedCoupon) {
-        couponRow.style.display = 'flex';
-        const discountEl = document.getElementById('checkoutDiscountAmount');
-        const codeEl = document.getElementById('checkoutAppliedCoupon');
-        if (discountEl) discountEl.textContent = `-$${discount.toFixed(2)} [Remove]`;
-        if (codeEl) codeEl.textContent = appliedCoupon.code;
-    } else if (couponRow) {
-        couponRow.style.display = 'none';
-    }
+    if (totalEl) totalEl.textContent = '$' + total.toFixed(2);
 }
 
-// Apply coupon on checkout page
-function applyCouponCheckout() {
-    const input = document.getElementById('orderCouponCode');
-    if (!input) return;
-    
-    const code = input.value.trim().toUpperCase();
-    
-    if (coupons[code]) {
-        appliedCoupon = {
-            code: code,
-            ...coupons[code]
-        };
-        localStorage.setItem('rosebudCoupon', JSON.stringify(appliedCoupon));
-        input.value = '';
-        updateCheckoutSummary();
-        showNotification('Coupon applied successfully!');
-    } else {
-        showNotification('Invalid coupon code', 'error');
-    }
-}
-
-// Toggle payment method visibility
-function togglePaymentMethod() {
-    const cardFields = document.getElementById('cardFields');
-    const paypalSection = document.getElementById('paypalSection');
-    const stripeSection = document.getElementById('stripeSection');
-    const selectedMethod = document.querySelector('input[name="paymentMethod"]:checked');
-    
-    // Update visual selection
-    document.querySelectorAll('.payment-options .payment-option').forEach(opt => {
-        opt.classList.remove('selected');
-    });
-    if (selectedMethod) {
-        selectedMethod.closest('.payment-option').classList.add('selected');
-    }
-    
-    // Show/hide sections
-    if (cardFields) cardFields.style.display = selectedMethod?.value === 'card' ? 'block' : 'none';
-    if (paypalSection) paypalSection.style.display = selectedMethod?.value === 'paypal' ? 'block' : 'none';
-    if (stripeSection) stripeSection.style.display = selectedMethod?.value === 'stripe' ? 'block' : 'none';
-}
-
-// Place order
 function placeOrder() {
-    // Basic validation
-    const requiredFields = ['firstName', 'lastName', 'phone', 'email', 'streetAddress', 'city', 'zipCode'];
-    let isValid = true;
-    
-    requiredFields.forEach(fieldId => {
-        const field = document.getElementById(fieldId);
-        if (field && !field.value.trim()) {
-            field.style.borderColor = '#D63585';
-            isValid = false;
-        } else if (field) {
-            field.style.borderColor = '#CBCBCB';
-        }
-    });
-    
-    if (!isValid) {
-        showNotification('Please fill in all required fields', 'error');
+    const inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+    if (inquiryCart.length > 0) {
+        window.location.href = 'contact.html';
         return;
     }
     
@@ -876,7 +959,6 @@ function placeOrder() {
         return;
     }
     
-    // Generate order details
     const orderData = {
         code: '#' + Math.random().toString(36).substr(2, 9).toUpperCase(),
         date: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
@@ -885,235 +967,166 @@ function placeOrder() {
         items: [...cart]
     };
     
-    // Save order to localStorage for complete page
     localStorage.setItem('rosebudLastOrder', JSON.stringify(orderData));
     
-    // Clear cart
     cart = [];
     appliedCoupon = null;
     saveCart();
     localStorage.removeItem('rosebudCoupon');
     
-    // Redirect to complete page
     window.location.href = 'order-complete.html';
 }
 
-// Show notification
+// ========================================
+// NOTIFICATION
+// ========================================
+
 function showNotification(message, type = 'success') {
-    // Remove existing notification
     const existing = document.querySelector('.cart-notification');
     if (existing) existing.remove();
     
+    let bgColor = '#38CB89';
+    if (type === 'error') bgColor = '#D63585';
+    if (type === 'inquiry') bgColor = PRIMARY_INQUIRY;
+    
     const notification = document.createElement('div');
     notification.className = `cart-notification ${type}`;
-    notification.innerHTML = `
-        <span>${message}</span>
-        <button onclick="this.parentElement.remove()">&times;</button>
-    `;
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: ${type === 'error' ? '#D63585' : '#38CB89'};
-        color: white;
-        padding: 16px 24px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        z-index: 10000;
-        font-family: 'Inter', sans-serif;
-        font-size: 14px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    `;
-    notification.querySelector('button').style.cssText = `
-        background: none;
-        border: none;
-        color: white;
-        font-size: 20px;
-        cursor: pointer;
-        padding: 0;
-        line-height: 1;
-    `;
+    notification.innerHTML = `<span>${message}</span><button onclick="this.parentElement.remove()">&times;</button>`;
+    notification.style.cssText = `position: fixed; top: 20px; right: 20px; background: ${bgColor}; color: white; padding: 16px 24px; border-radius: 8px; display: flex; align-items: center; gap: 12px; z-index: 10000; font-family: 'Inter', sans-serif; font-size: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); max-width: 400px;`;
+    notification.querySelector('button').style.cssText = `background: none; border: none; color: white; font-size: 20px; cursor: pointer; padding: 0; line-height: 1;`;
     
     document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        notification.remove();
-    }, 3000);
+    setTimeout(() => notification.remove(), 3000);
 }
 
-// Select payment method (for cart page)
+// ========================================
+// PAYMENT & DEMO FUNCTIONS
+// ========================================
+
 let selectedPaymentMethod = 'card';
 
 function selectPaymentMethod(method) {
     selectedPaymentMethod = method;
-    
-    // Update button states
-    document.querySelectorAll('.payment-btn').forEach(btn => {
-        btn.classList.remove('selected');
-    });
-    
-    // Find and select the clicked button
+    document.querySelectorAll('.payment-btn').forEach(btn => btn.classList.remove('selected'));
     const btnClass = method === 'card' ? 'credit-card-btn' : method + '-btn';
     const selectedBtn = document.querySelector(`.payment-btn.${btnClass}`);
-    if (selectedBtn) {
-        selectedBtn.classList.add('selected');
-    }
-    
-    // Store selection
+    if (selectedBtn) selectedBtn.classList.add('selected');
     localStorage.setItem('rosebudPaymentMethod', method);
 }
 
-// Global function to add products (used from other pages)
 window.addProductToCart = function(productId) {
-    // This would normally fetch product data
-    // For demo, we'll create sample product
-    const sampleProduct = {
-        id: productId,
-        name: 'Product ' + productId,
-        price: 99.00,
-        image: 'images/avatar-placeholder.png',
-        color: 'Default',
-        quantity: 1
-    };
-    
-    addToCart(sampleProduct);
+    addToCart({ id: productId, name: 'Product ' + productId, price: 99.00, image: 'images/avatar-placeholder.png', color: 'Default', quantity: 1 });
 };
 
-// Add demo items for testing the checkout workflow
 function addDemoItems() {
-    // Clear existing cart first
-    cart = [];
+    if (!canAddToCart()) {
+        showNotification('You have to Submit an Inquiry before adding a purchase item.', 'error');
+        return;
+    }
     
-    // Add sample items
-    const demoItems = [
-        {
-            id: 'demo-1',
-            name: 'Noritake Fine China Dinner Set',
-            price: 450.00,
-            image: 'images/hero/Noritake.webp',
-            color: 'White/Gold',
-            quantity: 1,
-            category: 'Fine China & Crystal'
-        },
-        {
-            id: 'demo-2',
-            name: 'Tozai Home Candle Holders Set',
-            price: 120.00,
-            image: 'images/hero/Tozai_Home.png',
-            color: 'Bronze',
-            quantity: 2,
-            category: 'Home Decor'
-        }
+    cart = [
+        { id: 'demo-1', sku: 'RT1189', name: 'Olivia Riegel Priscilla Picture Frame', price: 300.00, image: 'images/new-items/New Item - Frame.webp', color: 'Gold', quantity: 1, category: 'Household Items' },
+        { id: 'demo-2', sku: 'NOR-001', name: 'Noritake Fine China Dinner Set', price: 450.00, image: 'images/hero/Noritake.webp', color: 'White/Gold', quantity: 1, category: 'Household Items' }
     ];
     
-    demoItems.forEach(item => {
-        cart.push(item);
-    });
-    
-    // Save to localStorage
-    localStorage.setItem('rosebudCart', JSON.stringify(cart));
-    
-    // Refresh the page to show items
-    if (document.querySelector('.cart-items-section')) {
-        renderCartPageItems();
-        updateCartSummary();
-    }
+    saveCart();
+    if (document.querySelector('.cart-items-section')) { renderCartPageItems(); updateCartSummary(); }
     updateCartCount();
     renderSidebarCart();
-    
     showNotification('Demo items added to cart!', 'success');
 }
 
-// Add demo custom/specialty items for testing inquiry mode
-function addDemoCustomItems() {
-    cart = [];
-    
-    const demoItems = [
-        {
-            id: 'demo-custom-1',
-            name: 'Custom 100% Cotton Dyed Terry Hand Towels',
-            price: 0,
-            image: 'images/new-items/New Items - Custom Towels.png',
-            color: 'Custom',
-            quantity: 100,
-            category: 'Custom Gift Items',
-            isCustom: true
-        }
-    ];
-    
-    demoItems.forEach(item => {
-        cart.push(item);
-    });
-    
-    localStorage.setItem('rosebudCart', JSON.stringify(cart));
-    
-    if (document.querySelector('.cart-items-section')) {
-        renderCartPageItems();
-        updateCartSummary();
-        checkForCustomItems();
+function addDemoInquiryItems() {
+    if (!canAddToInquiry()) {
+        showNotification('To make an inquiry, complete your Cart transactons first.', 'error');
+        return;
     }
+    
+    cart = [];
+    saveCart();
+    
+    localStorage.setItem('rosebudInquiryCart', JSON.stringify([
+        { id: 'RBG-C2600', sku: 'RBG-C2600', name: 'Custom 100% Cotton Dyed Terry Hand Towels', image: 'images/new-items/New Items - Custom Towels.png', quantity: 100, category: 'Wholesale' }
+    ]));
+    
+    if (document.querySelector('.cart-items-section')) { renderCartPageItems(); updateCartSummary(); }
     updateCartCount();
     renderSidebarCart();
-    
-    showNotification('Custom demo items added!', 'success');
+    showNotification('Demo inquiry items added!', 'inquiry');
 }
 
-// Select checkout payment method
 function selectCheckoutPayment(method) {
     localStorage.setItem('rosebudPaymentMethod', method);
-    
-    // Update UI if needed
-    const paymentSection = document.getElementById('paymentSection');
-    if (paymentSection) {
-        // Show/hide card fields based on payment method
-        const cardFields = document.getElementById('cardFields');
-        const paypalSection = document.getElementById('paypalSection');
-        const stripeSection = document.getElementById('stripeSection');
-        
-        if (cardFields) cardFields.style.display = method === 'card' ? 'block' : 'none';
-        if (paypalSection) paypalSection.style.display = method === 'paypal' ? 'block' : 'none';
-        if (stripeSection) stripeSection.style.display = method === 'stripe' ? 'block' : 'none';
-    }
+    const cardFields = document.getElementById('cardFields');
+    const paypalSection = document.getElementById('paypalSection');
+    const stripeSection = document.getElementById('stripeSection');
+    if (cardFields) cardFields.style.display = method === 'card' ? 'block' : 'none';
+    if (paypalSection) paypalSection.style.display = method === 'paypal' ? 'block' : 'none';
+    if (stripeSection) stripeSection.style.display = method === 'stripe' ? 'block' : 'none';
 }
 
-// Continue as guest on checkout
 function continueAsGuest(event) {
     if (event) event.preventDefault();
-    
-    // Hide sign-in options
     const signinOptions = document.getElementById('checkoutSigninOptions');
-    if (signinOptions) {
-        signinOptions.style.display = 'none';
-    }
-    
-    // Mark as guest checkout
+    if (signinOptions) signinOptions.style.display = 'none';
     localStorage.setItem('rosebudCheckoutMode', 'guest');
-    
     showNotification('Continuing as guest', 'success');
 }
 
-// Reset cart completely (can be called from browser console: resetCart())
 function resetCart() {
     cart = [];
     localStorage.removeItem('rosebudCart');
     localStorage.removeItem('rosebudCoupon');
+    localStorage.removeItem('rosebudInquiryCart');
+    localStorage.removeItem('rosebudCartTimestamp');
     updateCartCount();
     renderSidebarCart();
-    if (document.querySelector('.cart-items-section')) {
-        renderCartPageItems();
-        updateCartSummary();
-    }
-    console.log('Cart has been reset to empty');
+    if (document.querySelector('.cart-items-section')) { renderCartPageItems(); updateCartSummary(); }
+    console.log('Cart reset');
+    showNotification('Cart cleared', 'success');
 }
 
-// Export functions globally
+// ========================================
+// GLOBAL EXPORTS
+// ========================================
+
+// updateShipping wrapper for cart.html radio buttons
+function updateShipping() {
+    const selectedRadio = document.querySelector('input[name="shipping"]:checked');
+    if (selectedRadio) {
+        selectShipping(selectedRadio.value);
+    }
+}
+
+window.toggleCart = toggleCart;
+window.addToCart = addToCart;
+window.addToInquiryCart = addToInquiryCart;
+window.removeFromCart = removeFromCart;
+window.updateQuantity = updateQuantity;
+window.updateCartCount = updateCartCount;
+window.applyCoupon = applyCoupon;
+window.removeCoupon = removeCoupon;
+window.selectShipping = selectShipping;
+window.updateShipping = updateShipping;
 window.proceedAsGuest = proceedAsGuest;
 window.proceedToCheckout = proceedToCheckout;
 window.checkInquiryMode = checkInquiryMode;
 window.addDemoItems = addDemoItems;
-window.addDemoCustomItems = addDemoCustomItems;
+window.addDemoInquiryItems = addDemoInquiryItems;
 window.selectCheckoutPayment = selectCheckoutPayment;
 window.continueAsGuest = continueAsGuest;
 window.resetCart = resetCart;
+window.placeOrder = placeOrder;
+window.updateSidebarQty = updateSidebarQty;
+window.removeSidebarItem = removeSidebarItem;
+window.updateInquirySidebarQty = updateInquirySidebarQty;
+window.removeInquirySidebarItem = removeInquirySidebarItem;
+window.removeInquiryCartItem = removeInquiryCartItem;
+window.updateInquiryCartQty = updateInquiryCartQty;
+window.renderSidebarCart = renderSidebarCart;
+window.canAddToCart = canAddToCart;
+window.canAddToInquiry = canAddToInquiry;
+window.getCartMode = getCartMode;
+window.showNotification = showNotification;
+
+console.log('RoseBud Cart System v4.1.2 - Single Cart Mode Switching - Loaded');

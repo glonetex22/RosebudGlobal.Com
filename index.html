@@ -269,15 +269,12 @@
                 <a href="#" class="btn-link">More Products <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4.16667 10H15.8333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M10.8333 5L15.8333 10L10.8333 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
             </div>
             <div class="products-carousel" id="productsCarousel">
-                <div class="product-card" data-price="0" data-name="Custom 100% Cotton Dyed Terry Hand Towels" data-sku="RBG-C2600" data-category="Wholesale" data-manufacturer="RoseBud Global">
+                <div class="product-card" data-price="0" data-name="Custom 100% Cotton Dyed Terry Hand Towels" data-sku="RBG-C2600" data-category="Wholesale" data-manufacturer="RoseBud Global" onclick="goToProductDetail('RBG-C2600')">
                     <div class="product-image-wrapper">
                         <img src="images/new-items/New Items - Custom Towels.png" alt="Custom Towels" class="product-img">
                         <div class="product-badges"><span class="badge badge-new-green">NEW</span></div>
                         <button class="wishlist-btn" onclick="handleHomeWishlist(event, 'RBG-C2600')" aria-label="Add to wishlist"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 17.5L9.08333 16.6667C4.58333 12.5833 1.66667 9.95833 1.66667 6.79167C1.66667 4.16667 3.75 2.08333 6.375 2.08333C7.86667 2.08333 9.3 2.79167 10 3.89167C10.7 2.79167 12.1333 2.08333 13.625 2.08333C16.25 2.08333 18.3333 4.16667 18.3333 6.79167C18.3333 9.95833 15.4167 12.5833 10.9167 16.6667L10 17.5Z" stroke="currentColor" stroke-width="1.5"/></svg></button>
-                        <div class="home-product-actions">
-                            <button class="home-action-btn btn-primary-inquiry" onclick="addToInquiryFromHome('Custom 100% Cotton Dyed Terry Hand Towels', 'RBG-C2600', 'images/new-items/New Items - Custom Towels.png')">Make an Inquiry</button>
-                            <button class="home-action-btn btn-secondary" disabled style="opacity:0.5;cursor:not-allowed;">Add to Cart</button>
-                        </div>
+                        <button class="add-to-cart-btn inquiry-btn" onclick="event.stopPropagation(); addToInquiryFromHome('Custom 100% Cotton Dyed Terry Hand Towels', 'RBG-C2600', 'images/new-items/New Items - Custom Towels.png')">Make an Inquiry</button>
                     </div>
                     <div class="product-info">
                         <div class="product-rating"><span class="stars">★★★★★</span></div>
@@ -285,15 +282,12 @@
                         <div class="product-price"><span class="current-price product-sku">RBG-C2600</span><span class="contact-price">Wholesale</span></div>
                     </div>
                 </div>
-                <div class="product-card" data-price="0" data-name="Special Shaped Plate Series Ceramic Plate" data-sku="RBG-P31005" data-category="Wholesale" data-manufacturer="OH OHERE">
+                <div class="product-card" data-price="0" data-name="Special Shaped Plate Series Ceramic Plate" data-sku="RBG-P31005" data-category="Wholesale" data-manufacturer="OH OHERE" onclick="goToProductDetail('RBG-P31005')">
                     <div class="product-image-wrapper product-img-white-bg">
                         <img src="images/new-items/plate-cleaned.png" alt="Ceramic Plate" class="product-img">
                         <div class="product-badges"><span class="badge badge-new-green">NEW</span></div>
                         <button class="wishlist-btn" onclick="handleHomeWishlist(event, 'RBG-P31005')" aria-label="Add to wishlist"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 17.5L9.08333 16.6667C4.58333 12.5833 1.66667 9.95833 1.66667 6.79167C1.66667 4.16667 3.75 2.08333 6.375 2.08333C7.86667 2.08333 9.3 2.79167 10 3.89167C10.7 2.79167 12.1333 2.08333 13.625 2.08333C16.25 2.08333 18.3333 4.16667 18.3333 6.79167C18.3333 9.95833 15.4167 12.5833 10.9167 16.6667L10 17.5Z" stroke="currentColor" stroke-width="1.5"/></svg></button>
-                        <div class="home-product-actions">
-                            <button class="home-action-btn btn-primary-inquiry" onclick="addToInquiryFromHome('Special Shaped Plate Series Ceramic Plate', 'RBG-P31005', 'images/new-items/plate-cleaned.png')">Make an Inquiry</button>
-                            <button class="home-action-btn btn-secondary" disabled style="opacity:0.5;cursor:not-allowed;">Add to Cart</button>
-                        </div>
+                        <button class="add-to-cart-btn inquiry-btn" onclick="event.stopPropagation(); addToInquiryFromHome('Special Shaped Plate Series Ceramic Plate', 'RBG-P31005', 'images/new-items/plate-cleaned.png')">Make an Inquiry</button>
                     </div>
                     <div class="product-info">
                         <div class="product-rating"><span class="stars">★★★★★</span></div>
@@ -301,15 +295,12 @@
                         <div class="product-price"><span class="current-price product-sku">RBG-P31005</span><span class="contact-price">Wholesale</span></div>
                     </div>
                 </div>
-                <div class="product-card" data-price="0" data-name="Custom Exotic Material Loveseat" data-sku="RBG-F29055" data-category="Wholesale" data-manufacturer="RoseBud Global">
+                <div class="product-card" data-price="0" data-name="Custom Exotic Material Loveseat" data-sku="RBG-F29055" data-category="Wholesale" data-manufacturer="RoseBud Global" onclick="goToProductDetail('RBG-F29055')">
                     <div class="product-image-wrapper">
                         <img src="images/new-items/New Item - Exotic Loveseat.png" alt="Exotic Loveseat" class="product-img">
                         <div class="product-badges"><span class="badge badge-new-green">NEW</span></div>
                         <button class="wishlist-btn" onclick="handleHomeWishlist(event, 'RBG-F29055')" aria-label="Add to wishlist"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 17.5L9.08333 16.6667C4.58333 12.5833 1.66667 9.95833 1.66667 6.79167C1.66667 4.16667 3.75 2.08333 6.375 2.08333C7.86667 2.08333 9.3 2.79167 10 3.89167C10.7 2.79167 12.1333 2.08333 13.625 2.08333C16.25 2.08333 18.3333 4.16667 18.3333 6.79167C18.3333 9.95833 15.4167 12.5833 10.9167 16.6667L10 17.5Z" stroke="currentColor" stroke-width="1.5"/></svg></button>
-                        <div class="home-product-actions">
-                            <button class="home-action-btn btn-primary-inquiry" onclick="addToInquiryFromHome('Custom Exotic Material Loveseat', 'RBG-F29055', 'images/new-items/New Item - Exotic Loveseat.png')">Make an Inquiry</button>
-                            <button class="home-action-btn btn-secondary" disabled style="opacity:0.5;cursor:not-allowed;">Add to Cart</button>
-                        </div>
+                        <button class="add-to-cart-btn inquiry-btn" onclick="event.stopPropagation(); addToInquiryFromHome('Custom Exotic Material Loveseat', 'RBG-F29055', 'images/new-items/New Item - Exotic Loveseat.png')">Make an Inquiry</button>
                     </div>
                     <div class="product-info">
                         <div class="product-rating"><span class="stars">★★★★★</span></div>
@@ -317,15 +308,12 @@
                         <div class="product-price"><span class="current-price product-sku">RBG-F29055</span><span class="contact-price">Wholesale</span></div>
                     </div>
                 </div>
-                <div class="product-card" data-price="300" data-name="Olivia Riegel Priscilla Picture Frame" data-sku="RT1189" data-category="Household Items" data-manufacturer="Olivia Riegel">
+                <div class="product-card" data-price="300" data-name="Olivia Riegel Priscilla Picture Frame" data-sku="RT1189" data-category="Household Items" data-manufacturer="Olivia Riegel" onclick="goToProductDetail('RT1189')">
                     <div class="product-image-wrapper">
                         <img src="images/new-items/New Item - Frame.webp" alt="Picture Frame" class="product-img">
                         <div class="product-badges"><span class="badge badge-new-green">NEW</span></div>
                         <button class="wishlist-btn" onclick="handleHomeWishlist(event, 'RT1189')" aria-label="Add to wishlist"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 17.5L9.08333 16.6667C4.58333 12.5833 1.66667 9.95833 1.66667 6.79167C1.66667 4.16667 3.75 2.08333 6.375 2.08333C7.86667 2.08333 9.3 2.79167 10 3.89167C10.7 2.79167 12.1333 2.08333 13.625 2.08333C16.25 2.08333 18.3333 4.16667 18.3333 6.79167C18.3333 9.95833 15.4167 12.5833 10.9167 16.6667L10 17.5Z" stroke="currentColor" stroke-width="1.5"/></svg></button>
-                        <div class="home-product-actions">
-                            <button class="home-action-btn btn-primary-cart" onclick="addToCart('Olivia Riegel Priscilla Picture Frame', 300, 'RT1189')">Add to Cart</button>
-                            <button class="home-action-btn btn-secondary" onclick="addToInquiryFromHome('Olivia Riegel Priscilla Picture Frame', 'RT1189', 'images/new-items/New Item - Frame.webp')">Make an Inquiry</button>
-                        </div>
+                        <button class="add-to-cart-btn" onclick="event.stopPropagation(); addToCart('Olivia Riegel Priscilla Picture Frame', 300, 'RT1189')">Add to Cart</button>
                     </div>
                     <div class="product-info">
                         <div class="product-rating"><span class="stars">★★★★★</span></div>

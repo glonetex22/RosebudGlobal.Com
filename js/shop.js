@@ -559,15 +559,13 @@ function renderProducts() {
 const PRIMARY_INQUIRY = '#377DFF';
 const PRIMARY_CART = '#D63585';
 
-// Category resolver - determines which button is primary
+// Category resolver - determines which button to show
 function getPrimaryAction(category) {
     const cat = (category || '').toLowerCase();
     const inquiryCategories = ['custom gift items', 'home decor', 'specialty items', 'home decor & accessories', 'wholesale'];
-    const cartCategories = ['household items', 'household', 'sale', 'sale items', 'fine china', 'fine china & crystal'];
     
     if (inquiryCategories.some(c => cat.includes(c))) return 'INQUIRY';
-    if (cartCategories.some(c => cat.includes(c))) return 'CART';
-    return 'CART'; // Default
+    return 'CART'; // Default for Household Items, Sale Items, etc.
 }
 
 function createProductCard(product) {
@@ -577,13 +575,25 @@ function createProductCard(product) {
         ? `$${product.price.toFixed(2)}` 
         : 'Contact for Price';
     
-    // Determine primary action based on category
+    // Determine which single button to show based on category
     const category = (product.category || '').toLowerCase();
     const primaryAction = getPrimaryAction(category);
     const hasNoPrice = product.price === 0;
     
-    // If no price, always show inquiry as primary
-    const effectivePrimary = hasNoPrice ? 'INQUIRY' : primaryAction;
+    // If no price, always show inquiry button
+    const showInquiry = hasNoPrice || primaryAction === 'INQUIRY';
+    
+    // Determine button text, class, and onclick
+    let buttonText, buttonClass, buttonOnclick;
+    if (showInquiry) {
+        buttonText = 'Make an Inquiry';
+        buttonClass = 'inquiry-btn';
+        buttonOnclick = `addToInquiryCartFromShop(${product.id})`;
+    } else {
+        buttonText = shopConfig.labels.addToCart;
+        buttonClass = '';
+        buttonOnclick = `addProductToCart(${product.id})`;
+    }
     
     let badges = '';
     if (product.badges && product.badges.length > 0) {
@@ -603,10 +613,6 @@ function createProductCard(product) {
         ? `<span class="multi-image-indicator">${product.images.length} photos</span>` 
         : '';
     
-    // Both buttons always present - primary/secondary styling based on category
-    const inquiryIsPrimary = effectivePrimary === 'INQUIRY';
-    const cartIsPrimary = effectivePrimary === 'CART';
-    
     return `
         <div class="product-card" onclick="viewProduct(${product.id})">
             <div class="product-image-container">
@@ -622,17 +628,9 @@ function createProductCard(product) {
                         <path d="M10 17.5L9.08333 16.6667C4.58333 12.5833 1.66667 9.95833 1.66667 6.79167C1.66667 4.16667 3.75 2.08333 6.375 2.08333C7.86667 2.08333 9.3 2.79167 10 3.89167C10.7 2.79167 12.1333 2.08333 13.625 2.08333C16.25 2.08333 18.3333 4.16667 18.3333 6.79167C18.3333 9.95833 15.4167 12.5833 10.9167 16.6667L10 17.5Z" stroke="currentColor" stroke-width="1.5"/>
                     </svg>
                 </button>
-                <div class="product-actions-dual">
-                    <button class="action-btn ${inquiryIsPrimary ? 'btn-primary-inquiry' : 'btn-secondary'}" 
-                            onclick="event.stopPropagation(); addToInquiryCartFromShop(${product.id})">
-                        Make an Inquiry
-                    </button>
-                    <button class="action-btn ${cartIsPrimary ? 'btn-primary-cart' : 'btn-secondary'}" 
-                            onclick="event.stopPropagation(); addProductToCart(${product.id})"
-                            ${hasNoPrice ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>
-                        Add to Cart
-                    </button>
-                </div>
+                <button class="add-to-cart-btn ${buttonClass}" onclick="event.stopPropagation(); ${buttonOnclick}">
+                    ${buttonText}
+                </button>
             </div>
             <div class="product-info">
                 <div class="product-rating">

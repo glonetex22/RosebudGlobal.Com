@@ -241,18 +241,9 @@ button { cursor: pointer; border: none; background: transparent; font-family: in
 .product-card:hover .add-to-cart-btn { opacity: 1; transform: translateY(0); }
 .add-to-cart-btn:hover { background-color: var(--primary-dark); }
 
-/* Home Page Dual Action Buttons */
-.home-product-actions { position: absolute; bottom: 16px; left: 16px; right: 16px; display: flex; flex-direction: column; gap: 8px; opacity: 0; transform: translateY(10px); transition: all 0.3s ease; }
-.product-card:hover .home-product-actions { opacity: 1; transform: translateY(0); }
-.home-action-btn { width: 100%; padding: 10px 16px; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; text-align: center; border: none; }
-.btn-primary-inquiry { background: #377DFF; color: white; }
-.btn-primary-inquiry:hover { background: #2563EB; }
-.btn-primary-cart { background: #D63585; color: white; }
-.btn-primary-cart:hover { background: #B82D71; }
-.btn-secondary { background: white; color: #141718; border: 1px solid #E8ECEF !important; }
-.btn-secondary:hover { background: #F3F5F7; }
-/* Hide old single button when dual actions present */
-.product-card:has(.home-product-actions) .add-to-cart-btn:not(.home-action-btn) { display: none; }
+/* Inquiry Button Style */
+.add-to-cart-btn.inquiry-btn { background-color: #377DFF; }
+.add-to-cart-btn.inquiry-btn:hover { background-color: #2563EB; }
 .product-info { display: flex; flex-direction: column; gap: 4px; }
 .product-rating .stars { color: var(--gold); font-size: 14px; letter-spacing: 2px; }
 .product-name { font-weight: 600; font-size: 16px; line-height: 26px; color: var(--neutral-07); }
@@ -387,3 +378,121 @@ button { cursor: pointer; border: none; background: transparent; font-family: in
 .chat-input-form button { width: 44px; height: 44px; background: var(--primary); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-left: 8px; transition: background 0.3s ease; }
 .chat-input-form button:hover { background: var(--primary-dark); }
 @media (max-width: 480px) { .chat-box { width: calc(100vw - 48px); right: -12px; } }
+
+/* ========================================
+   INQUIRY CART SIDEBAR STYLES
+   ======================================== */
+
+/* Inquiry Cart Icon Badge */
+.inquiry-cart-btn {
+    position: relative;
+}
+
+.inquiry-cart-count {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #377DFF;
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+}
+
+/* Inquiry Cart Sidebar */
+.inquiry-cart-sidebar {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 400px;
+    max-width: 100vw;
+    height: 100vh;
+    background: white;
+    z-index: 10001;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.3s ease;
+    box-shadow: -4px 0 20px rgba(0,0,0,0.1);
+}
+
+.inquiry-cart-sidebar.open {
+    right: 0;
+}
+
+.inquiry-cart-sidebar .cart-header h3 {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    color: #141718;
+}
+
+.inquiry-cart-sidebar .cart-item-sku {
+    color: #377DFF !important;
+}
+
+/* Inquiry Cart Footer */
+.inquiry-cart-footer {
+    background: #FAFAFA;
+    border-top: 1px solid #E8ECEF;
+}
+
+.inquiry-cart-footer .cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+}
+
+.inquiry-cart-label {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: #141718;
+}
+
+.inquiry-checkout-btn {
+    background: #377DFF !important;
+    color: white;
+    border: none;
+    padding: 16px 24px;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: calc(100% - 48px);
+    margin: 0 24px 24px 24px;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 12px rgba(55, 125, 255, 0.3);
+}
+
+.inquiry-checkout-btn:hover {
+    background: #2563EB !important;
+    box-shadow: 0 6px 16px rgba(55, 125, 255, 0.4);
+}
+
+/* Inquiry Cart Overlay */
+.inquiry-cart-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.inquiry-cart-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+

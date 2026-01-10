@@ -36,7 +36,7 @@ const brandLogos = [
 let cart = [];
 
 // Build version check (must match cart.js)
-const MAIN_BUILD_VERSION = '3.8.0';
+const MAIN_BUILD_VERSION = '4.1.2';
 
 // Initialize cart from localStorage
 function initCartFromStorage() {
@@ -439,6 +439,16 @@ function addToCart(name, price, sku) {
         return;
     }
     
+    // Check if inquiry cart has items (exclusive mode)
+    if (typeof canAddToCart === 'function' && !canAddToCart()) {
+        if (typeof showNotification === 'function') {
+            showNotification('To add an item to the cart, complete your inquiry first.', 'error');
+        } else {
+            showCartNotification('To add an item to the cart, complete your inquiry first.');
+        }
+        return;
+    }
+    
     const existingIndex = cart.findIndex(item => item.id === sku);
     const product = inventory.find(p => p.sku === sku) || { image: 'images/avatar-placeholder.png' };
     
@@ -464,7 +474,11 @@ function addToCart(name, price, sku) {
     toggleCart();
     
     // Show notification
-    showCartNotification(`${name} added to cart!`);
+    if (typeof showNotification === 'function') {
+        showNotification(`${name} added to cart!`);
+    } else {
+        showCartNotification(`${name} added to cart!`);
+    }
 }
 
 // Add item to inquiry cart directly (from main.js)
@@ -945,14 +959,26 @@ function goToProduct(id, sku) {
 // HOME PAGE INQUIRY FUNCTION
 // ========================================
 
-function addToInquiryFromHome(name, sku, image) {
+function addToInquiryFromHome(name, sku, image, price) {
+    // Check if cart has items (exclusive mode)
+    if (typeof canAddToInquiry === 'function' && !canAddToInquiry()) {
+        if (typeof showNotification === 'function') {
+            showNotification('To make an inquiry, complete your Cart transactions first.', 'error');
+        } else {
+            showCartNotification('To make an inquiry, complete your Cart transactions first.');
+        }
+        return;
+    }
+    
     let inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
     
     const existingIndex = inquiryCart.findIndex(item => item.sku === sku);
     
     const inquiryItem = {
+        id: sku,
         name: name,
         sku: sku,
+        price: parseFloat(price) || 0,
         image: image || 'images/avatar-placeholder.png',
         category: 'Wholesale',
         description: 'Premium quality product from RoseBud Global.',
@@ -969,13 +995,14 @@ function addToInquiryFromHome(name, sku, image) {
     
     // Update cart count
     if (typeof updateCartCount === 'function') updateCartCount();
-    
-    // Show sidebar
     if (typeof renderSidebarCart === 'function') renderSidebarCart();
-    if (typeof toggleCart === 'function') toggleCart();
     
-    // Show notification
-    showCartNotification(`${name} added to inquiry!`);
+    // Do NOT open sidebar - just show notification
+    if (typeof showNotification === 'function') {
+        showNotification(`${name} added to inquiry!`, 'inquiry');
+    } else {
+        showCartNotification(`${name} added to inquiry!`);
+    }
 }
 
 // ========================================
@@ -1081,4 +1108,10 @@ window.goToProduct = goToProduct;
 window.addToInquiryFromHome = addToInquiryFromHome;
 window.handleHomeWishlist = handleHomeWishlist;
 
-console.log('RoseBud Global v3.8.0 - Loaded');
+// Navigate to product detail page by SKU
+function goToProductDetail(sku) {
+    window.location.href = `product.html?sku=${encodeURIComponent(sku)}`;
+}
+window.goToProductDetail = goToProductDetail;
+
+console.log('RoseBud Global v4.1.2 - Single Cart Mode - Loaded');

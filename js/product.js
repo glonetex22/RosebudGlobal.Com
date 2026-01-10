@@ -122,15 +122,13 @@ function initProductPage() {
 const PRIMARY_INQUIRY = '#377DFF';
 const PRIMARY_CART = '#D63585';
 
-// Category resolver
+// Category resolver - determines which single button to show
 function getPrimaryActionForProduct(category) {
     const cat = (category || '').toLowerCase();
     const inquiryCategories = ['custom gift items', 'home decor', 'specialty items', 'home decor & accessories', 'wholesale'];
-    const cartCategories = ['household items', 'household', 'sale', 'sale items', 'fine china', 'fine china & crystal', 'picture frames'];
     
     if (inquiryCategories.some(c => cat.includes(c))) return 'INQUIRY';
-    if (cartCategories.some(c => cat.includes(c))) return 'CART';
-    return 'CART'; // Default
+    return 'CART'; // Default for Household Items, Sale Items, etc.
 }
 
 function updateAddToCartVisibility() {
@@ -140,43 +138,30 @@ function updateAddToCartVisibility() {
     const primaryAction = getPrimaryActionForProduct(category);
     const hasNoPrice = price === 0;
     
-    // If no price, inquiry is always primary
-    const effectivePrimary = hasNoPrice ? 'INQUIRY' : primaryAction;
+    // If no price, always show inquiry button
+    const showInquiry = hasNoPrice || primaryAction === 'INQUIRY';
     
     const addToCartBtn = document.getElementById('addToCartBtn');
     const makeInquiryBtn = document.getElementById('makeInquiryBtn');
     const quantitySelector = document.querySelector('.quantity-selector');
     
-    // Style based on which is primary
-    if (addToCartBtn && makeInquiryBtn) {
-        if (effectivePrimary === 'INQUIRY') {
-            // Inquiry is primary (filled blue), Cart is secondary (outline)
+    if (showInquiry) {
+        // Show only "Make an Inquiry" button
+        if (addToCartBtn) addToCartBtn.style.display = 'none';
+        if (makeInquiryBtn) {
+            makeInquiryBtn.style.display = 'block';
             makeInquiryBtn.style.background = PRIMARY_INQUIRY;
             makeInquiryBtn.style.color = 'white';
             makeInquiryBtn.style.border = 'none';
-            makeInquiryBtn.style.order = '1';
-            
-            addToCartBtn.style.background = 'white';
-            addToCartBtn.style.color = '#141718';
-            addToCartBtn.style.border = '1px solid #E8ECEF';
-            addToCartBtn.style.order = '2';
-            
-            if (hasNoPrice) {
-                addToCartBtn.disabled = true;
-                addToCartBtn.style.opacity = '0.5';
-                addToCartBtn.style.cursor = 'not-allowed';
-            }
-        } else {
-            // Cart is primary (filled pink), Inquiry is secondary (outline)
+        }
+    } else {
+        // Show only "Add to Cart" button
+        if (makeInquiryBtn) makeInquiryBtn.style.display = 'none';
+        if (addToCartBtn) {
+            addToCartBtn.style.display = 'block';
             addToCartBtn.style.background = PRIMARY_CART;
             addToCartBtn.style.color = 'white';
             addToCartBtn.style.border = 'none';
-            addToCartBtn.style.order = '1';
-            
-            makeInquiryBtn.style.background = 'white';
-            makeInquiryBtn.style.color = '#141718';
-            makeInquiryBtn.style.border = '1px solid #E8ECEF';
-            makeInquiryBtn.style.order = '2';
         }
     }
     
@@ -185,8 +170,18 @@ function updateAddToCartVisibility() {
     }
 }
 
-// Add product to Inquiry Cart
+// Add product to Inquiry Cart (with exclusive mode check)
 function addToInquiryCart() {
+    // Check exclusive mode - if cart has items, block inquiry
+    if (typeof canAddToInquiry === 'function' && !canAddToInquiry()) {
+        if (typeof showNotification === 'function') {
+            showNotification('To make an inquiry, complete your Cart transactions first.', 'error');
+        } else {
+            alert('To make an inquiry, complete your Cart transactions first.');
+        }
+        return;
+    }
+    
     const quantity = parseInt(document.getElementById('quantity')?.value || 1);
     
     // Get existing inquiry cart
@@ -196,8 +191,10 @@ function addToInquiryCart() {
     const existingIndex = inquiryCart.findIndex(item => item.sku === productData.sku);
     
     const inquiryItem = {
+        id: productData.sku,
         name: productData.name,
         sku: productData.sku,
+        price: parseFloat(productData.price) || 0,
         image: productData.image || productData.images?.[0] || 'images/avatar-placeholder.png',
         category: productData.category,
         description: productData.description || 'Premium quality product from RoseBud Global.',
@@ -217,15 +214,10 @@ function addToInquiryCart() {
     
     // Update cart count (includes inquiry items)
     if (typeof updateCartCount === 'function') updateCartCount();
+    if (typeof renderSidebarCart === 'function') renderSidebarCart();
     
-    // Show confirmation
+    // Show confirmation notification - Do NOT open sidebar
     showInquiryAddedNotification(productData.name, quantity);
-    
-    // Open cart sidebar to show inquiry items
-    if (typeof toggleCart === 'function') {
-        if (typeof renderSidebarCart === 'function') renderSidebarCart();
-        toggleCart();
-    }
 }
 
 // Show notification when item added to inquiry
@@ -530,6 +522,16 @@ function updateQuantityDisplay() {
 function addProductToCartFromPage() {
     if (!productData) return;
     
+    // Check exclusive mode - if inquiry has items, block cart
+    if (typeof canAddToCart === 'function' && !canAddToCart()) {
+        if (typeof showNotification === 'function') {
+            showNotification('You have to Submit an Inquiry before adding a purchase item.', 'error');
+        } else {
+            alert('You have to Submit an Inquiry before adding a purchase item.');
+        }
+        return;
+    }
+    
     if (productData.price === 0) {
         // Redirect to inquiry page for $0 price items
         window.location.href = `contact.html?product=${encodeURIComponent(productData.name)}`;
@@ -549,7 +551,13 @@ function addProductToCartFromPage() {
             brand: productData.brand || 'Rose Bud Global'
         });
     } else {
-        // Fallback: direct localStorage manipulation
+        // Fallback: direct localStorage manipulation (also check exclusive mode)
+        const inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+        if (inquiryCart.length > 0) {
+            alert('You have to Submit an Inquiry before adding a purchase item.');
+            return;
+        }
+        
         let cart = JSON.parse(localStorage.getItem('rosebudCart') || '[]');
         
         const existingIndex = cart.findIndex(item => 

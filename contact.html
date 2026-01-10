@@ -461,6 +461,15 @@
             document.querySelectorAll('#contactForm input[required]').forEach(function(field) { if (!validateField(field)) isFormValid = false; });
             if (!isFormValid) return;
             console.log('Contact Form Submission:', new FormData(event.target));
+            
+            // Clear inquiry cart after successful submission
+            localStorage.removeItem('rosebudInquiryCart');
+            document.getElementById('selectedItemsSection').classList.remove('visible');
+            
+            // Update cart count in header
+            if (typeof updateCartCount === 'function') updateCartCount();
+            if (typeof renderSidebarCart === 'function') renderSidebarCart();
+            
             document.getElementById('successModal').classList.add('active');
             event.target.reset();
             sessionStorage.removeItem('inquiryProduct');
