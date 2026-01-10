@@ -562,10 +562,16 @@ const PRIMARY_CART = '#D63585';
 // Category resolver - determines which button to show
 function getPrimaryAction(category) {
     const cat = (category || '').toLowerCase();
-    const inquiryCategories = ['custom gift items', 'home decor', 'specialty items', 'home decor & accessories', 'wholesale'];
     
+    // These categories get "Add to Cart" button (pink)
+    const cartCategories = ['sale', 'sale items', 'household', 'household items', 'handbag', 'handbags', 'bag', 'bags', 'purse', 'tote', 'clutch', 'wallet', 'leather'];
+    if (cartCategories.some(c => cat.includes(c) || cat === c)) return 'CART';
+    
+    // These categories get "Make an Inquiry" button (blue)
+    const inquiryCategories = ['custom gift', 'home decor', 'decor', 'specialty', 'wholesale', 'custom'];
     if (inquiryCategories.some(c => cat.includes(c))) return 'INQUIRY';
-    return 'CART'; // Default for Household Items, Sale Items, etc.
+    
+    return 'CART'; // Default for everything else
 }
 
 function createProductCard(product) {
@@ -578,10 +584,10 @@ function createProductCard(product) {
     // Determine which single button to show based on category
     const category = (product.category || '').toLowerCase();
     const primaryAction = getPrimaryAction(category);
-    const hasNoPrice = product.price === 0;
     
-    // If no price, always show inquiry button
-    const showInquiry = hasNoPrice || primaryAction === 'INQUIRY';
+    // Only show inquiry if category specifically requires it
+    // Sale items and bags should ALWAYS use Add to Cart, even with $0 price
+    const showInquiry = primaryAction === 'INQUIRY';
     
     // Determine button text, class, and onclick
     let buttonText, buttonClass, buttonOnclick;
@@ -603,7 +609,7 @@ function createProductCard(product) {
     }
     
     // Add Sale badge for Sale category
-    if (category === 'sale') {
+    if (category === 'sale' || category.includes('sale')) {
         badges = `<div class="product-badges">
             <span class="badge badge-sale">SALE</span>
         </div>` + badges;
@@ -623,11 +629,6 @@ function createProductCard(product) {
                      loading="lazy">
                 ${badges}
                 ${multiImageIndicator}
-                <button class="wishlist-btn" onclick="event.stopPropagation(); toggleWishlist(${product.id})" aria-label="Add to wishlist">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M10 17.5L9.08333 16.6667C4.58333 12.5833 1.66667 9.95833 1.66667 6.79167C1.66667 4.16667 3.75 2.08333 6.375 2.08333C7.86667 2.08333 9.3 2.79167 10 3.89167C10.7 2.79167 12.1333 2.08333 13.625 2.08333C16.25 2.08333 18.3333 4.16667 18.3333 6.79167C18.3333 9.95833 15.4167 12.5833 10.9167 16.6667L10 17.5Z" stroke="currentColor" stroke-width="1.5"/>
-                    </svg>
-                </button>
                 <button class="add-to-cart-btn ${buttonClass}" onclick="event.stopPropagation(); ${buttonOnclick}">
                     ${buttonText}
                 </button>
@@ -1003,20 +1004,23 @@ function addToInquiryCartFromShop(productId) {
     const product = productsData.find(p => p.id === productId);
     if (!product) return;
     
-    // Get existing inquiry cart
-    let inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
-    
-    // Check if product already in inquiry cart
-    const existingIndex = inquiryCart.findIndex(item => item.sku === product.sku);
-    
+    // Store inquiry item in localStorage for contact page to retrieve
     const inquiryItem = {
+        id: product.id || product.sku,
         name: product.name,
         sku: product.sku,
+        price: product.price || 0,
         image: product.image || product.images?.[0] || 'images/avatar-placeholder.png',
         category: product.category,
         description: product.description || 'Premium quality product from RoseBud Global.',
         quantity: 1
     };
+    
+    // Get existing inquiry cart or create new
+    let inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+    
+    // Check if product already in inquiry cart
+    const existingIndex = inquiryCart.findIndex(item => item.sku === product.sku);
     
     if (existingIndex > -1) {
         inquiryCart[existingIndex].quantity += 1;
@@ -1026,15 +1030,11 @@ function addToInquiryCartFromShop(productId) {
     
     localStorage.setItem('rosebudInquiryCart', JSON.stringify(inquiryCart));
     
-    // Update cart count (now includes inquiry items)
+    // Update cart count
     if (typeof updateCartCount === 'function') updateCartCount();
     
-    // Show sidebar with inquiry items
-    if (typeof renderSidebarCart === 'function') renderSidebarCart();
-    if (typeof toggleCart === 'function') toggleCart();
-    
-    // Show notification
-    showInquiryNotification(product.name);
+    // Navigate directly to contact page form section
+    window.location.href = 'contact.html#inquiry-form';
 }
 
 function showInquiryNotification(name) {

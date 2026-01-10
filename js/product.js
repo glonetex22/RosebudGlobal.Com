@@ -125,21 +125,26 @@ const PRIMARY_CART = '#D63585';
 // Category resolver - determines which single button to show
 function getPrimaryActionForProduct(category) {
     const cat = (category || '').toLowerCase();
-    const inquiryCategories = ['custom gift items', 'home decor', 'specialty items', 'home decor & accessories', 'wholesale'];
     
+    // These categories get "Add to Cart" button (pink)
+    const cartCategories = ['sale', 'sale items', 'household', 'household items', 'handbag', 'handbags', 'bag', 'bags', 'purse', 'tote', 'clutch', 'wallet', 'leather'];
+    if (cartCategories.some(c => cat.includes(c) || cat === c)) return 'CART';
+    
+    // These categories get "Make an Inquiry" button (blue)
+    const inquiryCategories = ['custom gift', 'home decor', 'decor', 'specialty', 'wholesale', 'custom'];
     if (inquiryCategories.some(c => cat.includes(c))) return 'INQUIRY';
-    return 'CART'; // Default for Household Items, Sale Items, etc.
+    
+    return 'CART'; // Default for everything else
 }
 
 function updateAddToCartVisibility() {
     const category = (productData.category || '').toLowerCase();
-    const price = productData.price || 0;
     
     const primaryAction = getPrimaryActionForProduct(category);
-    const hasNoPrice = price === 0;
     
-    // If no price, always show inquiry button
-    const showInquiry = hasNoPrice || primaryAction === 'INQUIRY';
+    // Only show inquiry if category specifically requires it
+    // Sale items and bags should ALWAYS use Add to Cart
+    const showInquiry = primaryAction === 'INQUIRY';
     
     const addToCartBtn = document.getElementById('addToCartBtn');
     const makeInquiryBtn = document.getElementById('makeInquiryBtn');
@@ -212,12 +217,11 @@ function addToInquiryCart() {
     // Save to localStorage
     localStorage.setItem('rosebudInquiryCart', JSON.stringify(inquiryCart));
     
-    // Update cart count (includes inquiry items)
+    // Update cart count
     if (typeof updateCartCount === 'function') updateCartCount();
-    if (typeof renderSidebarCart === 'function') renderSidebarCart();
     
-    // Show confirmation notification - Do NOT open sidebar
-    showInquiryAddedNotification(productData.name, quantity);
+    // Navigate directly to contact page form section
+    window.location.href = 'contact.html#inquiry-form';
 }
 
 // Show notification when item added to inquiry

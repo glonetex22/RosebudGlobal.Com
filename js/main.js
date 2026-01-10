@@ -995,14 +995,9 @@ function addToInquiryFromHome(name, sku, image, price) {
     
     // Update cart count
     if (typeof updateCartCount === 'function') updateCartCount();
-    if (typeof renderSidebarCart === 'function') renderSidebarCart();
     
-    // Do NOT open sidebar - just show notification
-    if (typeof showNotification === 'function') {
-        showNotification(`${name} added to inquiry!`, 'inquiry');
-    } else {
-        showCartNotification(`${name} added to inquiry!`);
-    }
+    // Navigate directly to contact page form section
+    window.location.href = 'contact.html#inquiry-form';
 }
 
 // ========================================
