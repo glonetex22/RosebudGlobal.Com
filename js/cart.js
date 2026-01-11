@@ -348,7 +348,7 @@ function renderSidebarCart() {
             checkoutBtn.textContent = 'Make an Inquiry';
             checkoutBtn.style.background = PRIMARY_INQUIRY;
             checkoutBtn.style.boxShadow = '0 4px 12px rgba(55, 125, 255, 0.3)';
-            checkoutBtn.onclick = function() { window.location.href = 'contact.html'; };
+            checkoutBtn.onclick = function() { window.location.href = 'contact.html#inquiry-form'; };
         }
         
         // Update footer layout for inquiry mode
@@ -631,7 +631,7 @@ function renderCartPageItems() {
         if (checkoutBtn) {
             checkoutBtn.textContent = 'Make an Inquiry';
             checkoutBtn.style.background = PRIMARY_INQUIRY;
-            checkoutBtn.onclick = function(e) { e.preventDefault(); window.location.href = 'contact.html'; };
+            checkoutBtn.onclick = function(e) { e.preventDefault(); window.location.href = 'contact.html#inquiry-form'; };
             checkoutBtn.removeAttribute('href');
             checkoutBtn.disabled = false;
         }
@@ -954,7 +954,7 @@ function loadCheckoutItems() {
 function placeOrder() {
     const inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
     if (inquiryCart.length > 0) {
-        window.location.href = 'contact.html';
+        window.location.href = 'contact.html#inquiry-form';
         return;
     }
     

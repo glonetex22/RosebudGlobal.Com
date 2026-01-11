@@ -560,12 +560,23 @@ const PRIMARY_INQUIRY = '#377DFF';
 const PRIMARY_CART = '#D63585';
 
 // Category resolver - determines which button to show
-function getPrimaryAction(category) {
+function getPrimaryAction(category, productName, productSku) {
     const cat = (category || '').toLowerCase();
+    const name = (productName || '').toLowerCase();
+    const sku = (productSku || '').toLowerCase();
     
     // These categories get "Add to Cart" button (pink)
     const cartCategories = ['sale', 'sale items', 'household', 'household items', 'handbag', 'handbags', 'bag', 'bags', 'purse', 'tote', 'clutch', 'wallet', 'leather'];
+    
+    // Check category
     if (cartCategories.some(c => cat.includes(c) || cat === c)) return 'CART';
+    
+    // Also check product name for bag-related keywords
+    const bagKeywords = ['handbag', 'bag', 'purse', 'tote', 'clutch', 'wallet', 'leather', 'satchel', 'crossbody'];
+    if (bagKeywords.some(k => name.includes(k))) return 'CART';
+    
+    // Check SKU patterns (RBG-W often indicates wallets/bags)
+    if (sku.startsWith('rbg-w') || sku.includes('-bag') || sku.includes('-hb')) return 'CART';
     
     // These categories get "Make an Inquiry" button (blue)
     const inquiryCategories = ['custom gift', 'home decor', 'decor', 'specialty', 'wholesale', 'custom'];
@@ -581,9 +592,9 @@ function createProductCard(product) {
         ? `$${product.price.toFixed(2)}` 
         : 'Contact for Price';
     
-    // Determine which single button to show based on category
+    // Determine which single button to show based on category, name, and SKU
     const category = (product.category || '').toLowerCase();
-    const primaryAction = getPrimaryAction(category);
+    const primaryAction = getPrimaryAction(category, product.name, product.sku);
     
     // Only show inquiry if category specifically requires it
     // Sale items and bags should ALWAYS use Add to Cart, even with $0 price
@@ -703,16 +714,11 @@ function viewProduct(productId) {
 function addProductToCart(productId) {
     const product = productsData.find(p => p.id === productId);
     if (product) {
-        if (product.price === 0) {
-            window.location.href = `contact.html?product=${encodeURIComponent(product.name)}`;
-            return;
-        }
-        
         if (typeof addToCart === 'function') {
             addToCart({
                 id: product.sku || `PROD-${productId}`,
                 name: product.name,
-                price: product.price,
+                price: product.price || 0,
                 image: product.image || 'images/avatar-placeholder.png',
                 color: product.color || 'Default',
                 quantity: 1,
@@ -1004,6 +1010,26 @@ function addToInquiryCartFromShop(productId) {
     const product = productsData.find(p => p.id === productId);
     if (!product) return;
     
+    // Check exclusive mode - if cart has items, block inquiry
+    if (typeof canAddToInquiry === 'function' && !canAddToInquiry()) {
+        if (typeof showNotification === 'function') {
+            showNotification('To make an inquiry, complete your Cart transactions first.', 'error');
+        }
+        return;
+    }
+    
+    // Get existing inquiry cart or create new
+    let inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+    
+    // Check if product already in inquiry cart - ONLY ALLOW ONE
+    const alreadyExists = inquiryCart.some(item => item.sku === product.sku || item.id === product.id);
+    
+    if (alreadyExists) {
+        // Show notification that item is already in cart
+        showAlreadyInCartNotification();
+        return;
+    }
+    
     // Store inquiry item in localStorage for contact page to retrieve
     const inquiryItem = {
         id: product.id || product.sku,
@@ -1016,25 +1042,65 @@ function addToInquiryCartFromShop(productId) {
         quantity: 1
     };
     
-    // Get existing inquiry cart or create new
-    let inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
-    
-    // Check if product already in inquiry cart
-    const existingIndex = inquiryCart.findIndex(item => item.sku === product.sku);
-    
-    if (existingIndex > -1) {
-        inquiryCart[existingIndex].quantity += 1;
-    } else {
-        inquiryCart.push(inquiryItem);
-    }
-    
+    inquiryCart.push(inquiryItem);
     localStorage.setItem('rosebudInquiryCart', JSON.stringify(inquiryCart));
     
     // Update cart count
     if (typeof updateCartCount === 'function') updateCartCount();
+    if (typeof updateCartUI === 'function') updateCartUI();
     
-    // Navigate directly to contact page form section
-    window.location.href = 'contact.html#inquiry-form';
+    // Render sidebar cart
+    if (typeof renderSidebarCart === 'function') renderSidebarCart();
+    
+    // Open cart sidebar popup
+    if (typeof toggleCart === 'function') {
+        const sidebar = document.getElementById('cartSidebar');
+        if (sidebar && !sidebar.classList.contains('open')) {
+            toggleCart();
+        }
+    }
+    
+    // Show notification
+    showInquiryNotification(product.name);
+}
+
+// Show notification when item already in cart
+function showAlreadyInCartNotification() {
+    const existingNotification = document.querySelector('.already-in-cart-notification');
+    if (existingNotification) existingNotification.remove();
+    
+    const notification = document.createElement('div');
+    notification.className = 'already-in-cart-notification';
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: #F59E0B;
+        color: white;
+        padding: 16px 24px;
+        border-radius: 8px;
+        z-index: 10000;
+        box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+        font-family: 'Inter', sans-serif;
+        max-width: 320px;
+    `;
+    notification.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"/>
+                <path d="M12 8V12M12 16H12.01" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span style="font-weight: 500;">Item already added to the cart</span>
+        </div>
+    `;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateX(100px)';
+        notification.style.transition = 'all 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
 }
 
 function showInquiryNotification(name) {

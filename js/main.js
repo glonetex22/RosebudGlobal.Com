@@ -569,10 +569,67 @@ function updateCartUI() {
 function renderSidebarCart() {
     const cartItems = document.getElementById('cartItems');
     const cartTotalEl = document.getElementById('cartTotal');
+    const checkoutBtn = document.querySelector('.cart-sidebar .checkout-btn');
+    const cartHeader = document.querySelector('.cart-sidebar .cart-header h3');
     
     if (!cartItems) return;
     
-    if (cart.length === 0) {
+    // Check for inquiry cart first
+    const inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+    
+    // INQUIRY MODE
+    if (inquiryCart.length > 0) {
+        if (cartHeader) cartHeader.textContent = 'Inquiry Cart';
+        if (checkoutBtn) {
+            checkoutBtn.textContent = 'Make an Inquiry';
+            checkoutBtn.style.background = '#377DFF';
+            checkoutBtn.onclick = function() { window.location.href = 'contact.html#inquiry-form'; };
+        }
+        
+        let html = '';
+        let total = 0;
+        
+        inquiryCart.forEach((item, index) => {
+            const price = parseFloat(item.price) || 0;
+            const qty = parseInt(item.quantity) || 1;
+            total += price * qty;
+            
+            html += `
+                <div class="cart-item">
+                    <div class="cart-item-image">
+                        <img src="${item.image || 'images/avatar-placeholder.png'}" alt="${item.name || 'Product'}" onerror="this.src='images/avatar-placeholder.png'">
+                    </div>
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name || 'Unknown'}</div>
+                        <div class="cart-item-sku" style="color: #377DFF;">${item.sku || ''}</div>
+                        <div class="cart-item-price">$${price.toFixed(2)}</div>
+                        <div class="cart-item-qty">
+                            <button class="qty-btn" onclick="updateInquiryQty(${index}, -1)">−</button>
+                            <span>${qty}</span>
+                            <button class="qty-btn" onclick="updateInquiryQty(${index}, 1)">+</button>
+                            <span class="cart-item-remove" onclick="removeInquiryItem(${index})">Remove</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        cartItems.innerHTML = html;
+        if (cartTotalEl) cartTotalEl.textContent = '$' + total.toFixed(2);
+        return;
+    }
+    
+    // REGULAR CART MODE
+    const storedCart = JSON.parse(localStorage.getItem('rosebudCart') || '[]');
+    
+    if (cartHeader) cartHeader.textContent = 'Shopping Cart';
+    if (checkoutBtn) {
+        checkoutBtn.textContent = 'Checkout';
+        checkoutBtn.style.background = '#D63585';
+        checkoutBtn.onclick = function() { window.location.href = 'cart.html'; };
+    }
+    
+    if (storedCart.length === 0) {
         cartItems.innerHTML = '<p class="empty-cart">Your cart is empty</p>';
         if (cartTotalEl) cartTotalEl.textContent = '$0.00';
         return;
@@ -581,24 +638,25 @@ function renderSidebarCart() {
     let html = '';
     let total = 0;
     
-    cart.forEach(item => {
-        const itemTotal = item.price * item.quantity;
-        total += itemTotal;
+    storedCart.forEach((item, index) => {
+        const price = parseFloat(item.price) || 0;
+        const qty = parseInt(item.quantity) || 1;
+        total += price * qty;
         const imgSrc = item.image || 'images/avatar-placeholder.png';
         html += `
             <div class="cart-item">
                 <div class="cart-item-image">
-                    <img src="${imgSrc}" alt="${item.name}" onerror="this.src='images/avatar-placeholder.png'">
+                    <img src="${imgSrc}" alt="${item.name || 'Product'}" onerror="this.src='images/avatar-placeholder.png'">
                 </div>
                 <div class="cart-item-info">
-                    <div class="cart-item-name">${item.name}</div>
-                    <div class="cart-item-sku">${item.id}</div>
-                    <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+                    <div class="cart-item-name">${item.name || 'Unknown'}</div>
+                    <div class="cart-item-sku" style="color: #D63585;">${item.sku || item.id || ''}</div>
+                    <div class="cart-item-price">$${price.toFixed(2)}</div>
                     <div class="cart-item-qty">
-                        <button class="qty-btn" onclick="updateQty('${item.id}', -1)">−</button>
-                        <span>${item.quantity}</span>
-                        <button class="qty-btn" onclick="updateQty('${item.id}', 1)">+</button>
-                        <span class="cart-item-remove" onclick="removeFromCart('${item.id}')">Remove</span>
+                        <button class="qty-btn" onclick="updateCartQty(${index}, -1)">−</button>
+                        <span>${qty}</span>
+                        <button class="qty-btn" onclick="updateCartQty(${index}, 1)">+</button>
+                        <span class="cart-item-remove" onclick="removeCartItem(${index})">Remove</span>
                     </div>
                 </div>
             </div>
@@ -607,6 +665,44 @@ function renderSidebarCart() {
     
     cartItems.innerHTML = html;
     if (cartTotalEl) cartTotalEl.textContent = '$' + total.toFixed(2);
+}
+
+// Inquiry cart quantity functions
+function updateInquiryQty(index, delta) {
+    let inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+    if (inquiryCart[index]) {
+        inquiryCart[index].quantity = Math.max(1, (inquiryCart[index].quantity || 1) + delta);
+        localStorage.setItem('rosebudInquiryCart', JSON.stringify(inquiryCart));
+        updateCartUI();
+        renderSidebarCart();
+    }
+}
+
+function removeInquiryItem(index) {
+    let inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+    inquiryCart.splice(index, 1);
+    localStorage.setItem('rosebudInquiryCart', JSON.stringify(inquiryCart));
+    updateCartUI();
+    renderSidebarCart();
+}
+
+// Regular cart quantity functions
+function updateCartQty(index, delta) {
+    let storedCart = JSON.parse(localStorage.getItem('rosebudCart') || '[]');
+    if (storedCart[index]) {
+        storedCart[index].quantity = Math.max(1, (storedCart[index].quantity || 1) + delta);
+        localStorage.setItem('rosebudCart', JSON.stringify(storedCart));
+        updateCartUI();
+        renderSidebarCart();
+    }
+}
+
+function removeCartItem(index) {
+    let storedCart = JSON.parse(localStorage.getItem('rosebudCart') || '[]');
+    storedCart.splice(index, 1);
+    localStorage.setItem('rosebudCart', JSON.stringify(storedCart));
+    updateCartUI();
+    renderSidebarCart();
 }
 
 function handleCheckout() {
@@ -990,7 +1086,14 @@ function addToInquiryFromHome(name, sku, image, price) {
     
     let inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
     
-    const existingIndex = inquiryCart.findIndex(item => item.sku === sku);
+    // Check if product already in inquiry cart - ONLY ALLOW ONE
+    const alreadyExists = inquiryCart.some(item => item.sku === sku);
+    
+    if (alreadyExists) {
+        // Show notification that item is already in cart
+        showAlreadyInCartNotification();
+        return;
+    }
     
     const inquiryItem = {
         id: sku,
@@ -1003,19 +1106,66 @@ function addToInquiryFromHome(name, sku, image, price) {
         quantity: 1
     };
     
-    if (existingIndex > -1) {
-        inquiryCart[existingIndex].quantity++;
-    } else {
-        inquiryCart.push(inquiryItem);
-    }
+    inquiryCart.push(inquiryItem);
     
     localStorage.setItem('rosebudInquiryCart', JSON.stringify(inquiryCart));
     
-    // Update cart count only - DO NOT open sidebar
+    // Update cart count
     if (typeof updateCartCount === 'function') updateCartCount();
+    updateCartUI();
+    
+    // Render sidebar cart
+    renderSidebarCart();
+    
+    // Open cart sidebar popup
+    if (typeof toggleCart === 'function') {
+        const sidebar = document.getElementById('cartSidebar');
+        if (sidebar && !sidebar.classList.contains('open')) {
+            toggleCart();
+        }
+    }
     
     // Show notification
     showCartNotification(`${name} added to inquiry!`);
+}
+
+// Show notification when item already in cart
+function showAlreadyInCartNotification() {
+    const existingNotification = document.querySelector('.already-in-cart-notification');
+    if (existingNotification) existingNotification.remove();
+    
+    const notification = document.createElement('div');
+    notification.className = 'already-in-cart-notification';
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: #F59E0B;
+        color: white;
+        padding: 16px 24px;
+        border-radius: 8px;
+        z-index: 10000;
+        box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+        font-family: 'Inter', sans-serif;
+        max-width: 320px;
+    `;
+    notification.innerHTML = `
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"/>
+                <path d="M12 8V12M12 16H12.01" stroke="white" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span style="font-weight: 500;">Item already added to the cart</span>
+        </div>
+    `;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateX(100px)';
+        notification.style.transition = 'all 0.3s ease';
+        setTimeout(() => notification.remove(), 300);
+    }, 3000);
 }
 
 // ========================================
@@ -1120,6 +1270,12 @@ window.toggleSearch = toggleSearch;
 window.goToProduct = goToProduct;
 window.addToInquiryFromHome = addToInquiryFromHome;
 window.handleHomeWishlist = handleHomeWishlist;
+window.updateInquiryQty = updateInquiryQty;
+window.removeInquiryItem = removeInquiryItem;
+window.updateCartQty = updateCartQty;
+window.removeCartItem = removeCartItem;
+window.renderSidebarCart = renderSidebarCart;
+window.updateCartUI = updateCartUI;
 
 // Navigate to product detail page by SKU
 function goToProductDetail(sku) {

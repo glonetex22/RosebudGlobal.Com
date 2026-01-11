@@ -287,7 +287,7 @@
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            margin-bottom: 18px;
+            margin-bottom: 12px;
             box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.08), 0px 2px 3px rgba(0, 0, 0, 0.17);
             display: flex;
             align-items: center;
@@ -313,6 +313,41 @@
             font-weight: 500;
             font-size: 20px;
             color: rgba(0, 0, 0, 0.54);
+        }
+
+        /* PayPal Button */
+        .paypal-btn {
+            width: 100%;
+            height: 60px;
+            background: #FFC439;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .paypal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15), 0px 4px 6px rgba(0, 0, 0, 0.2);
+            background: #F0B429;
+        }
+
+        .paypal-btn svg {
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .paypal-btn span {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            color: #003087;
         }
 
         /* Social Icons at Bottom */
@@ -438,6 +473,19 @@
                     <span>Sign In with Google</span>
                 </button>
 
+                <button type="button" class="paypal-btn" onclick="signInWithPayPal()">
+                    <svg viewBox="0 0 101 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.237 4.1H5.307C4.813 4.1 4.393 4.453 4.313 4.94L1.803 20.64C1.743 21.007 2.023 21.34 2.397 21.34H5.673C6.167 21.34 6.587 20.987 6.667 20.5L7.353 16.18C7.433 15.693 7.853 15.34 8.347 15.34H10.627C15.307 15.34 17.987 13.1 18.677 8.6C18.987 6.627 18.687 5.06 17.787 3.967C16.797 2.767 14.857 4.1 12.237 4.1Z" fill="#003087"/>
+                        <path d="M13.093 8.94C12.743 11.213 11.013 11.213 9.343 11.213H8.407L9.027 7.353C9.063 7.127 9.257 6.96 9.487 6.96H9.917C11.077 6.96 12.177 6.96 12.743 7.627C13.077 8.02 13.187 8.58 13.093 8.94Z" fill="#003087"/>
+                        <path d="M30.507 8.867H27.217C26.987 8.867 26.793 9.033 26.757 9.26L26.617 10.14L26.397 9.82C25.737 8.86 24.257 8.54 22.777 8.54C19.357 8.54 16.437 11.14 15.877 14.74C15.587 16.533 16.017 18.253 17.057 19.453C18.017 20.56 19.357 21.02 20.957 21.02C23.737 21.02 25.277 19.213 25.277 19.213L25.137 20.087C25.077 20.453 25.357 20.787 25.731 20.787H28.707C29.201 20.787 29.621 20.433 29.701 19.947L31.101 9.567C31.161 9.2 30.881 8.867 30.507 8.867ZM26.117 14.82C25.827 16.56 24.457 17.72 22.697 17.72C21.817 17.72 21.107 17.433 20.647 16.9C20.187 16.367 20.017 15.62 20.157 14.78C20.427 13.06 21.817 11.86 23.557 11.86C24.417 11.86 25.117 12.147 25.587 12.687C26.057 13.233 26.247 13.987 26.117 14.82Z" fill="#003087"/>
+                        <path d="M46.067 8.867H42.757C42.497 8.867 42.257 8.993 42.107 9.207L37.567 15.76L35.637 9.427C35.537 9.093 35.227 8.867 34.877 8.867H31.627C31.217 8.867 30.927 9.267 31.057 9.653L34.677 19.653L31.277 24.447C30.987 24.86 31.277 25.427 31.787 25.427H35.087C35.347 25.427 35.587 25.3 35.737 25.093L46.587 9.84C46.867 9.427 46.577 8.867 46.067 8.867Z" fill="#003087"/>
+                        <path d="M56.027 4.1H49.097C48.603 4.1 48.183 4.453 48.103 4.94L45.593 20.64C45.533 21.007 45.813 21.34 46.187 21.34H49.713C50.057 21.34 50.347 21.093 50.397 20.753L51.143 16.18C51.223 15.693 51.643 15.34 52.137 15.34H54.417C59.097 15.34 61.777 13.1 62.467 8.6C62.777 6.627 62.477 5.06 61.577 3.967C60.587 2.767 58.647 4.1 56.027 4.1Z" fill="#0070BA"/>
+                        <path d="M56.883 8.94C56.533 11.213 54.803 11.213 53.133 11.213H52.197L52.817 7.353C52.853 7.127 53.047 6.96 53.277 6.96H53.707C54.867 6.96 55.967 6.96 56.533 7.627C56.867 8.02 56.977 8.58 56.883 8.94Z" fill="#0070BA"/>
+                        <path d="M74.297 8.867H71.007C70.777 8.867 70.583 9.033 70.547 9.26L70.407 10.14L70.187 9.82C69.527 8.86 68.047 8.54 66.567 8.54C63.147 8.54 60.227 11.14 59.667 14.74C59.377 16.533 59.807 18.253 60.847 19.453C61.807 20.56 63.147 21.02 64.747 21.02C67.527 21.02 69.067 19.213 69.067 19.213L68.927 20.087C68.867 20.453 69.147 20.787 69.521 20.787H72.497C72.991 20.787 73.411 20.433 73.491 19.947L74.891 9.567C74.951 9.2 74.671 8.867 74.297 8.867ZM69.907 14.82C69.617 16.56 68.247 17.72 66.487 17.72C65.607 17.72 64.897 17.433 64.437 16.9C63.977 16.367 63.807 15.62 63.947 14.78C64.217 13.06 65.607 11.86 67.347 11.86C68.207 11.86 68.907 12.147 69.377 12.687C69.847 13.233 70.037 13.987 69.907 14.82Z" fill="#0070BA"/>
+                        <path d="M77.077 4.38L74.527 20.64C74.467 21.007 74.747 21.34 75.121 21.34H77.977C78.471 21.34 78.891 20.987 78.971 20.5L81.481 4.8C81.541 4.433 81.261 4.1 80.887 4.1H77.671C77.441 4.1 77.247 4.267 77.077 4.38Z" fill="#0070BA"/>
+                    </svg>
+                </button>
+
                 <div class="social-icons">
                     <a href="https://instagram.com/rosebudglobal" class="social-icon" aria-label="Instagram" target="_blank">
                         <svg viewBox="0 0 36 36" fill="none">
@@ -520,7 +568,23 @@
             localStorage.setItem('rosebudUser', JSON.stringify({
                 email: 'user@gmail.com',
                 displayName: 'Google User',
-                avatar: 'images/avatar-placeholder.png'
+                avatar: 'images/avatar-placeholder.png',
+                loginMethod: 'google'
+            }));
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const redirect = urlParams.get('redirect');
+            window.location.href = redirect === 'checkout' ? 'checkout.html' : 'account.html';
+        }
+
+        function signInWithPayPal() {
+            // Simulate PayPal login
+            localStorage.setItem('rosebudLoggedIn', 'true');
+            localStorage.setItem('rosebudUser', JSON.stringify({
+                email: 'user@paypal.com',
+                displayName: 'PayPal User',
+                avatar: 'images/avatar-placeholder.png',
+                loginMethod: 'paypal'
             }));
             
             const urlParams = new URLSearchParams(window.location.search);
