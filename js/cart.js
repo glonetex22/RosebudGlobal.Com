@@ -488,7 +488,11 @@ function removeSidebarItem(index) {
 // ========================================
 
 function handleCheckout() {
-    if (cart.length === 0) {
+    // Check localStorage directly, not the global cart variable
+    const storedCart = JSON.parse(localStorage.getItem('rosebudCart') || '[]');
+    const inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+    
+    if (storedCart.length === 0 && inquiryCart.length === 0) {
         showNotification('Your cart is empty', 'error');
         return;
     }

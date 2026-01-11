@@ -123,12 +123,23 @@ const PRIMARY_INQUIRY = '#377DFF';
 const PRIMARY_CART = '#D63585';
 
 // Category resolver - determines which single button to show
-function getPrimaryActionForProduct(category) {
+function getPrimaryActionForProduct(category, productName, productSku) {
     const cat = (category || '').toLowerCase();
+    const name = (productName || '').toLowerCase();
+    const sku = (productSku || '').toLowerCase();
     
     // These categories get "Add to Cart" button (pink)
     const cartCategories = ['sale', 'sale items', 'household', 'household items', 'handbag', 'handbags', 'bag', 'bags', 'purse', 'tote', 'clutch', 'wallet', 'leather'];
+    
+    // Check category
     if (cartCategories.some(c => cat.includes(c) || cat === c)) return 'CART';
+    
+    // Also check product name for bag-related keywords
+    const bagKeywords = ['handbag', 'bag', 'purse', 'tote', 'clutch', 'wallet', 'leather', 'satchel', 'crossbody'];
+    if (bagKeywords.some(k => name.includes(k))) return 'CART';
+    
+    // Check SKU patterns (RBG-W often indicates wallets/bags)
+    if (sku.startsWith('rbg-w') || sku.includes('-bag') || sku.includes('-hb')) return 'CART';
     
     // These categories get "Make an Inquiry" button (blue)
     const inquiryCategories = ['custom gift', 'home decor', 'decor', 'specialty', 'wholesale', 'custom'];
@@ -139,39 +150,31 @@ function getPrimaryActionForProduct(category) {
 
 function updateAddToCartVisibility() {
     const category = (productData.category || '').toLowerCase();
-    
-    const primaryAction = getPrimaryActionForProduct(category);
-    
-    // Only show inquiry if category specifically requires it
-    // Sale items and bags should ALWAYS use Add to Cart
-    const showInquiry = primaryAction === 'INQUIRY';
+    const productName = (productData.name || '').toLowerCase();
+    const productSku = (productData.sku || '').toUpperCase();
     
     const addToCartBtn = document.getElementById('addToCartBtn');
     const makeInquiryBtn = document.getElementById('makeInquiryBtn');
-    const quantitySelector = document.querySelector('.quantity-selector');
     
-    if (showInquiry) {
-        // Show only "Make an Inquiry" button
-        if (addToCartBtn) addToCartBtn.style.display = 'none';
-        if (makeInquiryBtn) {
-            makeInquiryBtn.style.display = 'block';
-            makeInquiryBtn.style.background = PRIMARY_INQUIRY;
-            makeInquiryBtn.style.color = 'white';
-            makeInquiryBtn.style.border = 'none';
-        }
-    } else {
-        // Show only "Add to Cart" button
-        if (makeInquiryBtn) makeInquiryBtn.style.display = 'none';
-        if (addToCartBtn) {
-            addToCartBtn.style.display = 'block';
-            addToCartBtn.style.background = PRIMARY_CART;
-            addToCartBtn.style.color = 'white';
-            addToCartBtn.style.border = 'none';
-        }
+    if (!addToCartBtn || !makeInquiryBtn) {
+        console.error('Buttons not found');
+        return;
     }
     
-    if (quantitySelector) {
-        quantitySelector.style.display = 'flex';
+    // Determine which button to show based on category/product
+    const primaryAction = getPrimaryActionForProduct(category, productName, productSku);
+    const showInquiry = (primaryAction === 'INQUIRY');
+    
+    console.log('Button visibility:', { category, productName, primaryAction, showInquiry });
+    
+    if (showInquiry) {
+        // Show Make an Inquiry, hide Add to Cart
+        addToCartBtn.style.display = 'none';
+        makeInquiryBtn.style.display = 'block';
+    } else {
+        // Show Add to Cart, hide Make an Inquiry
+        addToCartBtn.style.display = 'block';
+        makeInquiryBtn.style.display = 'none';
     }
 }
 
@@ -187,7 +190,7 @@ function addToInquiryCart() {
         return;
     }
     
-    const quantity = parseInt(document.getElementById('quantity')?.value || 1);
+    const qty = parseInt(document.getElementById('qtyValue')?.textContent || 1);
     
     // Get existing inquiry cart
     let inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
@@ -203,12 +206,12 @@ function addToInquiryCart() {
         image: productData.image || productData.images?.[0] || 'images/avatar-placeholder.png',
         category: productData.category,
         description: productData.description || 'Premium quality product from RoseBud Global.',
-        quantity: quantity
+        quantity: qty
     };
     
     if (existingIndex > -1) {
         // Update quantity if already exists
-        inquiryCart[existingIndex].quantity += quantity;
+        inquiryCart[existingIndex].quantity += qty;
     } else {
         // Add new item
         inquiryCart.push(inquiryItem);
@@ -217,11 +220,11 @@ function addToInquiryCart() {
     // Save to localStorage
     localStorage.setItem('rosebudInquiryCart', JSON.stringify(inquiryCart));
     
-    // Update cart count
+    // Update cart count only - DO NOT open sidebar
     if (typeof updateCartCount === 'function') updateCartCount();
     
-    // Navigate directly to contact page form section
-    window.location.href = 'contact.html#inquiry-form';
+    // Show notification
+    showInquiryAddedNotification(productData.name, qty);
 }
 
 // Show notification when item added to inquiry
@@ -501,21 +504,102 @@ function hideOfferSection() {
 // ========================================
 
 function increaseQty() {
+    const inventory = getProductInventory();
+    
+    // If inventory is 0, don't allow any changes
+    if (inventory === 0) return;
+    
+    // Don't exceed available inventory
+    if (inventory > 0 && quantity >= inventory) {
+        showNotification(`Only ${inventory} in stock`, 'error');
+        return;
+    }
+    
     quantity++;
     updateQuantityDisplay();
 }
 
 function decreaseQty() {
+    const inventory = getProductInventory();
+    
+    // If inventory is 0, don't allow any changes
+    if (inventory === 0) return;
+    
     if (quantity > 1) {
         quantity--;
         updateQuantityDisplay();
     }
 }
 
+function getProductInventory() {
+    if (!productData) return -1; // -1 means unlimited
+    
+    // Check for inventory/stock property
+    if (typeof productData.inventory === 'number') return productData.inventory;
+    if (typeof productData.stock === 'number') return productData.stock;
+    
+    return -1; // -1 means unlimited (no inventory tracking)
+}
+
 function updateQuantityDisplay() {
     const qtyElement = document.getElementById('qtyValue');
     if (qtyElement) {
         qtyElement.textContent = quantity;
+    }
+    updateQuantityButtonStates();
+}
+
+function updateQuantityButtonStates() {
+    const inventory = getProductInventory();
+    const minusBtn = document.querySelector('.qty-btn.minus');
+    const plusBtn = document.querySelector('.qty-btn.plus');
+    const addToCartBtn = document.getElementById('addToCartBtn');
+    const makeInquiryBtn = document.getElementById('makeInquiryBtn');
+    
+    // If inventory is 0, disable everything
+    if (inventory === 0) {
+        if (minusBtn) {
+            minusBtn.disabled = true;
+            minusBtn.style.opacity = '0.3';
+            minusBtn.style.cursor = 'not-allowed';
+        }
+        if (plusBtn) {
+            plusBtn.disabled = true;
+            plusBtn.style.opacity = '0.3';
+            plusBtn.style.cursor = 'not-allowed';
+        }
+        if (addToCartBtn) {
+            addToCartBtn.disabled = true;
+            addToCartBtn.textContent = 'Out of Stock';
+            addToCartBtn.style.opacity = '0.5';
+            addToCartBtn.style.cursor = 'not-allowed';
+        }
+        return;
+    }
+    
+    // Enable minus if quantity > 1
+    if (minusBtn) {
+        if (quantity <= 1) {
+            minusBtn.disabled = true;
+            minusBtn.style.opacity = '0.3';
+        } else {
+            minusBtn.disabled = false;
+            minusBtn.style.opacity = '1';
+            minusBtn.style.cursor = 'pointer';
+        }
+    }
+    
+    // Enable/disable plus based on inventory
+    if (plusBtn) {
+        if (inventory > 0 && quantity >= inventory) {
+            plusBtn.disabled = true;
+            plusBtn.style.opacity = '0.3';
+            plusBtn.style.cursor = 'not-allowed';
+        } else {
+            plusBtn.disabled = false;
+            plusBtn.style.opacity = '1';
+            plusBtn.style.cursor = 'pointer';
+        }
     }
 }
 
@@ -672,40 +756,97 @@ window.addToCart = addToCart;
 window.toggleWishlist = toggleWishlist;
 window.switchTab = switchTab;
 window.switchColorVariant = switchColorVariant;
+window.addProductToCartFromPage = addProductToCartFromPage;
+window.addToInquiryCart = addToInquiryCart;
 
 // Wishlist with auth gate for product page
 function toggleProductWishlist() {
     const isLoggedIn = localStorage.getItem('rosebudLoggedIn') === 'true';
     
     if (!isLoggedIn) {
-        showWishlistAuthModal();
+        // Show notification popup instead of modal
+        showWishlistAuthNotification();
         return;
     }
     
     if (!productData) return;
     
+    // Store full product data in wishlist (not just ID)
     let wishlist = JSON.parse(localStorage.getItem('rosebudWishlist') || '[]');
-    const index = wishlist.indexOf(productData.id);
+    const existingIndex = wishlist.findIndex(item => item.id === productData.id || item.sku === productData.sku);
     const wishlistIcon = document.getElementById('wishlistIcon');
     const wishlistPath = wishlistIcon?.querySelector('path');
     
-    if (index > -1) {
-        wishlist.splice(index, 1);
+    if (existingIndex > -1) {
+        wishlist.splice(existingIndex, 1);
         if (wishlistPath) {
             wishlistPath.setAttribute('fill', 'none');
-            wishlistPath.setAttribute('stroke', '#6C7275');
+            wishlistPath.setAttribute('stroke', '#D63585');
         }
         showWishlistToast('Removed from wishlist');
     } else {
-        wishlist.push(productData.id);
+        // Store full product data for account-wishlist.html
+        wishlist.push({
+            id: productData.id,
+            sku: productData.sku,
+            name: productData.name,
+            price: productData.price,
+            image: productData.image || productData.images?.[0] || 'images/avatar-placeholder.png',
+            category: productData.category
+        });
         if (wishlistPath) {
             wishlistPath.setAttribute('fill', '#D63585');
             wishlistPath.setAttribute('stroke', '#D63585');
         }
-        showWishlistToast('Added to wishlist');
+        showWishlistToast('Added to wishlist! View in My Account.');
     }
     
     localStorage.setItem('rosebudWishlist', JSON.stringify(wishlist));
+}
+
+// Simple notification popup for wishlist auth requirement
+function showWishlistAuthNotification() {
+    const existingNotification = document.getElementById('wishlistAuthNotification');
+    if (existingNotification) existingNotification.remove();
+    
+    const notification = document.createElement('div');
+    notification.id = 'wishlistAuthNotification';
+    notification.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: #D63585;
+        color: white;
+        padding: 16px 24px;
+        border-radius: 8px;
+        z-index: 10000;
+        box-shadow: 0 4px 20px rgba(214, 53, 133, 0.3);
+        font-family: 'Inter', sans-serif;
+        max-width: 320px;
+        animation: slideIn 0.3s ease;
+    `;
+    notification.innerHTML = `
+        <div style="display: flex; align-items: flex-start; gap: 12px;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="flex-shrink: 0; margin-top: 2px;">
+                <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z" fill="white"/>
+            </svg>
+            <div>
+                <div style="font-weight: 600; margin-bottom: 4px;">Sign In Required</div>
+                <div style="font-size: 14px; opacity: 0.9;">Please <a href="signin.html" style="color: white; text-decoration: underline; font-weight: 600;">sign in</a> to add items to your wishlist.</div>
+            </div>
+            <button onclick="this.parentElement.parentElement.remove()" style="background: none; border: none; color: white; cursor: pointer; font-size: 18px; padding: 0; margin-left: 8px;">×</button>
+        </div>
+    `;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.style.opacity = '0';
+            notification.style.transform = 'translateX(100px)';
+            notification.style.transition = 'all 0.3s ease';
+            setTimeout(() => notification.remove(), 300);
+        }
+    }, 5000);
 }
 
 function showWishlistAuthModal() {

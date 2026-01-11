@@ -67,6 +67,17 @@ function initCartFromStorage() {
 initCartFromStorage();
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Load cart from localStorage first
+    try {
+        const savedCart = localStorage.getItem('rosebudCart');
+        if (savedCart) {
+            cart = JSON.parse(savedCart);
+        }
+    } catch (e) {
+        console.warn('Error loading cart:', e);
+        cart = [];
+    }
+    
     initNotificationBar();
     initHeroSlider();
     initNavigation();
@@ -539,9 +550,16 @@ function saveCart() {
 }
 
 function updateCartUI() {
-    const cartCountElements = document.querySelectorAll('.cart-count, #cartCount');
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    // Load cart from localStorage
+    const storedCart = JSON.parse(localStorage.getItem('rosebudCart') || '[]');
+    const inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
     
+    // Combined count from BOTH carts
+    const cartTotal = storedCart.reduce((sum, item) => sum + (parseInt(item.quantity) || 0), 0);
+    const inquiryTotal = inquiryCart.reduce((sum, item) => sum + (parseInt(item.quantity) || 0), 0);
+    const totalItems = cartTotal + inquiryTotal;
+    
+    const cartCountElements = document.querySelectorAll('.cart-count, #cartCount');
     cartCountElements.forEach(el => {
         el.textContent = totalItems;
         el.style.display = totalItems > 0 ? 'flex' : 'none';
@@ -993,11 +1011,11 @@ function addToInquiryFromHome(name, sku, image, price) {
     
     localStorage.setItem('rosebudInquiryCart', JSON.stringify(inquiryCart));
     
-    // Update cart count
+    // Update cart count only - DO NOT open sidebar
     if (typeof updateCartCount === 'function') updateCartCount();
     
-    // Navigate directly to contact page form section
-    window.location.href = 'contact.html#inquiry-form';
+    // Show notification
+    showCartNotification(`${name} added to inquiry!`);
 }
 
 // ========================================
