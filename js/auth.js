@@ -226,19 +226,28 @@ function parseJwt(token) {
 
 // Google Sign In button click handler
 function signInWithGoogle() {
-    // For demo: Show Google OAuth popup
-    // In production, this would use the full OAuth flow
+    // NOTE: For production Google OAuth, you need:
+    // 1. Google Cloud Console project
+    // 2. OAuth 2.0 Client ID (Web application)
+    // 3. Authorized JavaScript origins and redirect URIs
+    // 4. OAuth consent screen configured
     
     // Try Google Identity Services first
     if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
-        google.accounts.id.prompt((notification) => {
-            if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-                // Fallback to demo login
-                demoGoogleLogin();
-            }
-        });
+        try {
+            // Use Google One Tap or Credential Picker
+            google.accounts.id.prompt((notification) => {
+                if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
+                    // Fallback to demo login if prompt not available
+                    demoGoogleLogin();
+                }
+            });
+        } catch (e) {
+            console.error('Google Sign In error:', e);
+            demoGoogleLogin();
+        }
     } else {
-        // Demo login for testing
+        // Google Identity Services not loaded, use demo login
         demoGoogleLogin();
     }
 }
@@ -256,8 +265,14 @@ function demoGoogleLogin() {
             avatar: 'images/avatar-placeholder.png',
             provider: 'google'
         }));
-        alert('Google Sign In Successful!\n\nWelcome, ' + email.split('@')[0]);
-        window.location.href = 'account.html';
+        
+        // Check if there's a redirect URL (e.g., from checkout)
+        const redirectUrl = sessionStorage.getItem('authRedirect') || localStorage.getItem('rosebudRedirectUrl') || 'account.html';
+        sessionStorage.removeItem('authRedirect');
+        localStorage.removeItem('rosebudRedirectUrl');
+        
+        // Redirect to previous page or account page
+        window.location.href = redirectUrl;
     }
 }
 
@@ -318,6 +333,15 @@ document.addEventListener('DOMContentLoaded', function() {
 const PAYPAL_CLIENT_ID = 'AeeEJxL75ee5MYIcWJdn6P2ijEhQOTn-fqPgkQazj5xDHRJZ7_W4ibVCOkx52DzgHxQu2uueJzXR33kr';
 
 function signInWithPayPal() {
+    // NOTE: PayPal OAuth for authentication requires server-side implementation
+    // This is a demo implementation using localStorage
+    
+    // For production, you would need:
+    // 1. PayPal Developer account
+    // 2. OAuth App credentials (Client ID and Secret)
+    // 3. Server-side OAuth flow (authorization code exchange)
+    // 4. PayPal Identity API integration
+    
     // Demo PayPal login
     const email = prompt('Enter your PayPal email for demo login:', 'paypal@example.com');
     if (email && email.includes('@')) {
@@ -330,14 +354,15 @@ function signInWithPayPal() {
             avatar: 'images/avatar-placeholder.png',
             provider: 'paypal'
         }));
-        alert('PayPal Sign In Successful!\n\nWelcome, ' + email.split('@')[0]);
         
         // Check if there's a redirect URL (e.g., from checkout)
-        const redirectUrl = sessionStorage.getItem('authRedirect') || 'account.html';
+        const redirectUrl = sessionStorage.getItem('authRedirect') || localStorage.getItem('rosebudRedirectUrl') || 'account.html';
         sessionStorage.removeItem('authRedirect');
+        localStorage.removeItem('rosebudRedirectUrl');
+        
+        // Redirect to previous page or account page
         window.location.href = redirectUrl;
     }
-}
 }
 
 // PayPal callback handler (would be on paypal-callback.html)
@@ -418,27 +443,132 @@ function sendEmailOTP(event) {
     startCountdown();
 }
 
+// ========================================
+// PHONE VALIDATION AND FORMATTING
+// ========================================
+
+/**
+ * Format phone number as user types: (XXX) XXX-XXXX
+ * Only allows digits, auto-formats to (XXX) XXX-XXXX
+ */
+function formatPhoneInput(input) {
+    // Remove all non-digit characters
+    let value = input.value.replace(/\D/g, '');
+    
+    // Limit to 10 digits
+    if (value.length > 10) {
+        value = value.slice(0, 10);
+    }
+    
+    // Format based on length
+    let formatted = '';
+    if (value.length === 0) {
+        formatted = '';
+    } else if (value.length <= 3) {
+        formatted = '(' + value;
+    } else if (value.length <= 6) {
+        formatted = '(' + value.slice(0, 3) + ') ' + value.slice(3);
+    } else {
+        formatted = '(' + value.slice(0, 3) + ') ' + value.slice(3, 6) + '-' + value.slice(6);
+    }
+    
+    input.value = formatted;
+}
+
+/**
+ * Validate phone number
+ * Requirements:
+ * - Format: (XXX) XXX-XXXX
+ * - 10 digits total
+ * - First digit cannot be 0 or 1
+ * 
+ * @param {string} phone - Phone number to validate
+ * @returns {object} {valid: boolean, error: string, cleaned: string}
+ */
+function validatePhone(phone) {
+    // Remove all non-digit characters to get clean number
+    const cleaned = phone.replace(/\D/g, '');
+    
+    // Check if 10 digits
+    if (cleaned.length !== 10) {
+        return {
+            valid: false,
+            error: 'Phone number must be 10 digits',
+            cleaned: cleaned
+        };
+    }
+    
+    // Check if first digit is 0 or 1
+    const firstDigit = cleaned.charAt(0);
+    if (firstDigit === '0' || firstDigit === '1') {
+        return {
+            valid: false,
+            error: 'Phone number cannot start with 0 or 1',
+            cleaned: cleaned
+        };
+    }
+    
+    // Format should match (XXX) XXX-XXXX
+    const formatted = '(' + cleaned.slice(0, 3) + ') ' + cleaned.slice(3, 6) + '-' + cleaned.slice(6);
+    
+    return {
+        valid: true,
+        error: null,
+        cleaned: cleaned,
+        formatted: formatted
+    };
+}
+
+/**
+ * Store validated phone number for OTP authentication
+ */
+function storePhoneForOTP(phone, cleaned) {
+    // Store in localStorage for OTP authentication
+    localStorage.setItem('rosebudOTPPhone', cleaned);
+    localStorage.setItem('rosebudOTPPhoneFormatted', phone);
+    
+    console.log('[RoseBud] Phone stored for OTP:', cleaned);
+}
+
 // Send OTP via phone
 function sendPhoneOTP(event) {
     event.preventDefault();
     
-    const phone = document.getElementById('resetPhone').value;
-    if (!phone) {
-        alert('Please enter your phone number');
+    const phoneInput = document.getElementById('resetPhone');
+    if (!phoneInput) {
+        alert('Phone input field not found');
         return;
     }
     
-    resetContact = phone;
+    const phone = phoneInput.value.trim();
+    if (!phone) {
+        alert('Please enter your phone number');
+        phoneInput.focus();
+        return;
+    }
+    
+    // Validate phone number
+    const validation = validatePhone(phone);
+    if (!validation.valid) {
+        alert(validation.error + '\n\nFormat: (XXX) XXX-XXXX\nPhone cannot start with 0 or 1');
+        phoneInput.focus();
+        phoneInput.select();
+        return;
+    }
+    
+    // Store validated phone for OTP authentication
+    storePhoneForOTP(validation.formatted, validation.cleaned);
+    resetContact = validation.formatted;
     
     // Generate demo OTP
     generatedOTP = Math.floor(100000 + Math.random() * 900000).toString();
     
     // Demo: Show the OTP (in real app, this would be sent via SMS)
-    alert(`Demo Mode: Your OTP code is ${generatedOTP}\n\nIn a real application, this would be sent via SMS to ${phone}`);
+    alert(`Demo Mode: Your OTP code is ${generatedOTP}\n\nIn a real application, this would be sent via SMS to ${validation.formatted}`);
     
     // Show step 2
     showStep(2);
-    document.getElementById('otpMessage').textContent = `We've sent a 6-digit code to ${maskPhone(phone)}`;
+    document.getElementById('otpMessage').textContent = `We've sent a 6-digit code to ${maskPhone(validation.formatted)}`;
     startCountdown();
 }
 
@@ -592,6 +722,8 @@ function maskPhone(phone) {
 window.handleSignIn = handleSignIn;
 window.handleSignUp = handleSignUp;
 window.togglePasswordVisibility = togglePasswordVisibility;
+window.formatPhoneInput = formatPhoneInput;
+window.validatePhone = validatePhone;
 window.checkPasswordStrength = checkPasswordStrength;
 window.checkResetPasswordStrength = checkResetPasswordStrength;
 window.signInWithGoogle = signInWithGoogle;

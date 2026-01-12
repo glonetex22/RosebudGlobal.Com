@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Terms of Service - RoseBud Global</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
     <style>
         .legal-page { max-width: 900px; margin: 0 auto; padding: 80px 40px; }
         .legal-page h1 { font-family: 'Poppins', sans-serif; font-size: 40px; font-weight: 600; color: #141718; margin-bottom: 16px; }
@@ -25,7 +26,14 @@
             <a href="index.html" class="logo">
                 <img src="images/Rosebud_Global_Logo.png" alt="RoseBud Global" class="logo-img">
             </a>
-            <ul class="nav-links">
+                        <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+            <ul class="nav-links" id="navMenu">
+                <button class="mobile-menu-close" onclick="toggleMobileMenu()">×</button>
                 <li><a href="index.html" class="nav-link">Home</a></li>
                 <li><a href="shop.html" class="nav-link">Shop</a></li>
                 <li><a href="supply-services.html" class="nav-link">Supply Services</a></li>
@@ -55,7 +63,8 @@
                 </button>
             </div>
         </div>
-    </nav>
+                <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
+        </nav>
 
     <main class="legal-page">
         <h1>Terms of Service</h1>
@@ -149,7 +158,8 @@
                     <a href="shop.html" class="footer-link">Shop</a>
                     <a href="supply-services.html" class="footer-link">Supply Services</a>
                     <a href="contact.html" class="footer-link">Contact</a>
-                </nav>
+                            <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
+        </nav>
             </div>
             <div class="footer-bottom">
                 <div class="footer-legal">

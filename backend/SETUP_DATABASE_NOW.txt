@@ -1,0 +1,15 @@
+# Database Setup Commands - Copy and Paste These
+
+# You're already in the backend folder, so just run these:
+
+# 1. Create database (enter MySQL password when prompted, or press Enter if no password)
+mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS rosebud_global;"
+
+# 2. Import schema (enter MySQL password when prompted)
+mysql -u root -p rosebud_global < database/schema.sql
+
+# 3. Test database connection
+node -e "require('dotenv').config(); require('./config/db').getConnection().then(() => { console.log('✅ Database connected!'); process.exit(0); }).catch(e => { console.error('❌ Error:', e.message); process.exit(1); });"
+
+# 4. Start the server
+npm run dev

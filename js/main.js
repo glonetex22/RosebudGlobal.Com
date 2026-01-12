@@ -758,9 +758,53 @@ function showCartNotification(message, type = 'success') {
     }, 3000);
 }
 
+// ========================================
+// MOBILE MENU TOGGLE
+// ========================================
+
 function toggleMobileMenu() {
-    document.querySelector('.nav-links').classList.toggle('active');
+  var menuBtn = document.getElementById('mobileMenuBtn');
+  var navMenu = document.getElementById('navMenu');
+  var overlay = document.getElementById('mobileMenuOverlay');
+  var body = document.body;
+  
+  if (menuBtn) menuBtn.classList.toggle('active');
+  if (navMenu) navMenu.classList.toggle('active');
+  if (overlay) overlay.classList.toggle('active');
+  
+  // Prevent body scroll when menu is open
+  if (navMenu && navMenu.classList.contains('active')) {
+    body.style.overflow = 'hidden';
+  } else {
+    body.style.overflow = '';
+  }
 }
+
+// Close menu on escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    var navMenu = document.getElementById('navMenu');
+    if (navMenu && navMenu.classList.contains('active')) {
+      toggleMobileMenu();
+    }
+  }
+});
+
+// Close menu on window resize (if going to desktop)
+window.addEventListener('resize', function() {
+  if (window.innerWidth > 992) {
+    var navMenu = document.getElementById('navMenu');
+    var menuBtn = document.getElementById('mobileMenuBtn');
+    var overlay = document.getElementById('mobileMenuOverlay');
+    
+    if (navMenu) navMenu.classList.remove('active');
+    if (menuBtn) menuBtn.classList.remove('active');
+    if (overlay) overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+});
+
+window.toggleMobileMenu = toggleMobileMenu;
 
 function initProductCarousel() {
     const carousel = document.getElementById('productsCarousel');
@@ -800,17 +844,110 @@ function initProductCarousel() {
 }
 
 // Newsletter
-function handleNewsletter(e) {
-    e.preventDefault();
-    const input = e.target.querySelector('.newsletter-input');
-    const btn = e.target.querySelector('.newsletter-submit');
-    if (input.value) {
-        btn.textContent = 'Subscribed!';
-        btn.style.color = '#38CB89';
-        input.value = '';
-        setTimeout(() => { btn.textContent = 'Signup'; btn.style.color = ''; }, 3000);
+// ========================================
+// NEWSLETTER SUBSCRIPTION
+// ========================================
+
+async function handleNewsletterSubmit(event) {
+  event.preventDefault();
+  
+  const form = document.getElementById('newsletterForm');
+  const emailInput = document.getElementById('newsletterEmail');
+  const submitBtn = document.getElementById('newsletterBtn');
+  const btnText = submitBtn.querySelector('.btn-text');
+  const btnLoading = submitBtn.querySelector('.btn-loading');
+  const successMsg = document.getElementById('newsletterSuccess');
+  const errorMsg = document.getElementById('newsletterError');
+  const errorText = document.getElementById('newsletterErrorText');
+  
+  const email = emailInput.value.trim();
+  
+  // Validate email
+  if (!email || !isValidEmail(email)) {
+    showNewsletterError('Please enter a valid email address');
+    return;
+  }
+  
+  // Show loading state
+  submitBtn.disabled = true;
+  btnText.style.display = 'none';
+  btnLoading.style.display = 'flex';
+  successMsg.style.display = 'none';
+  errorMsg.style.display = 'none';
+  
+  try {
+    // Send to backend API
+    const response = await fetch('/api/newsletter/subscribe', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email: email })
+    });
+    
+    const data = await response.json();
+    
+    if (response.ok && data.success) {
+      // Success
+      form.style.display = 'none';
+      successMsg.style.display = 'flex';
+      
+      // Store in localStorage to prevent re-subscription
+      localStorage.setItem('newsletterSubscribed', 'true');
+      localStorage.setItem('newsletterEmail', email);
+      
+      console.log('[RoseBud] Newsletter subscription successful');
+    } else {
+      // Error from server
+      showNewsletterError(data.message || 'Subscription failed. Please try again.');
     }
+  } catch (error) {
+    console.error('[RoseBud] Newsletter error:', error);
+    showNewsletterError('Network error. Please check your connection and try again.');
+  } finally {
+    // Reset button state
+    submitBtn.disabled = false;
+    btnText.style.display = 'inline';
+    btnLoading.style.display = 'none';
+  }
 }
+
+function showNewsletterError(message) {
+  const errorMsg = document.getElementById('newsletterError');
+  const errorText = document.getElementById('newsletterErrorText');
+  
+  if (errorText) errorText.textContent = message;
+  if (errorMsg) errorMsg.style.display = 'flex';
+  
+  // Hide after 5 seconds
+  setTimeout(function() {
+    if (errorMsg) errorMsg.style.display = 'none';
+  }, 5000);
+}
+
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+// Check if already subscribed on page load
+document.addEventListener('DOMContentLoaded', function() {
+  const isSubscribed = localStorage.getItem('newsletterSubscribed') === 'true';
+  
+  if (isSubscribed) {
+    const form = document.getElementById('newsletterForm');
+    const successMsg = document.getElementById('newsletterSuccess');
+    
+    if (form) form.style.display = 'none';
+    if (successMsg) {
+      successMsg.style.display = 'flex';
+      successMsg.querySelector('p').textContent = 'You are already subscribed to our newsletter!';
+    }
+  }
+});
+
+// Export
+window.handleNewsletterSubmit = handleNewsletterSubmit;
 
 // Contact Form
 function handleContactForm(e) {

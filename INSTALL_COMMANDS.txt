@@ -1,0 +1,54 @@
+# RoseBud Global Backend - Complete Installation Commands
+# Copy and paste these commands one by one into your terminal
+
+# ============================================
+# STEP 1: Navigate to the extracted backend folder
+# ============================================
+# Replace 'path/to/extracted' with your actual path
+cd path/to/extracted/backend
+
+# OR if you extracted in Downloads:
+cd ~/Downloads/backend
+
+# ============================================
+# STEP 2: Install Node.js dependencies
+# ============================================
+npm install
+
+# ============================================
+# STEP 3: Set up environment file
+# ============================================
+cp .env.example .env
+
+# ============================================
+# STEP 4: Set up MySQL Database
+# ============================================
+# Option A: If MySQL is installed and accessible
+mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS rosebud_global;"
+mysql -u root -p rosebud_global < database/schema.sql
+
+# Option B: If MySQL requires password, you'll be prompted
+# Just enter your MySQL root password when prompted
+
+# ============================================
+# STEP 5: Update .env file (if you set MySQL password)
+# ============================================
+# Edit .env and set DB_PASSWORD=your_password
+# Or leave empty if no password: DB_PASSWORD=
+nano .env
+# Press Ctrl+X, then Y, then Enter to save
+
+# ============================================
+# STEP 6: Test database connection
+# ============================================
+node -e "require('dotenv').config(); require('./config/db').getConnection().then(() => { console.log('✅ Database connected!'); process.exit(0); }).catch(err => { console.error('❌ Error:', err.message); process.exit(1); });"
+
+# ============================================
+# STEP 7: Start the server
+# ============================================
+npm run dev
+
+# ============================================
+# STEP 8: Test API (in a NEW terminal window)
+# ============================================
+curl http://localhost:3000/health

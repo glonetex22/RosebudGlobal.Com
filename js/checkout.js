@@ -21,9 +21,15 @@ document.addEventListener('DOMContentLoaded', function() {
     renderOrderItems();
     calculateTotals();
     initPaymentMethods();
-    initAddressAutocomplete();
+    // Google Places autocomplete will be initialized when API loads
+    // initAddressAutocomplete(); // Old custom autocomplete - replaced with Google Places
     initFormValidation();
     updateCartCount();
+    
+    // Check if Google Places is already loaded
+    if (typeof ensureGooglePlacesReady === 'function') {
+        ensureGooglePlacesReady();
+    }
 });
 
 // ========================================
@@ -407,6 +413,15 @@ function toggleBillingAddress() {
     
     if (billingFields) {
         billingFields.style.display = checkbox.checked ? 'block' : 'none';
+        
+        // Initialize billing autocomplete when billing fields are shown
+        if (checkbox.checked && typeof initBillingAutocomplete === 'function') {
+            // Wait a moment for the fields to be visible
+            setTimeout(function() {
+                ensureGooglePlacesReady();
+                initBillingAutocomplete();
+            }, 100);
+        }
     }
 }
 

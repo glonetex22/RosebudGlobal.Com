@@ -348,7 +348,10 @@ function renderSidebarCart() {
             checkoutBtn.textContent = 'Make an Inquiry';
             checkoutBtn.style.background = PRIMARY_INQUIRY;
             checkoutBtn.style.boxShadow = '0 4px 12px rgba(55, 125, 255, 0.3)';
-            checkoutBtn.onclick = function() { window.location.href = 'contact.html#inquiry-form'; };
+            checkoutBtn.onclick = function() { 
+                if (typeof toggleCart === 'function') toggleCart();
+                window.location.href = 'contact.html#inquiry-form'; 
+            };
         }
         
         // Update footer layout for inquiry mode
@@ -504,30 +507,50 @@ function handleCheckout() {
 // ========================================
 
 function addToCart(product) {
+    console.log('[RoseBud] addToCart() called with:', product);
+    
     if (!canAddToCart()) {
         showNotification('You have to Submit an Inquiry before adding a purchase item.', 'error');
         return false;
     }
     
+    // Normalize product data - PRESERVE IMAGE
     const normalizedProduct = {
         id: product.id || product.sku || 'unknown',
         sku: product.sku || product.id || 'unknown',
         name: product.name || 'Unknown Item',
         price: parseFloat(product.price) || 0,
-        image: product.image || 'images/avatar-placeholder.png',
+        image: product.image || product.img || product.thumbnail || 'images/avatar-placeholder.png',  // <-- IMAGE
         color: product.color || 'Default',
         quantity: parseInt(product.quantity) || 1,
         isCustom: product.isCustom || false,
         category: product.category || '',
-        brand: product.brand || ''
+        brand: product.brand || '',
+        location: product.location || 'USA'
     };
+    
+    console.log('[RoseBud] Normalized cart item:', normalizedProduct);
+    console.log('[RoseBud] Image URL:', normalizedProduct.image);
+    
+    // Validate location - prevent Nigerian items from being added to cart
+    const location = (normalizedProduct.location || 'USA').toUpperCase();
+    if (location === 'NG' || location === 'NIGERIA') {
+        showNotification('This item is not available for purchase in the USA. Please contact us for availability.', 'error');
+        return false;
+    }
     
     const existingItem = cart.find(item => item.id === normalizedProduct.id && item.color === normalizedProduct.color);
     
     if (existingItem) {
+        // Update quantity, but also update image in case it was missing
         existingItem.quantity += normalizedProduct.quantity;
+        if (!existingItem.image || existingItem.image === 'images/avatar-placeholder.png') {
+            existingItem.image = normalizedProduct.image;
+        }
+        console.log('[RoseBud] Updated existing item quantity');
     } else {
         cart.push(normalizedProduct);
+        console.log('[RoseBud] Added new item to cart');
     }
     
     saveCart();
@@ -538,6 +561,10 @@ function addToCart(product) {
     if (sidebar && !sidebar.classList.contains('open')) toggleCart();
     
     showNotification(`${normalizedProduct.name} added to cart!`);
+    
+    // Debug: Check cart contents
+    console.log('[DEBUG] Cart contents:', JSON.parse(localStorage.getItem('rosebudCart')));
+    
     return true;
 }
 
@@ -631,7 +658,10 @@ function renderCartPageItems() {
         if (checkoutBtn) {
             checkoutBtn.textContent = 'Make an Inquiry';
             checkoutBtn.style.background = PRIMARY_INQUIRY;
-            checkoutBtn.onclick = function(e) { e.preventDefault(); window.location.href = 'contact.html#inquiry-form'; };
+            checkoutBtn.onclick = function(e) { 
+                e.preventDefault(); 
+                window.location.href = 'contact.html#inquiry-form'; 
+            };
             checkoutBtn.removeAttribute('href');
             checkoutBtn.disabled = false;
         }
@@ -704,6 +734,7 @@ function renderCartPageItems() {
                     <div class="item-details">
                         <span class="item-name">${item.name || 'Unknown'}</span>
                         <span class="item-color">Color: ${item.color || 'Default'}</span>
+                        <span class="item-sku">${item.sku || item.id || ''}</span>
                         ${item.isCustom ? '<span class="custom-badge">Custom Item</span>' : ''}
                         <button class="item-remove" onclick="removeFromCart(${index})">
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 4L12 12M12 4L4 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -866,6 +897,26 @@ function proceedAsGuest() {
 function proceedToCheckout(mode) {
     if (cart.length === 0) {
         showNotification('Your cart is empty', 'error');
+        return;
+    }
+    
+    // Validate location - remove any Nigerian items from cart
+    const nigerianItems = cart.filter(item => {
+        const location = (item.location || 'USA').toUpperCase();
+        return location === 'NG' || location === 'NIGERIA';
+    });
+    
+    if (nigerianItems.length > 0) {
+        // Remove Nigerian items from cart
+        cart = cart.filter(item => {
+            const location = (item.location || 'USA').toUpperCase();
+            return location !== 'NG' && location !== 'NIGERIA';
+        });
+        saveCart();
+        updateCartCount();
+        renderSidebarCart();
+        
+        showNotification('Some items are not available for purchase in the USA and have been removed from your cart.', 'error');
         return;
     }
     

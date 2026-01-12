@@ -512,3 +512,81 @@
         flex: 1 1 100%;
     }
 }
+
+/* ========================================
+   INQUIRY ITEMS STYLES
+   ======================================== */
+.inquiry-item {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    background: #F9FAFB;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    position: relative;
+}
+
+.inquiry-item-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: white;
+}
+
+.inquiry-item-details {
+    flex: 1;
+}
+
+.inquiry-item-name {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #141718;
+    margin: 0 0 4px;
+}
+
+.inquiry-item-sku {
+    font-size: 12px;
+    color: #377DFF;
+    margin: 0 0 4px;
+}
+
+.inquiry-item-desc {
+    font-size: 14px;
+    color: #6C7275;
+    margin: 0 0 4px;
+    line-height: 1.4;
+}
+
+.inquiry-item-qty {
+    font-size: 14px;
+    font-weight: 500;
+    color: #141718;
+    margin: 0;
+}
+
+.remove-inquiry-item {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    background: white;
+    border: 1px solid #E8ECEF;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    color: #6C7275;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: all 0.2s ease;
+}
+
+.remove-inquiry-item:hover {
+    background: #FEE2E2;
+    color: #DC2626;
+    border-color: #DC2626;
+}

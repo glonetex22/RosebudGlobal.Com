@@ -2,44 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Product - RoseBud Global</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/product.css">
 </head>
 <body>
-    <!-- Notification Bar -->
-    <div class="notification-bar">
-        <div class="notification-content">
-            <svg class="notification-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="#343839" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-            <span class="notification-text">30% off storewide — Limited time!</span>
-            <a href="shop.html" class="notification-link">
-                Shop Now
-                <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
-                    <path d="M4.16667 10H15.8333" stroke="#377DFF" stroke-width="1.5" stroke-linecap="round"/>
-                    <path d="M10.8333 5L15.8333 10L10.8333 15" stroke="#377DFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </a>
-        </div>
-        <button class="notification-close" aria-label="Close notification">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M15 5L5 15M5 5L15 15" stroke="#343839" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-        </button>
-    </div>
-
     <!-- Navigation Bar -->
     <nav class="navbar navbar-white">
         <div class="navbar-container">
             <a href="index.html" class="logo">
                 <img src="images/Rosebud_Global_Logo.png" alt="RoseBud Global" class="logo-img">
             </a>
-            <ul class="nav-links">
+                        <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+            <ul class="nav-links" id="navMenu">
+                <button class="mobile-menu-close" onclick="toggleMobileMenu()">×</button>
                 <li><a href="index.html" class="nav-link">Home</a></li>
                 <li><a href="shop.html" class="nav-link">Shop</a></li>
                 <li><a href="supply-services.html" class="nav-link">Supply Services</a></li>
@@ -69,88 +55,69 @@
                 </button>
             </div>
         </div>
-    </nav>
+                <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
+        </nav>
 
     <!-- Product Section -->
     <section class="product-section">
-        <!-- Breadcrumbs -->
-        <nav class="breadcrumbs" aria-label="Breadcrumb">
-            <a href="index.html" class="breadcrumb-link">Home</a>
-            <span class="breadcrumb-separator">›</span>
-            <a href="shop.html" class="breadcrumb-link">Shop</a>
-            <span class="breadcrumb-separator">›</span>
-            <a href="shop.html?category=fine-china" class="breadcrumb-link">Living Room</a>
-            <span class="breadcrumb-separator">›</span>
-            <span class="breadcrumb-current">Product</span>
-        </nav>
-
         <div class="product-container">
-            <!-- Product Gallery -->
+            <!-- Left Column - Image Gallery -->
             <div class="product-gallery">
-                <div class="main-image-container">
-                    <img src="images/new-items/New Item - Exotic Loveseat.png" alt="Product Image" class="main-image" id="mainProductImage">
+                <div class="main-image-container" style="background:#F5F5F5; border-radius:12px; aspect-ratio:1; display:flex; align-items:center; justify-content:center; position:relative;">
+                    <button class="gallery-nav prev" onclick="prevImage()" style="position:absolute; left:16px; top:50%; transform:translateY(-50%); width:40px; height:40px; border-radius:50%; background:white; border:1px solid #E8ECEF; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:2;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#141718" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                    </button>
+                    <img id="mainProductImage" src="" alt="Product Image" style="max-width:90%; max-height:90%; object-fit:contain;">
                     <div class="product-badges">
                         <span class="badge badge-new">NEW</span>
                         <span class="badge badge-sale">-50%</span>
                     </div>
-                    <div class="gallery-arrows">
-                        <button class="gallery-arrow prev" onclick="prevImage()">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </button>
-                        <button class="gallery-arrow next" onclick="nextImage()">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </button>
-                    </div>
+                    <button class="gallery-nav next" onclick="nextImage()" style="position:absolute; right:16px; top:50%; transform:translateY(-50%); width:40px; height:40px; border-radius:50%; background:white; border:1px solid #E8ECEF; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:2;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#141718" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                    </button>
                 </div>
-                <div class="thumbnail-images">
-                    <div class="thumbnail active" onclick="setMainImage(0)">
-                        <img src="images/new-items/New Item - Exotic Loveseat.png" alt="Thumbnail 1">
-                    </div>
-                    <div class="thumbnail" onclick="setMainImage(1)">
-                        <img src="images/new-items/plate-cleaned.png" alt="Thumbnail 2">
-                    </div>
-                    <div class="thumbnail" onclick="setMainImage(2)">
-                        <img src="images/new-items/New Item - Frame.webp" alt="Thumbnail 3">
-                    </div>
+                <div class="thumbnail-gallery thumbnail-grid" id="thumbnailGallery" style="display:flex; gap:12px; margin-top:16px; overflow-x:auto;">
+                    <!-- Thumbnails generated by JavaScript -->
                 </div>
             </div>
 
-            <!-- Product Info -->
+            <!-- Right Column - Product Info -->
             <div class="product-info">
-                <div class="product-header">
-                    <div class="rating-reviews">
-                        <div class="star-rating">
-                            <svg class="star filled" width="16" height="16" viewBox="0 0 16 16"><path d="M8 1L10.06 5.52L15 6.23L11.5 9.63L12.36 14.57L8 12.27L3.64 14.57L4.5 9.63L1 6.23L5.94 5.52L8 1Z" fill="#C9A164"/></svg>
-                            <svg class="star filled" width="16" height="16" viewBox="0 0 16 16"><path d="M8 1L10.06 5.52L15 6.23L11.5 9.63L12.36 14.57L8 12.27L3.64 14.57L4.5 9.63L1 6.23L5.94 5.52L8 1Z" fill="#C9A164"/></svg>
-                            <svg class="star filled" width="16" height="16" viewBox="0 0 16 16"><path d="M8 1L10.06 5.52L15 6.23L11.5 9.63L12.36 14.57L8 12.27L3.64 14.57L4.5 9.63L1 6.23L5.94 5.52L8 1Z" fill="#C9A164"/></svg>
-                            <svg class="star filled" width="16" height="16" viewBox="0 0 16 16"><path d="M8 1L10.06 5.52L15 6.23L11.5 9.63L12.36 14.57L8 12.27L3.64 14.57L4.5 9.63L1 6.23L5.94 5.52L8 1Z" fill="#C9A164"/></svg>
-                            <svg class="star" width="16" height="16" viewBox="0 0 16 16"><path d="M8 1L10.06 5.52L15 6.23L11.5 9.63L12.36 14.57L8 12.27L3.64 14.57L4.5 9.63L1 6.23L5.94 5.52L8 1Z" stroke="#C9A164" fill="none"/></svg>
-                        </div>
-                        <span class="review-count" id="reviewCount">0 Reviews</span>
+                <!-- Breadcrumbs -->
+                <nav class="breadcrumb" aria-label="Breadcrumb">
+                    <a href="index.html">Home</a> / 
+                    <a href="shop.html">Shop</a> / 
+                    <a href="shop.html?category=fine-china" class="breadcrumb-link" id="breadcrumbCategory">Category</a> / 
+                    <span class="breadcrumb-current" id="breadcrumbProduct">Product Name</span>
+                            <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
+        </nav>
+                
+                <!-- Reviews Summary -->
+                <div class="reviews-summary-inline">
+                    <div class="stars rating-stars" id="productStars">
+                        <svg class="star-icon" width="16" height="16" viewBox="0 0 16 16"><path d="M8 1L10.06 5.52L15 6.23L11.5 9.63L12.36 14.57L8 12.27L3.64 14.57L4.5 9.63L1 6.23L5.94 5.52L8 1Z" fill="#C9A164"/></svg>
+                        <svg class="star-icon" width="16" height="16" viewBox="0 0 16 16"><path d="M8 1L10.06 5.52L15 6.23L11.5 9.63L12.36 14.57L8 12.27L3.64 14.57L4.5 9.63L1 6.23L5.94 5.52L8 1Z" fill="#C9A164"/></svg>
+                        <svg class="star-icon" width="16" height="16" viewBox="0 0 16 16"><path d="M8 1L10.06 5.52L15 6.23L11.5 9.63L12.36 14.57L8 12.27L3.64 14.57L4.5 9.63L1 6.23L5.94 5.52L8 1Z" fill="#C9A164"/></svg>
+                        <svg class="star-icon" width="16" height="16" viewBox="0 0 16 16"><path d="M8 1L10.06 5.52L15 6.23L11.5 9.63L12.36 14.57L8 12.27L3.64 14.57L4.5 9.63L1 6.23L5.94 5.52L8 1Z" fill="#C9A164"/></svg>
+                        <svg class="star-icon" width="16" height="16" viewBox="0 0 16 16"><path d="M8 1L10.06 5.52L15 6.23L11.5 9.63L12.36 14.57L8 12.27L3.64 14.57L4.5 9.63L1 6.23L5.94 5.52L8 1Z" stroke="#C9A164" fill="none"/></svg>
                     </div>
-                    <h1 class="product-title">Tray Table</h1>
-                    <p class="product-description">Buy one or buy a few and make every space where you sit more convenient. Light and easy to move around with removable tray top, handy for serving snacks.</p>
-                    <div class="product-price">
-                        <span class="current-price">$199.00</span>
-                        <span class="original-price">$400.00</span>
-                    </div>
+                    <span class="review-count" id="reviewCount">0 Reviews</span>
                 </div>
-
-                <!-- Timer - Hidden by default, managed via CMS -->
-                <div class="offer-timer" id="offerTimer" style="display: none;">
-                    <!-- Timer controlled by CMS/Order Management System -->
+                
+                <!-- Product Title -->
+                <h1 class="product-title" id="productName">Tray Table</h1>
+                
+                <!-- Price -->
+                <div class="product-price">
+                    <span class="current-price" id="productPrice">$199.00</span>
+                    <span class="original-price" id="originalPrice">$400.00</span>
                 </div>
-
-                <!-- Product Options -->
-                <div class="product-options">
-                    <div class="option-group" id="measurementsGroup">
-                        <span class="option-label">Measurements</span>
-                        <span class="option-value" id="measurementsValue">17 1/2x20 5/8 "</span>
-                    </div>
+                
+                <!-- Short Description -->
+                <p class="product-description" id="productDescription">Buy one or buy a few and make every space where you sit more convenient. Light and easy to move around with removable tray top, handy for serving snacks.</p>
+                
+                <!-- Color Variants (if applicable) -->
+                <div class="color-variants" id="colorVariants">
                     <div class="option-group" id="colorSelector">
                         <div class="color-label">
                             <span class="label-text">Choose Color</span>
@@ -161,37 +128,61 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Add to Cart -->
-                <div class="product-actions" id="productActions">
-                    <!-- Quantity + Wishlist Row -->
-                    <div class="action-row" id="actionRow" style="display:flex !important; gap:16px; align-items:center; margin-bottom:16px;">
-                        <div class="quantity-selector" id="quantitySelector" style="width:127px; height:52px; background:#F5F5F5; border-radius:8px; display:flex !important; align-items:center; justify-content:space-between; padding:0 16px;">
-                            <button class="qty-btn minus" onclick="decreaseQty()" style="background:none; border:none; font-size:20px; color:#121212; cursor:pointer;">−</button>
-                            <span class="qty-value" id="qtyValue" style="font-family:Poppins,sans-serif; font-weight:600; font-size:16px; color:#121212;">1</span>
-                            <button class="qty-btn plus" onclick="increaseQty()" style="background:none; border:none; font-size:20px; color:#121212; cursor:pointer;">+</button>
-                        </div>
-                        <button class="wishlist-btn" id="wishlistBtn" onclick="toggleProductWishlist()" style="flex:1; min-width:150px; height:52px; background:transparent; border:1px solid #141718; border-radius:8px; display:flex !important; align-items:center; justify-content:center; gap:8px; font-family:Inter,sans-serif; font-weight:500; font-size:18px; color:#141718; cursor:pointer;">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" id="wishlistIcon">
-                                <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z" stroke="#D63585" stroke-width="1.5" fill="none"/>
-                            </svg>
-                            Wishlist
-                        </button>
+                
+                <!-- Quantity + Wishlist Row - Top Aligned, 24px Gap -->
+                <div class="qty-wishlist-row">
+                    <div class="qty-box">
+                        <button type="button" class="qty-minus" onclick="decreaseQty()">−</button>
+                        <span class="qty-number" id="qtyValue">1</span>
+                        <button type="button" class="qty-plus" onclick="increaseQty()">+</button>
                     </div>
-                    <!-- Action Buttons -->
-                    <button id="addToCartBtn" onclick="addProductToCartFromPage()" style="display:block !important; width:100%; height:52px; background:#D63585; color:#fff; border:none; border-radius:8px; font-family:Inter,sans-serif; font-weight:500; font-size:18px; cursor:pointer;">Add to Cart</button>
-                    <button id="makeInquiryBtn" onclick="addToInquiryCart()" style="display:none; width:100%; height:52px; background:#377DFF; color:#fff; border:none; border-radius:8px; font-family:Inter,sans-serif; font-weight:500; font-size:18px; cursor:pointer;">Make an Inquiry</button>
+                    <button type="button" class="wishlist-box" id="wishlistBtn" onclick="toggleProductWishlist()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" id="wishlistIcon">
+                            <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.28 2 8.5C2 5.42 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.09C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.42 22 8.5C22 12.28 18.6 15.36 13.45 20.04L12 21.35Z" stroke="#D63585" stroke-width="1.5" fill="none" id="wishlistIconPath"/>
+                        </svg>
+                        <span>Wishlist</span>
+                    </button>
                 </div>
-
+                
+                <!-- ========== PRODUCT ACTION BUTTONS ========== -->
+                <div id="productActionButtons" class="product-action-buttons">
+                  
+                  <!-- Add to Cart Button (Pink - for Sale, Household) -->
+                  <button 
+                    type="button" 
+                    id="addToCartBtn" 
+                    class="action-button action-button--cart"
+                    onclick="addProductToCartFromPage()"
+                  >
+                    Add to Cart
+                  </button>
+                  
+                  <!-- Make an Inquiry Button (Blue - for Custom Gift, Home Decor, Specialty, Wholesale) -->
+                  <button 
+                    type="button" 
+                    id="makeInquiryBtn" 
+                    class="action-button action-button--inquiry"
+                    onclick="handleMakeInquiry()"
+                  >
+                    Make an Inquiry
+                  </button>
+                  
+                </div>
+                <!-- ========== END PRODUCT ACTION BUTTONS ========== -->
+                
                 <!-- Product Meta -->
                 <div class="product-meta">
-                    <div class="meta-row">
-                        <span class="meta-label">SKU</span>
-                        <span class="meta-value">Model#</span>
+                    <div class="meta-item">
+                        <span class="meta-label">SKU:</span>
+                        <span class="meta-value" id="productSku">N/A</span>
                     </div>
-                    <div class="meta-row">
-                        <span class="meta-label">CATEGORY</span>
-                        <span class="meta-value">Living Room, Bedroom</span>
+                    <div class="meta-item">
+                        <span class="meta-label">Category:</span>
+                        <span class="meta-value" id="productCategory">N/A</span>
+                    </div>
+                    <div class="meta-item">
+                        <span class="meta-label">Brand:</span>
+                        <span class="meta-value" id="productBrand">N/A</span>
                     </div>
                 </div>
             </div>
@@ -206,79 +197,100 @@
                 <button class="tab-btn" data-tab="questions" onclick="switchTab('questions')">Questions</button>
                 <button class="tab-btn" data-tab="reviews" onclick="switchTab('reviews')">Reviews</button>
             </div>
-
-            <!-- Additional Info Tab -->
-            <div class="tab-content active" id="tab-additional">
-                <h3 class="tab-section-title">Additional Information</h3>
-                <div class="info-table">
-                    <div class="info-row">
-                        <span class="info-label">Weight</span>
-                        <span class="info-value">5.5 kg</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Dimensions</span>
-                        <span class="info-value">17 1/2 x 20 5/8 x 24 inches</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Materials</span>
-                        <span class="info-value">Steel, Powder-coated</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Color</span>
-                        <span class="info-value">Black, White, Brown, Gray</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Assembly</span>
-                        <span class="info-value">Required, tools included</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Questions Tab -->
-            <div class="tab-content" id="tab-questions" style="display: none;">
-                <h3 class="tab-section-title">Frequently Asked Questions</h3>
-                <div class="faq-list">
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFaq(this)">
-                            <span>What is the weight capacity of the tray table?</span>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                            </svg>
+            
+            <div class="tab-content active" id="additionalContent">
+                <div class="additional-info" id="additionalInfo">
+                    <h3 class="tab-section-title">Additional Information</h3>
+                    <div class="info-table">
+                        <div class="info-row">
+                            <span class="info-label">Weight</span>
+                            <span class="info-value">5.5 kg</span>
                         </div>
-                        <div class="faq-answer">
-                            <p>The tray table can safely hold up to 15 kg (33 lbs) when properly assembled. We recommend distributing weight evenly across the surface.</p>
+                        <div class="info-row">
+                            <span class="info-label">Dimensions</span>
+                            <span class="info-value">17 1/2 x 20 5/8 x 24 inches</span>
                         </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFaq(this)">
-                            <span>Is the tray removable?</span>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                            </svg>
+                        <div class="info-row">
+                            <span class="info-label">Materials</span>
+                            <span class="info-value">Steel, Powder-coated</span>
                         </div>
-                        <div class="faq-answer">
-                            <p>Yes! The tray top is completely removable, making it perfect for serving snacks and drinks. Simply lift it off the base when needed.</p>
+                        <div class="info-row">
+                            <span class="info-label">Color</span>
+                            <span class="info-value">Black, White, Brown, Gray</span>
                         </div>
-                    </div>
-                    <div class="faq-item">
-                        <div class="faq-question" onclick="toggleFaq(this)">
-                            <span>How do I clean the table?</span>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                            </svg>
-                        </div>
-                        <div class="faq-answer">
-                            <p>Wipe clean with a damp cloth. For stubborn stains, use mild soap and water. Avoid abrasive cleaners that may damage the powder-coated finish.</p>
+                        <div class="info-row">
+                            <span class="info-label">Assembly</span>
+                            <span class="info-value">Required, tools included</span>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Reviews Tab (Empty - Coming Soon) -->
-            <div class="tab-content" id="tab-reviews" style="display: none;">
-                <div class="reviews-empty-state">
-                    <h3 class="tab-section-title">Customer Reviews</h3>
-                    <p class="reviews-placeholder">No reviews yet. Be the first to leave a review!</p>
+            
+            <div class="tab-content" id="questionsContent">
+                <div class="questions-container" id="questionsContainer">
+                    <h3 class="tab-section-title">Frequently Asked Questions</h3>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                <span>What is the weight capacity of the tray table?</span>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="faq-answer">
+                                <p>The tray table can safely hold up to 15 kg (33 lbs) when properly assembled. We recommend distributing weight evenly across the surface.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                <span>Is the tray removable?</span>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Yes! The tray top is completely removable, making it perfect for serving snacks and drinks. Simply lift it off the base when needed.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question" onclick="toggleFaq(this)">
+                                <span>How do I clean the table?</span>
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                    <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="faq-answer">
+                                <p>Wipe clean with a damp cloth. For stubborn stains, use mild soap and water. Avoid abrasive cleaners that may damage the powder-coated finish.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="tab-reviews">
+                <div class="reviews-content">
+                    <!-- Reviews Header with Summary -->
+                    <div class="reviews-header">
+                        <div class="reviews-summary">
+                            <span class="avg-rating" id="avgRating">0.0</span>
+                            <div class="stars-display" id="avgStars">
+                                <span class="star">☆</span>
+                                <span class="star">☆</span>
+                                <span class="star">☆</span>
+                                <span class="star">☆</span>
+                                <span class="star">☆</span>
+                            </div>
+                            <span class="total-reviews" id="totalReviews">0 Reviews</span>
+                        </div>
+                        <button type="button" class="write-review-btn" onclick="handleWriteReview()">
+                            Write Review
+                        </button>
+                    </div>
+                    
+                    <!-- Reviews List Container -->
+                    <div id="reviewsList" class="reviews-list">
+                        <!-- Reviews will be loaded here by JavaScript -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -328,7 +340,8 @@
                     <a href="shop.html" class="footer-link">Shop</a>
                     <a href="supply-services.html" class="footer-link">Supply Services</a>
                     <a href="contact.html" class="footer-link">Contact</a>
-                </nav>
+                            <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
+        </nav>
             </div>
             <div class="footer-bottom">
                 <div class="footer-legal">
@@ -399,5 +412,6 @@
     <script src="js/main.js"></script>
     <script src="js/cart.js"></script>
     <script src="js/product.js"></script>
+    <script src="js/wishlist-fix.js"></script>
 </body>
 </html>

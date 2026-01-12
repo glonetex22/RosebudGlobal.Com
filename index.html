@@ -2,16 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>RoseBud Global - Premium Gifts &amp; Home Essentials</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;family=Space+Grotesk:wght@400;500;600&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
-    <!-- Notification Bar -->
-    <div class="notification-bar">
+    <!-- Notification Bar - DISABLED -->
+    <!-- <div class="notification-bar" style="display:none !important;">
         <div class="notification-content">
             <svg class="notification-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" stroke="#343839" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -30,7 +31,7 @@
                 <path d="M15 5L5 15M5 5L15 15" stroke="#343839" stroke-width="1.5" stroke-linecap="round"/>
             </svg>
         </button>
-    </div>
+    </div> -->
 
     <!-- Navigation Bar -->
     <nav class="navbar">
@@ -39,12 +40,20 @@
                 <img src="images/Rosebud_Global_Logo.png" alt="RoseBud Global" class="logo-img logo-default">
                 <img src="images/Rosebud_Global_Logo_White.png" alt="RoseBud Global" class="logo-img logo-scrolled">
             </a>
-            <ul class="nav-links">
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+            <ul class="nav-links" id="navMenu">
+                <button class="mobile-menu-close" onclick="toggleMobileMenu()">×</button>
                 <li><a href="index.html" class="nav-link active">Home</a></li>
                 <li><a href="shop.html" class="nav-link">Shop</a></li>
                 <li><a href="supply-services.html" class="nav-link">Supply Services</a></li>
                 <li><a href="contact.html" class="nav-link">Contact</a></li>
             </ul>
+            <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
             <div class="nav-icons">
                 <div class="search-container">
                     <button class="icon-btn search-btn" aria-label="Search" onclick="toggleSearch()">
@@ -74,11 +83,6 @@
                     <span class="cart-count" id="cartCount">0</span>
                 </button>
             </div>
-            <button class="mobile-menu-btn" aria-label="Menu" onclick="toggleMobileMenu()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path d="M3 6H21M3 12H21M3 18H21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-            </button>
         </div>
     </nav>
 
@@ -268,43 +272,8 @@
                 <div class="section-title"><h2>New<br>Items</h2></div>
                 <a href="#" class="btn-link">More Products <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4.16667 10H15.8333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M10.8333 5L15.8333 10L10.8333 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
             </div>
+            <!-- Products loaded dynamically by JavaScript -->
             <div class="products-carousel" id="productsCarousel">
-                <div class="product-card" data-price="0" data-name="Custom 100% Cotton Dyed Terry Hand Towels" data-sku="RBG-C2600" data-category="Wholesale" data-manufacturer="RoseBud Global" onclick="goToProductDetail('RBG-C2600')">
-                    <div class="product-image-wrapper">
-                        <img src="images/new-items/New Items - Custom Towels.png" alt="Custom Towels" class="product-img">
-                        <div class="product-badges"><span class="badge badge-new-green">NEW</span></div>
-                        <button class="add-to-cart-btn inquiry-btn" onclick="event.stopPropagation(); addToInquiryFromHome('Custom 100% Cotton Dyed Terry Hand Towels', 'RBG-C2600', 'images/new-items/New Items - Custom Towels.png')">Make an Inquiry</button>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-rating"><span class="stars">★★★★★</span></div>
-                        <h3 class="product-name">Custom 100% Cotton Dyed Terry Hand Towels</h3>
-                        <div class="product-price"><span class="current-price product-sku">RBG-C2600</span><span class="contact-price">Wholesale</span></div>
-                    </div>
-                </div>
-                <div class="product-card" data-price="0" data-name="Special Shaped Plate Series Ceramic Plate" data-sku="RBG-P31005" data-category="Wholesale" data-manufacturer="OH OHERE" onclick="goToProductDetail('RBG-P31005')">
-                    <div class="product-image-wrapper product-img-white-bg">
-                        <img src="images/new-items/plate-cleaned.png" alt="Ceramic Plate" class="product-img">
-                        <div class="product-badges"><span class="badge badge-new-green">NEW</span></div>
-                        <button class="add-to-cart-btn inquiry-btn" onclick="event.stopPropagation(); addToInquiryFromHome('Special Shaped Plate Series Ceramic Plate', 'RBG-P31005', 'images/new-items/plate-cleaned.png')">Make an Inquiry</button>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-rating"><span class="stars">★★★★★</span></div>
-                        <h3 class="product-name">Special Shaped Plate Series Latest Design Ceramic Plate</h3>
-                        <div class="product-price"><span class="current-price product-sku">RBG-P31005</span><span class="contact-price">Wholesale</span></div>
-                    </div>
-                </div>
-                <div class="product-card" data-price="0" data-name="Custom Exotic Material Loveseat" data-sku="RBG-F29055" data-category="Wholesale" data-manufacturer="RoseBud Global" onclick="goToProductDetail('RBG-F29055')">
-                    <div class="product-image-wrapper">
-                        <img src="images/new-items/New Item - Exotic Loveseat.png" alt="Exotic Loveseat" class="product-img">
-                        <div class="product-badges"><span class="badge badge-new-green">NEW</span></div>
-                        <button class="add-to-cart-btn inquiry-btn" onclick="event.stopPropagation(); addToInquiryFromHome('Custom Exotic Material Loveseat', 'RBG-F29055', 'images/new-items/New Item - Exotic Loveseat.png')">Make an Inquiry</button>
-                    </div>
-                    <div class="product-info">
-                        <div class="product-rating"><span class="stars">★★★★★</span></div>
-                        <h3 class="product-name">Custom Exotic Material Loveseat</h3>
-                        <div class="product-price"><span class="current-price product-sku">RBG-F29055</span><span class="contact-price">Wholesale</span></div>
-                    </div>
-                </div>
                 <div class="product-card" data-price="300" data-name="Olivia Riegel Priscilla Picture Frame" data-sku="RT1189" data-category="Household Items" data-manufacturer="Olivia Riegel" onclick="goToProductDetail('RT1189')">
                     <div class="product-image-wrapper">
                         <img src="images/new-items/New Item - Frame.webp" alt="Picture Frame" class="product-img">
@@ -415,33 +384,57 @@
     </section>
 
     <!-- Newsletter Section -->
-    <section class="newsletter-section" id="newsletterSection">
-        <div class="newsletter-bg">
-            <img src="images/Newsletter_Card.png" alt="" class="newsletter-bg-image" id="newsletterBgImage">
-        </div>
-        <div class="newsletter-card-container">
-            <div class="newsletter-card" id="newsletterCard">
-                <div class="newsletter-header">
-                    <h2 class="newsletter-title" id="newsletterTitle">Join Our Newsletter</h2>
-                    <p class="newsletter-description" id="newsletterDescription">Sign up for deals, new products and promotions</p>
-                </div>
-                <div class="newsletter-form-wrapper">
-                    <form class="newsletter-form" id="newsletterForm" onsubmit="handleNewsletter(event)">
-                        <div class="newsletter-input-row">
-                            <div class="newsletter-icon-input">
-                                <svg class="newsletter-email-icon" id="newsletterEmailIcon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <path d="M2.88 5.88L12 12L21.12 5.88C20.74 4.8 19.71 4 18.5 4H5.5C4.29 4 3.26 4.8 2.88 5.88Z" fill="#D63585"/>
-                                    <path d="M21.33 7.69L12 14L2.67 7.69C2.56 8.1 2.5 8.54 2.5 9V17C2.5 18.66 3.84 20 5.5 20H18.5C20.16 20 21.5 18.66 21.5 17V9C21.5 8.54 21.44 8.1 21.33 7.69Z" fill="#D63585"/>
-                                </svg>
-                                <input type="email" class="newsletter-input" id="newsletterEmail" placeholder="Email address" required>
-                            </div>
-                            <button type="submit" class="newsletter-submit-btn" id="newsletterSubmitBtn">Signup</button>
-                        </div>
-                        <div class="newsletter-underline"></div>
-                    </form>
-                </div>
+    <section class="newsletter-section">
+      <div class="newsletter-container">
+        <div class="newsletter-content">
+          <h2 class="newsletter-title">Join Our Newsletter</h2>
+          <p class="newsletter-subtitle">Sign up for deals, new products and promotions</p>
+          
+          <form class="newsletter-form" id="newsletterForm" onsubmit="handleNewsletterSubmit(event)">
+            <div class="newsletter-input-wrapper">
+              <svg class="email-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6C7275" stroke-width="1.5">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+              <input 
+                type="email" 
+                id="newsletterEmail" 
+                name="email" 
+                placeholder="Email address" 
+                required
+                autocomplete="email"
+              >
             </div>
+            <button type="submit" class="newsletter-btn" id="newsletterBtn">
+              <span class="btn-text">Signup</span>
+              <span class="btn-loading" style="display:none;">
+                <svg class="spinner" width="20" height="20" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="60" stroke-linecap="round">
+                    <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/>
+                  </circle>
+                </svg>
+              </span>
+            </button>
+          </form>
+          
+          <!-- Success Message (hidden by default) -->
+          <div class="newsletter-success" id="newsletterSuccess" style="display:none;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#10B981">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+            <p>Thank you for subscribing! Check your email for confirmation.</p>
+          </div>
+          
+          <!-- Error Message (hidden by default) -->
+          <div class="newsletter-error" id="newsletterError" style="display:none;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#DC2626">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+            <p id="newsletterErrorText">Something went wrong. Please try again.</p>
+          </div>
+          
         </div>
+      </div>
     </section>
 
     <!-- Footer - Restored Original State -->

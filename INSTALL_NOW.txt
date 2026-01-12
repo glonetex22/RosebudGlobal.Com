@@ -1,0 +1,39 @@
+# ============================================
+# COMPLETE INSTALLATION COMMANDS
+# Copy and paste these commands in order
+# ============================================
+
+# 1. Navigate to extracted backend folder
+cd ~/Downloads/backend
+# (or wherever you extracted the ZIP)
+
+# 2. Install dependencies
+npm install
+
+# 3. Create .env file
+cp .env.example .env
+
+# 4. Create MySQL database
+mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS rosebud_global;"
+
+# 5. Import database schema
+mysql -u root -p rosebud_global < database/schema.sql
+
+# 6. Edit .env file (set MySQL password if you have one)
+nano .env
+# Change: DB_PASSWORD=your_password
+# Or leave empty: DB_PASSWORD=
+# Save: Ctrl+X, Y, Enter
+
+# 7. Test database connection
+node -e "require('dotenv').config(); require('./config/db').getConnection().then(() => { console.log('✅ Connected!'); process.exit(0); }).catch(e => { console.error('❌ Error:', e.message); process.exit(1); });"
+
+# 8. Start the server
+npm run dev
+
+# ============================================
+# OR USE THE QUICK INSTALL SCRIPT:
+# ============================================
+# cd ~/Downloads/backend
+# chmod +x ../QUICK_INSTALL.sh
+# ../QUICK_INSTALL.sh

@@ -566,20 +566,13 @@ function getPrimaryAction(category, productName, productSku) {
     const sku = (productSku || '').toLowerCase();
     
     // These categories get "Add to Cart" button (pink)
-    const cartCategories = ['sale', 'sale items', 'household', 'household items', 'handbag', 'handbags', 'bag', 'bags', 'purse', 'tote', 'clutch', 'wallet', 'leather'];
+    const cartCategories = ['sale', 'sale items', 'household', 'household items'];
     
     // Check category
     if (cartCategories.some(c => cat.includes(c) || cat === c)) return 'CART';
     
-    // Also check product name for bag-related keywords
-    const bagKeywords = ['handbag', 'bag', 'purse', 'tote', 'clutch', 'wallet', 'leather', 'satchel', 'crossbody'];
-    if (bagKeywords.some(k => name.includes(k))) return 'CART';
-    
-    // Check SKU patterns (RBG-W often indicates wallets/bags)
-    if (sku.startsWith('rbg-w') || sku.includes('-bag') || sku.includes('-hb')) return 'CART';
-    
     // These categories get "Make an Inquiry" button (blue)
-    const inquiryCategories = ['custom gift', 'home decor', 'decor', 'specialty', 'wholesale', 'custom'];
+    const inquiryCategories = ['custom gift', 'home decor', 'decor', 'accessories', 'specialty', 'wholesale', 'custom'];
     if (inquiryCategories.some(c => cat.includes(c))) return 'INQUIRY';
     
     return 'CART'; // Default for everything else
@@ -592,17 +585,26 @@ function createProductCard(product) {
         ? `$${product.price.toFixed(2)}` 
         : 'Contact for Price';
     
-    // Determine which single button to show based on category, name, and SKU
+    // Check location - Nigerian items should NOT be purchasable
+    const location = (product.location || 'USA').toUpperCase();
+    const isNigerianItem = location === 'NG' || location === 'NIGERIA';
+    
+    // Determine which single button to show based on category, name, SKU, and location
     const category = (product.category || '').toLowerCase();
     const primaryAction = getPrimaryAction(category, product.name, product.sku);
     
-    // Only show inquiry if category specifically requires it
-    // Sale items and bags should ALWAYS use Add to Cart, even with $0 price
-    const showInquiry = primaryAction === 'INQUIRY';
+    // Nigerian items always show "Contact for Availability" instead of Add to Cart
+    // Only show inquiry if category specifically requires it OR if item is Nigerian
+    const showInquiry = primaryAction === 'INQUIRY' || isNigerianItem;
     
     // Determine button text, class, and onclick
     let buttonText, buttonClass, buttonOnclick;
-    if (showInquiry) {
+    if (isNigerianItem) {
+        // Nigerian items: show "Contact for Availability" which triggers inquiry
+        buttonText = 'Contact for Availability';
+        buttonClass = 'inquiry-btn';
+        buttonOnclick = `addToInquiryCartFromShop(${product.id})`;
+    } else if (showInquiry) {
         buttonText = 'Make an Inquiry';
         buttonClass = 'inquiry-btn';
         buttonOnclick = `addToInquiryCartFromShop(${product.id})`;
@@ -723,7 +725,8 @@ function addProductToCart(productId) {
                 color: product.color || 'Default',
                 quantity: 1,
                 brand: product.brand,
-                category: product.category
+                category: product.category,
+                location: product.location || 'USA'
             });
             
             showAddedToCartFeedback(product.name);

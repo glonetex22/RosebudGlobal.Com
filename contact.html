@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Contact Us - RoseBud Global</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/contact.css">
     <style>
         /* Contact Card Animation */
@@ -140,7 +141,14 @@
     <nav class="navbar navbar-white">
         <div class="navbar-container">
             <a href="index.html" class="logo"><img src="images/Rosebud_Global_Logo.png" alt="RoseBud Global" class="logo-img"></a>
-            <ul class="nav-links">
+                        <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+            <ul class="nav-links" id="navMenu">
+                <button class="mobile-menu-close" onclick="toggleMobileMenu()">×</button>
                 <li><a href="index.html" class="nav-link">Home</a></li>
                 <li><a href="shop.html" class="nav-link">Shop</a></li>
                 <li><a href="supply-services.html" class="nav-link">Supply Services</a></li>
@@ -159,13 +167,15 @@
                 </button>
             </div>
         </div>
-    </nav>
+                <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
+        </nav>
 
     <main class="contact-page">
         <nav class="breadcrumbs" aria-label="Breadcrumb">
             <a href="index.html" class="breadcrumb-link">Home</a>
             <span class="breadcrumb-separator">›</span>
             <span class="breadcrumb-current">Contact Us</span>
+                    <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
         </nav>
 
         <section class="contact-header">
@@ -317,7 +327,8 @@
                     <a href="shop.html" class="footer-link">Shop</a>
                     <a href="supply-services.html" class="footer-link">Supply Services</a>
                     <a href="contact.html" class="footer-link">Contact</a>
-                </nav>
+                            <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
+        </nav>
             </div>
             <div class="footer-bottom">
                 <div class="footer-legal">
@@ -352,12 +363,14 @@
             const urlParams = new URLSearchParams(window.location.search);
             const inquiryType = urlParams.get('inquiry');
             
-            // Check for inquiry cart items
-            if (inquiryType === 'cart') {
+            // Always load inquiry cart items if they exist
+            const inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
+            if (inquiryCart.length > 0) {
                 loadInquiryCart();
             }
+            
             // Check for single product inquiry (legacy)
-            else if (inquiryType === 'custom' || inquiryType === 'quote') {
+            if (inquiryType === 'custom' || inquiryType === 'quote') {
                 const inquiryProduct = JSON.parse(sessionStorage.getItem('inquiryProduct') || '{}');
                 if (inquiryProduct.name) {
                     document.getElementById('inquiryProductPreview').classList.add('visible');
@@ -371,10 +384,14 @@
                 }
             }
             
-            // Also check if there are items in inquiry cart without URL param
-            const inquiryCart = JSON.parse(localStorage.getItem('rosebudInquiryCart') || '[]');
-            if (inquiryCart.length > 0 && !inquiryType) {
-                loadInquiryCart();
+            // Scroll to inquiry form if hash is present
+            if (window.location.hash === '#inquiry-form') {
+                setTimeout(() => {
+                    const form = document.getElementById('inquiry-form');
+                    if (form) {
+                        form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 100);
             }
             
             document.querySelectorAll('#contactForm input[required]').forEach(function(input) {
@@ -399,13 +416,15 @@
             header.textContent = `Selected Items (${inquiryCart.length})`;
             
             list.innerHTML = inquiryCart.map((item, index) => `
-                <div class="selected-item">
-                    <img src="${item.image || 'images/avatar-placeholder.png'}" alt="${item.name}" class="selected-item-image" onerror="this.src='images/avatar-placeholder.png'">
-                    <div class="selected-item-info">
-                        <p class="selected-item-name">${item.name}</p>
-                        <p class="selected-item-sku">${item.sku || 'N/A'}</p>
+                <div class="selected-item inquiry-item">
+                    <img src="${item.image || 'images/avatar-placeholder.png'}" alt="${item.name}" class="selected-item-image inquiry-item-image" onerror="this.src='images/avatar-placeholder.png'">
+                    <div class="selected-item-info inquiry-item-details">
+                        <p class="selected-item-name inquiry-item-name">${item.name}</p>
+                        <p class="selected-item-sku inquiry-item-sku">SKU: ${item.sku || 'N/A'}</p>
+                        ${item.description ? `<p class="inquiry-item-desc">${item.description}</p>` : ''}
+                        <p class="inquiry-item-qty">Quantity: ${item.quantity || 1}</p>
                     </div>
-                    <button class="selected-item-remove" onclick="removeInquiryItem(${index})" title="Remove">×</button>
+                    <button class="selected-item-remove remove-inquiry-item" onclick="removeInquiryItem(${index})" title="Remove">×</button>
                 </div>
             `).join('');
             
@@ -426,7 +445,13 @@
             } else {
                 loadInquiryCart();
             }
+            
+            // Update cart count in header
+            if (typeof updateCartCount === 'function') updateCartCount();
         }
+        
+        // Expose to window for onclick handlers
+        window.removeInquiryItem = removeInquiryItem;
         
         // Clear all inquiry items
         function clearInquiryCart() {

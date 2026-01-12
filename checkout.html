@@ -2,15 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Checkout - RoseBud Global</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/checkout.css">
     <!-- PayPal SDK - Sandbox -->
     <script src="https://www.paypal.com/sdk/js?client-id=AeeEJxL75ee5MYIcWJdn6P2ijEhQOTn-fqPgkQazj5xDHRJZ7_W4ibVCOkx52DzgHxQu2uueJzXR33kr&currency=USD&intent=capture" data-sdk-integration-source="button-factory"></script>
+    <!-- Google Places API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_PLACES_API_KEY&libraries=places&callback=initGooglePlaces" async defer></script>
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -19,7 +22,14 @@
             <a href="index.html" class="logo">
                 <img src="images/Rosebud_Global_Logo.png" alt="RoseBud Global" class="logo-img">
             </a>
-            <ul class="nav-links">
+                        <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+            <ul class="nav-links" id="navMenu">
+                <button class="mobile-menu-close" onclick="toggleMobileMenu()">×</button>
                 <li><a href="index.html" class="nav-link">Home</a></li>
                 <li><a href="shop.html" class="nav-link">Shop</a></li>
                 <li><a href="supply-services.html" class="nav-link">Supply Services</a></li>
@@ -49,7 +59,8 @@
                 </a>
             </div>
         </div>
-    </nav>
+                <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
+        </nav>
 
     <!-- Processing Overlay with Animation -->
     <div class="processing-overlay" id="processingOverlay">
@@ -166,8 +177,7 @@
                     <div class="form-group address-autocomplete-wrapper">
                         <label for="streetAddress">STREET ADDRESS *</label>
                         <input type="text" id="streetAddress" placeholder="Start typing your address..." required 
-                               autocomplete="off" oninput="handleAddressInput(this.value)" onfocus="showAddressSuggestions()">
-                        <div class="address-suggestions" id="addressSuggestions"></div>
+                               autocomplete="off">
                         <span class="field-error">Required Field</span>
                     </div>
                     <div class="form-group">
@@ -250,7 +260,7 @@
                     <div class="billing-address-fields" id="billingAddressFields" style="display: none;">
                         <div class="form-group">
                             <label for="billingStreet">STREET ADDRESS</label>
-                            <input type="text" id="billingStreet" placeholder="Street Address">
+                            <input type="text" id="billingStreet" placeholder="Start typing your address..." autocomplete="off">
                         </div>
                         <div class="form-group">
                             <label for="billingAddress2">ADDRESS 2</label>
@@ -387,7 +397,8 @@
                     <a href="shop.html">Shop</a>
                     <a href="supply-services.html">Supply Services</a>
                     <a href="contact.html">Contact Us</a>
-                </nav>
+                            <div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
+        </nav>
             </div>
             <div class="footer-bottom">
                 <div class="footer-legal">
