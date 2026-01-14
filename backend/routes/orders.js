@@ -163,4 +163,177 @@ router.patch('/:id/status', authenticate, adminOnly, async (req, res) => {
   }
 });
 
+// ========================================
+// STRIPE PAYMENT INTENT
+// ========================================
+
+router.post('/create-payment-intent', async (req, res) => {
+  try {
+    const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+    const { amount, currency } = req.body;
+    
+    if (!amount || amount <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid amount'
+      });
+    }
+    
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: Math.round(amount), // Amount in cents
+      currency: currency || 'usd',
+      automatic_payment_methods: { enabled: true }
+    });
+    
+    res.json({
+      success: true,
+      clientSecret: paymentIntent.client_secret
+    });
+  } catch (error) {
+    console.error('Create payment intent error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error creating payment intent',
+      error: error.message
+    });
+  }
+});
+
+// ========================================
+// PAYPAL ORDER CREATION
+// ========================================
+
+router.post('/create-paypal-order', async (req, res) => {
+  try {
+    const axios = require('axios');
+    const { amount } = req.body;
+    
+    if (!amount || amount <= 0) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid amount'
+      });
+    }
+    
+    // PayPal API endpoint (sandbox or production)
+    const paypalBaseUrl = process.env.PAYPAL_ENVIRONMENT === 'production' 
+      ? 'https://api-m.paypal.com' 
+      : 'https://api-m.sandbox.paypal.com';
+    
+    // Get access token
+    const authResponse = await axios.post(
+      `${paypalBaseUrl}/v1/oauth2/token`,
+      'grant_type=client_credentials',
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        auth: {
+          username: process.env.PAYPAL_CLIENT_ID,
+          password: process.env.PAYPAL_CLIENT_SECRET
+        }
+      }
+    );
+    
+    const accessToken = authResponse.data.access_token;
+    
+    // Create order
+    const orderResponse = await axios.post(
+      `${paypalBaseUrl}/v2/checkout/orders`,
+      {
+        intent: 'CAPTURE',
+        purchase_units: [{
+          amount: {
+            currency_code: 'USD',
+            value: amount.toFixed(2)
+          }
+        }]
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+        }
+      }
+    );
+    
+    res.json({
+      success: true,
+      id: orderResponse.data.id
+    });
+  } catch (error) {
+    console.error('Create PayPal order error:', error.response?.data || error.message);
+    res.status(500).json({
+      success: false,
+      message: 'Error creating PayPal order',
+      error: error.response?.data?.message || error.message
+    });
+  }
+});
+
+// ========================================
+// PAYPAL ORDER CAPTURE
+// ========================================
+
+router.post('/capture-paypal-order', async (req, res) => {
+  try {
+    const axios = require('axios');
+    const { orderID } = req.body;
+    
+    if (!orderID) {
+      return res.status(400).json({
+        success: false,
+        message: 'Order ID is required'
+      });
+    }
+    
+    // PayPal API endpoint (sandbox or production)
+    const paypalBaseUrl = process.env.PAYPAL_ENVIRONMENT === 'production' 
+      ? 'https://api-m.paypal.com' 
+      : 'https://api-m.sandbox.paypal.com';
+    
+    // Get access token
+    const authResponse = await axios.post(
+      `${paypalBaseUrl}/v1/oauth2/token`,
+      'grant_type=client_credentials',
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        auth: {
+          username: process.env.PAYPAL_CLIENT_ID,
+          password: process.env.PAYPAL_CLIENT_SECRET
+        }
+      }
+    );
+    
+    const accessToken = authResponse.data.access_token;
+    
+    // Capture order
+    const captureResponse = await axios.post(
+      `${paypalBaseUrl}/v2/checkout/orders/${orderID}/capture`,
+      {},
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+        }
+      }
+    );
+    
+    res.json({
+      success: true,
+      id: captureResponse.data.id,
+      status: captureResponse.data.status
+    });
+  } catch (error) {
+    console.error('Capture PayPal order error:', error.response?.data || error.message);
+    res.status(500).json({
+      success: false,
+      message: 'Error capturing PayPal order',
+      error: error.response?.data?.message || error.message
+    });
+  }
+});
+
 module.exports = router;

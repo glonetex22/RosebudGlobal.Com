@@ -155,10 +155,27 @@ async function initShopPage() {
     // Load products from JSON
     await loadProducts();
     
-    // Check URL parameters for category filter
+    // Check URL parameters for category or filter
     const urlParams = new URLSearchParams(window.location.search);
     const categoryParam = urlParams.get('category');
-    if (categoryParam) {
+    const filterParam = urlParams.get('filter');
+    
+    if (filterParam) {
+        // Handle filter parameter (e.g., fine-bone-china-dinner-sets)
+        console.log('[RoseBud] Filter parameter:', filterParam);
+        
+        // Convert URL-friendly format to match subcategory ID
+        // fine-bone-china-dinner-sets -> fine-china
+        const filterMap = {
+            'fine-bone-china-dinner-sets': 'fine-china'
+        };
+        
+        const subcategoryId = filterMap[filterParam] || filterParam.replace(/-/g, '-');
+        
+        // Add subcategory to selectedCategories (subcategories are stored in the same array)
+        selectedCategories = [subcategoryId];
+        console.log('[RoseBud] Applying filter - Subcategory:', subcategoryId);
+    } else if (categoryParam) {
         selectedCategories = [categoryParam];
     }
     
@@ -579,8 +596,17 @@ function getPrimaryAction(category, productName, productSku) {
 }
 
 function createProductCard(product) {
-    const hasImage = product.images && product.images.length > 0;
-    const imageUrl = hasImage ? product.image : 'images/avatar-placeholder.png';
+    // CRITICAL: Ensure we capture the image correctly
+    const productImage = product.image || 
+                         product.images?.[0] || 
+                         product.thumbnail ||
+                         product.img ||
+                         'images/avatar-placeholder.png';
+    
+    console.log('[RoseBud] Creating card for:', product.name, 'Image:', productImage);
+    
+    const hasImage = productImage && productImage !== 'images/avatar-placeholder.png';
+    const imageUrl = productImage;
     const priceDisplay = product.price > 0 
         ? `$${product.price.toFixed(2)}` 
         : 'Contact for Price';
@@ -632,11 +658,23 @@ function createProductCard(product) {
         ? `<span class="multi-image-indicator">${product.images.length} photos</span>` 
         : '';
     
+    // Store ALL product data as data attributes
+    const productDataAttrs = `
+        data-product-id="${product.id || ''}"
+        data-product-sku="${(product.sku || '').replace(/"/g, '&quot;')}"
+        data-product-name="${(product.name || '').replace(/"/g, '&quot;')}"
+        data-product-price="${product.price || 0}"
+        data-product-image="${(productImage || '').replace(/"/g, '&quot;')}"
+        data-product-category="${(product.category || '').replace(/"/g, '&quot;')}"
+        data-product-description="${((product.description || '').replace(/"/g, '&quot;').substring(0, 200))}"
+        data-product-brand="${(product.brand || '').replace(/"/g, '&quot;')}"
+    `;
+    
     return `
-        <div class="product-card" onclick="viewProduct(${product.id})">
+        <div class="product-card" ${productDataAttrs} onclick="viewProduct(${product.id})">
             <div class="product-image-container">
                 <img src="${imageUrl}" 
-                     alt="${product.name}" 
+                     alt="${(product.name || 'Product').replace(/"/g, '&quot;')}" 
                      class="product-image"
                      onerror="this.src='images/avatar-placeholder.png'"
                      loading="lazy">
@@ -716,16 +754,27 @@ function viewProduct(productId) {
 function addProductToCart(productId) {
     const product = productsData.find(p => p.id === productId);
     if (product) {
+        // CRITICAL: Ensure image is included
+        const productImage = product.image || 
+                             product.images?.[0] || 
+                             product.thumbnail ||
+                             product.img ||
+                             'images/avatar-placeholder.png';
+        
+        console.log('[RoseBud] Adding to cart - Product:', product.name, 'Image:', productImage);
+        
         if (typeof addToCart === 'function') {
             addToCart({
-                id: product.sku || `PROD-${productId}`,
+                id: product.id || product.sku || `PROD-${productId}`,
+                sku: product.sku || '',
                 name: product.name,
                 price: product.price || 0,
-                image: product.image || 'images/avatar-placeholder.png',
+                image: productImage,
                 color: product.color || 'Default',
                 quantity: 1,
                 brand: product.brand,
                 category: product.category,
+                description: product.description || '',
                 location: product.location || 'USA'
             });
             

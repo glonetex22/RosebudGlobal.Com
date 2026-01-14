@@ -422,10 +422,15 @@ function renderSidebarCart() {
         const qty = parseInt(item.quantity) || 1;
         total += price * qty;
         
+        // CRITICAL: Use the image from cart item data
+        const imageSrc = item.image || 'images/avatar-placeholder.png';
+        
+        console.log('[RoseBud] Rendering cart item:', item.name, 'Image:', imageSrc);
+        
         html += `
             <div class="cart-item">
                 <div class="cart-item-image">
-                    <img src="${item.image || 'images/avatar-placeholder.png'}" alt="${item.name}" onerror="this.src='images/avatar-placeholder.png'">
+                    <img src="${imageSrc}" alt="${(item.name || 'Product').replace(/"/g, '&quot;')}" onerror="this.src='images/avatar-placeholder.png'">
                 </div>
                 <div class="cart-item-info">
                     <div class="cart-item-name">${item.name || 'Unknown'}</div>

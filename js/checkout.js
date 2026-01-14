@@ -188,7 +188,7 @@ function initPaymentMethods() {
 
 function selectPaymentMethod(method) {
     // Check if trying to select a second method
-    const currentlySelected = document.querySelector('.payment-option.active input').value;
+    const currentlySelected = document.querySelector('.payment-option.active input')?.value;
     
     // Remove all active states
     document.querySelectorAll('.payment-option').forEach(opt => {
@@ -199,16 +199,38 @@ function selectPaymentMethod(method) {
     const selectedOption = document.getElementById(`${method}Option`);
     if (selectedOption) {
         selectedOption.classList.add('active');
-        selectedOption.querySelector('input').checked = true;
+        const input = selectedOption.querySelector('input');
+        if (input) input.checked = true;
     }
     
     selectedPaymentMethod = method;
     
-    // Show/hide card fields
+    // Show/hide payment forms
     const cardFields = document.getElementById('cardFields');
+    const paypalForm = document.getElementById('paypalPaymentForm');
+    
     if (cardFields) {
-        cardFields.style.display = method === 'card' ? 'block' : 'none';
+        cardFields.style.display = (method === 'card' || method === 'stripe') ? 'block' : 'none';
     }
+    
+    if (paypalForm) {
+        paypalForm.style.display = method === 'paypal' ? 'block' : 'none';
+    }
+    
+    // Initialize Stripe Elements if card/stripe is selected
+    if ((method === 'card' || method === 'stripe') && typeof Stripe !== 'undefined' && !window.stripeElementsInitialized) {
+        setTimeout(() => {
+            if (typeof initStripeElements === 'function') initStripeElements();
+        }, 100);
+    }
+    
+    // Initialize PayPal button if PayPal is selected
+    if (method === 'paypal' && typeof paypal !== 'undefined' && !window.paypalButtonInitialized) {
+        setTimeout(() => {
+            if (typeof initPayPalButton === 'function') initPayPalButton();
+        }, 100);
+    }
+}
 }
 
 // ========================================
@@ -516,7 +538,7 @@ function validateForm() {
 // PLACE ORDER
 // ========================================
 
-function placeOrder() {
+async function placeOrder() {
     // Validate form
     if (!validateForm()) {
         return;
@@ -531,14 +553,30 @@ function placeOrder() {
     // Save checkout form data for account pages
     saveCheckoutData();
     
-    // Show processing overlay
-    showProcessingOverlay();
-    
-    // Simulate payment processing (5 seconds)
-    setTimeout(() => {
-        // Process successful - redirect to order complete
+    // Route to appropriate payment processor
+    if (selectedPaymentMethod === 'paypal') {
+        // PayPal handles its own flow through the button
+        alert('Please click the PayPal button to complete your payment.');
+        return;
+    } else if (selectedPaymentMethod === 'card' || selectedPaymentMethod === 'stripe') {
+        // Process Stripe payment
+        if (typeof processStripePayment === 'function') {
+            await processStripePayment();
+        } else {
+            alert('Payment processing not available. Please try again.');
+        }
+    } else {
+        // Fallback to demo payment
+        showProcessingLoader('Processing Order...');
+        await delay(2000);
+        updateProcessingMessage('Verifying payment...');
+        await delay(2000);
+        updateProcessingMessage('Confirming order...');
+        await delay(1000);
+        updateProcessingMessage('Opening My Account Page...');
+        await delay(500);
         processOrderComplete();
-    }, 5000);
+    }
 }
 
 function saveCheckoutData() {
@@ -555,7 +593,7 @@ function saveCheckoutData() {
             lastName: document.getElementById('lastName')?.value || '',
             phone: document.getElementById('phone')?.value || '',
             email: document.getElementById('email')?.value || '',
-            street: document.getElementById('street')?.value || '',
+            street: document.getElementById('streetAddress')?.value || '',
             city: document.getElementById('city')?.value || '',
             state: document.getElementById('state')?.value || '',
             zip: document.getElementById('zipCode')?.value || '',
@@ -587,10 +625,118 @@ function saveCheckoutData() {
 }
 
 function showProcessingOverlay() {
-    const overlay = document.getElementById('processingOverlay');
-    if (overlay) {
-        overlay.classList.add('active');
+    // Use new processing loader instead
+    showProcessingLoader('Processing Order...');
+}
+// ========================================
+// PAYMENT PROCESSING LOADER
+// ========================================
+
+function showProcessingLoader(message = 'Processing Order...') {
+    const loader = document.getElementById('processingLoader');
+    const textEl = document.getElementById('processingText');
+    const cartCountEl = document.getElementById('loaderCartCount');
+    
+    if (textEl) {
+        textEl.textContent = message;
     }
+    
+    // Update cart count in loader
+    if (cartCountEl) {
+        try {
+            const cart = JSON.parse(localStorage.getItem('rosebudCart') || '[]');
+            const totalItems = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            cartCountEl.textContent = totalItems || 0;
+        } catch (e) {
+            cartCountEl.textContent = '0';
+        }
+    }
+    
+    if (loader) {
+        loader.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
+    
+    console.log('[RoseBud] Showing processing loader:', message);
+}
+
+function hideProcessingLoader() {
+    const loader = document.getElementById('processingLoader');
+    
+    if (loader) {
+        loader.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+}
+
+function updateProcessingMessage(message) {
+    const textEl = document.getElementById('processingText');
+    if (textEl) {
+        textEl.textContent = message;
+    }
+}
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// ========================================
+// HELPER FUNCTIONS FOR PAYMENTS
+// ========================================
+
+function getCartTotal() {
+    const totalText = document.getElementById('grandTotalAmount')?.textContent || '$0.00';
+    return parseFloat(totalText.replace(/[$,]/g, '')) || 0;
+}
+
+function getBillingDetails() {
+    const differentBilling = document.getElementById('differentBilling')?.checked;
+    
+    if (differentBilling) {
+        return {
+            name: `${document.getElementById('billingFirstName')?.value || ''} ${document.getElementById('billingLastName')?.value || ''}`.trim(),
+            email: document.getElementById('billingEmail')?.value || document.getElementById('email')?.value || '',
+            phone: document.getElementById('billingPhone')?.value || document.getElementById('phone')?.value || '',
+            address: {
+                line1: document.getElementById('billingStreet')?.value || '',
+                city: document.getElementById('billingCity')?.value || '',
+                state: document.getElementById('billingState')?.value || '',
+                postal_code: document.getElementById('billingZip')?.value || '',
+                country: 'US'
+            }
+        };
+    } else {
+        return {
+            name: `${document.getElementById('firstName')?.value || ''} ${document.getElementById('lastName')?.value || ''}`.trim(),
+            email: document.getElementById('email')?.value || '',
+            phone: document.getElementById('phone')?.value || '',
+            address: {
+                line1: document.getElementById('streetAddress')?.value || '',
+                city: document.getElementById('city')?.value || '',
+                state: document.getElementById('state')?.value || '',
+                postal_code: document.getElementById('zipCode')?.value || '',
+                country: 'US'
+            }
+        };
+    }
+}
+
+async function saveOrder(paymentId, paymentMethod) {
+    // This function saves order data
+    const orderData = {
+        paymentId: paymentId,
+        paymentMethod: paymentMethod,
+        items: cart,
+        total: getCartTotal(),
+        timestamp: new Date().toISOString()
+    };
+    
+    // Save to localStorage
+    localStorage.setItem('lastOrder', JSON.stringify(orderData));
+    console.log('[RoseBud] Order saved:', orderData);
+}
+
+
 }
 
 function processOrderComplete() {
@@ -662,3 +808,10 @@ window.removeItem = removeItem;
 window.placeOrder = placeOrder;
 window.handleCountryChange = handleCountryChange;
 window.lookupAddress = lookupAddress;
+window.showProcessingLoader = showProcessingLoader;
+window.hideProcessingLoader = hideProcessingLoader;
+window.updateProcessingMessage = updateProcessingMessage;
+window.getCartTotal = getCartTotal;
+window.getBillingDetails = getBillingDetails;
+window.saveOrder = saveOrder;
+window.delay = delay;

@@ -575,18 +575,32 @@ function updateGallery() {
     const mainImage = document.getElementById('mainProductImage');
     const thumbnailContainer = document.querySelector('.thumbnail-grid');
     
-    // Get images array
+    // CRITICAL: Get images array - check multiple possible fields
+    const productImage = productData.image || 
+                         productData.images?.[0] || 
+                         productData.thumbnail ||
+                         productData.img ||
+                         'images/avatar-placeholder.png';
+    
     const images = productData.images && productData.images.length > 0 
         ? productData.images 
-        : [productData.image || 'images/avatar-placeholder.png'];
+        : [productImage];
+    
+    console.log('[RoseBud] updateGallery - Product:', productData.name);
+    console.log('[RoseBud] updateGallery - Image:', productImage);
+    console.log('[RoseBud] updateGallery - Images array:', images);
     
     // Set main image
     if (mainImage) {
         mainImage.src = images[0];
-        mainImage.alt = productData.name;
+        mainImage.alt = productData.name || 'Product';
         mainImage.onerror = function() {
+            console.warn('[RoseBud] Main image failed to load:', images[0]);
             this.src = 'images/avatar-placeholder.png';
         };
+        console.log('[RoseBud] Main image set to:', images[0]);
+    } else {
+        console.warn('[RoseBud] Main image element not found');
     }
     
     // Generate thumbnails
